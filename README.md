@@ -10,7 +10,7 @@
 
 
 ## 4. 기술 스택
-
+- [Gradle](https://github.com/f-lab-edu/Daily/wiki/Build-Tool-:-Gradle)
 
 ## 5. 화면 구성
 
