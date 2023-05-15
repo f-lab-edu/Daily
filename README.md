@@ -10,7 +10,9 @@
 
 
 ## 4. 기술 스택
+- [MariaDB](https://github.com/f-lab-edu/Daily/wiki/DB-:-MariaDB)
 - [Gradle](https://github.com/f-lab-edu/Daily/wiki/Build-Tool-:-Gradle)
+- AWS
 
 ## 5. 화면 구성
 
