@@ -23,4 +23,5 @@
 ## 7. 아키텍처
 
 
-## 8. ERD...
+## 8. ERD
+![238662268-f23266aa-0f48-4efc-a57e-cff18b5bd6a1](https://github.com/f-lab-edu/Daily/assets/87467958/cfe4eede-005b-49e6-8801-e0e8320886bb)
