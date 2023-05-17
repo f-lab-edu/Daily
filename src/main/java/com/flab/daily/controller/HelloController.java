@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     //Hello World Get API 메서드
-    @GetMapping("/hello")
+    @GetMapping("/")
     @ResponseBody
     public String hello() {
         return "Hello World";
     }
-
 
 }
