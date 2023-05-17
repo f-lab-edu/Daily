@@ -8,6 +8,8 @@ class DailyApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+		System.out.println("Test!");
 	}
 
 }
