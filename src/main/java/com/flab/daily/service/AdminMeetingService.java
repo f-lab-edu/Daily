@@ -5,9 +5,11 @@ import com.flab.daily.dto.request.MeetingRequestDTO;
 import com.flab.daily.mapper.MeetingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AdminMeetingService {
 
     private final MeetingMapper meetingMapper;
