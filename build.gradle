@@ -32,6 +32,10 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
+	implementation group: 'org.mybatis', name: 'mybatis-spring', version: '3.0.2'
+
+
 }
 
 tasks.named('test') {
