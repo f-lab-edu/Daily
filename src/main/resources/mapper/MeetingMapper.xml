@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.daily.mapper.MeetingMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
+    <insert id="addMeeting" parameterType="java.util.Map">
+        insert into meeting(
+            category_id,
+            meeting_name,
+            meeting_description,
+            meeting_date,
+            meeting_place,
+            current_people,
+            meeting_people,
+            meeting_image,
+            created_by,
+            created_date,
+            updated_date)
+        values (
+            #{category_id},
+            #{name},
+            #{content},
+            #{date},
+            #{place},
+            0,
+            #{people},
+            #{image},
+            #{email},
+            now(),
+            now())
+    </insert>
+
+    <select id="getMeeting" resultType="com.flab.daily.dto.MeetingDTO">
+        select * from meeting
+    </select>
+</mapper>
+
