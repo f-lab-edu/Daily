@@ -12,18 +12,21 @@ public class AdminMeetingService {
     private final MeetingMapper meetingMapper;
 
     public void addMeeting(MeetingDTO meetingDTO) {
+
         MeetingDTO meetingInfo = MeetingDTO.builder()
-                .category_id(meetingDTO.getCategory_id())
-                .meeting_name(meetingDTO.getMeeting_name())
-                .meeting_description(meetingDTO.getMeeting_description())
-                .meeting_date(meetingDTO.getMeeting_date()) //date 계산 필요
-                .meeting_place(meetingDTO.getMeeting_place())
-                .meeting_people(meetingDTO.getMeeting_people())
-                .meeting_image(meetingDTO.getMeeting_image())
-                .created_by(meetingDTO.getCreated_by())
+                .categoryId(meetingDTO.getCategoryId())
+                .meetingName(meetingDTO.getMeetingName())
+                .meetingDescription(meetingDTO.getMeetingDescription())
+                .meetingDate(meetingDTO.getMeetingDate())
+                .meetingPlace(meetingDTO.getMeetingPlace())
+                .currentPeople(meetingDTO.getCurrentPeople())
+                .meetingPeople(meetingDTO.getMeetingPeople())
+                .meetingImage(meetingDTO.getMeetingImage())
+                .createdBy(meetingDTO.getCreatedBy())
                 .build();
 
-        meetingMapper.addMeeting(meetingInfo);
+
+        meetingMapper.addMeeting(meetingDTO);
     }
 
     public MeetingDTO getMeeting() {
