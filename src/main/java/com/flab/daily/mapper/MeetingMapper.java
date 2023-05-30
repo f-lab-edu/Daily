@@ -10,7 +10,7 @@ import java.util.Map;
 @Repository
 public interface MeetingMapper {
 
-    // void addMeeting(Map<String, String> map);
+    void addMeeting(MeetingDTO meetingDTO);
 
     MeetingDTO getMeeting();
 }
