@@ -38,18 +38,18 @@ public class MeetingDTO {
     private String meetingPlace;
 
     @JsonProperty(value = "current_people")
-    private Integer registerPeopleNum;
+    private Integer currentPeople;
 
     @NotNull
     @JsonProperty(value = "meeting_people")
-    private Integer recruitPeopleNum;
+    private Integer meetingPeople;
 
     @JsonProperty(value = "meeting_image")
-    private String meetingBanner;
+    private String meetingImage;
 
     @NotNull
     @JsonProperty(value = "created_by")
-    private String meetingAdmin;
+    private String createdBy;
 
 
 }
