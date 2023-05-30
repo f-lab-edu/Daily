@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
-        <mapper resource="MeetingMapper.xml"></mapper>
+        <mapper resource="meetingMapper.xml"></mapper>
     </mappers>
 </configuration>
