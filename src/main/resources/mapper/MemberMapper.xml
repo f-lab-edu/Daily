@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.flab.daily.mapper.MemberMapper">
+
+    <insert id="insertMember" parameterType="com.flab.daily.dto.Member">
+        insert into member(email, password, nickname, member_type, created_date)
+        values (#{email}, #{password}, #{nickname}, #{memberType}, now())
+    </insert>
+
+</mapper>
