@@ -3,9 +3,7 @@ package com.flab.daily.controller;
 import com.flab.daily.dto.MeetingDTO;
 import com.flab.daily.service.AdminMeetingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/admin")
 @RestController
@@ -13,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminMeetingController {
 
     private final AdminMeetingService adminMeetingService;
+
+    @PostMapping("/meetings")
+    public void addMeeting(@RequestBody MeetingDTO meetingDTO) {
+        adminMeetingService.addMeeting(meetingDTO);
+    }
 
     @GetMapping("/meetings")
     public MeetingDTO getMeeting() {
