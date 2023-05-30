@@ -1,8 +1,13 @@
 package com.flab.daily.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -10,26 +15,41 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class MeetingDTO {
 
-    private Long category_id;
 
-    private String meeting_name;
+    @NotNull
+    @JsonProperty(value = "category_id")
+    private Long categoryId;
 
-    private String meeting_description;
+    @NotNull
+    @JsonProperty(value = "meeting_name")
+    private String meetingName;
 
-    private Timestamp meeting_date;
+    @NotNull
+    @JsonProperty(value = "meeting_description")
+    private String meetingDescription;
 
-    private String meeting_place;
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonProperty(value = "meeting_date")
+    private LocalDateTime meetingDate;
 
-    private Integer current_people;
+    @NotNull
+    @JsonProperty(value = "meeting_place")
+    private String meetingPlace;
 
-    private Integer meeting_people;
+    @JsonProperty(value = "current_people")
+    private Integer registerPeopleNum;
 
-    private String meeting_image;
+    @NotNull
+    @JsonProperty(value = "meeting_people")
+    private Integer recruitPeopleNum;
 
-    private String created_by;
+    @JsonProperty(value = "meeting_image")
+    private String meetingBanner;
 
-    private Timestamp created_date;
+    @NotNull
+    @JsonProperty(value = "created_by")
+    private String meetingAdmin;
 
-    private Timestamp updated_date;
 
 }
