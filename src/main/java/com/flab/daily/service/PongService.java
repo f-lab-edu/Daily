@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PongService {
-
-    public String pong(){
+    public String pong() {
         return "pong!";
     }
 }
