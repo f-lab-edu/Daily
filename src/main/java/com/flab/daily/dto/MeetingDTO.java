@@ -2,10 +2,7 @@ package com.flab.daily.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -18,16 +15,19 @@ import java.time.LocalDateTime;
 public class MeetingDTO {
 
 
+    @Max(value = 6, message = "유효하지 않은 카테고리 값입니다.")
+    @Min(value = 1, message = "유효하지 않은 카테고리 값입니다.")
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")
     private Long categoryId;
 
-    @Size
+    @Size(max = 45, message = "45자 미만으로만 작성이 가능합니다.")
     @NotBlank(message = "소모임 이름을 입력해 주세요.")
     @JsonProperty(value = "meeting_name")
     private String meetingName;
 
-    @NotBlank(message = "소모임에 대햐 소개해 주세요.")
+    @Size(max = 255, message = "45자 미만으로만 작성이 가능합니다.")
+    @NotBlank(message = "소모임에 대해 소개해 주세요.")
     @JsonProperty(value = "meeting_description")
     private String meetingDescription;
 
@@ -50,7 +50,7 @@ public class MeetingDTO {
     @JsonProperty(value = "meeting_image")
     private String meetingImage;
 
-    @Email
+    @Email(message = "이메일 형식이랑 맞지 않습니다.")
     @NotBlank(message = "소모임 관리자 이메일 주소(ID)를 입력해 주세요.")
     @JsonProperty(value = "created_by")
     private String createdBy;
