@@ -26,7 +26,7 @@ public class AdminMeetingService {
                 .build();
 
 
-        meetingMapper.addMeeting(meetingDTO);
+        meetingMapper.addMeeting(meetingInfo);
     }
 
     public MeetingDTO getMeeting() {

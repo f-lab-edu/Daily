@@ -23,9 +23,9 @@
             #{meetingDate},
             #{meetingPlace},
             0,
-            #{recruitPeopleNum},
-            #{meetingBanner},
-            #{meetingAdmin},
+            #{meetingPeople},
+            #{meetingImage},
+            #{createdBy},
             now(),
             now())
     </insert>
