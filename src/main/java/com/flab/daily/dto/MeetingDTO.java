@@ -26,7 +26,7 @@ public class MeetingDTO {
     @JsonProperty(value = "meeting_name")
     private String meetingName;
 
-    @Size(max = 255, message = "45자 미만으로만 작성이 가능합니다.")
+    @Size(max = 255, message = "255자 미만으로만 작성이 가능합니다.")
     @NotBlank(message = "소모임에 대해 소개해 주세요.")
     @JsonProperty(value = "meeting_description")
     private String meetingDescription;
@@ -36,6 +36,7 @@ public class MeetingDTO {
     @JsonProperty(value = "meeting_date")
     private LocalDateTime meetingDate;
 
+    @Size(max = 255, message = "45자 미만으로만 작성이 가능합니다.")
     @NotBlank(message = "소모임 장소를 입력해 주세요.")
     @JsonProperty(value = "meeting_place")
     private String meetingPlace;
