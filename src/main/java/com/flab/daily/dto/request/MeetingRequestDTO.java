@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.checkerframework.common.value.qual.EnumVal;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MeetingRequestDTO {
 
-    @Max(value = 6, message = "유효하지 않은 카테고리 값입니다.")
-    @Min(value = 1, message = "유효하지 않은 카테고리 값입니다.")
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")
-    private Long categoryId;
+    private String categoryId;
 
     @Size(min = 0, max = 45, message = "45자 미만으로만 작성이 가능합니다.")
     @NotBlank(message = "소모임 이름을 입력해 주세요.")
