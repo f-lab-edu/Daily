@@ -1,14 +1,14 @@
 package com.flab.daily.mapper;
 
-import com.flab.daily.dto.MeetingDTO;
+import com.flab.daily.dao.MeetingDAO;
+import com.flab.daily.dto.request.MeetingRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
-@Repository
 public interface MeetingMapper {
 
-    void addMeeting(MeetingDTO meetingDTO);
+    void addMeeting(MeetingDAO meetingDAO);
 
-    MeetingDTO getMeeting();
+    MeetingRequestDTO getMeeting();
 }

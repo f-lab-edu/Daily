@@ -1,6 +1,7 @@
 package com.flab.daily.service;
 
-import com.flab.daily.dto.MeetingDTO;
+import com.flab.daily.dao.MeetingDAO;
+import com.flab.daily.dto.request.MeetingRequestDTO;
 import com.flab.daily.mapper.MeetingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,27 +12,20 @@ public class AdminMeetingService {
 
     private final MeetingMapper meetingMapper;
 
-    public void addMeeting(MeetingDTO meetingDTO) {
+    public void addMeeting(MeetingRequestDTO meetingRequestDTO) {
 
-        MeetingDTO meetingInfo = MeetingDTO.builder()
-                .categoryId(meetingDTO.getCategoryId())
-                .meetingName(meetingDTO.getMeetingName())
-                .meetingDescription(meetingDTO.getMeetingDescription())
-                .meetingDate(meetingDTO.getMeetingDate())
-                .meetingPlace(meetingDTO.getMeetingPlace())
-                .currentPeople(meetingDTO.getCurrentPeople())
-                .meetingPeople(meetingDTO.getMeetingPeople())
-                .meetingImage(meetingDTO.getMeetingImage())
-                .createdBy(meetingDTO.getCreatedBy())
+        MeetingDAO meetingInfo = MeetingDAO.builder()
+                .categoryId(meetingRequestDTO.getCategoryId())
+                .meetingName(meetingRequestDTO.getMeetingName())
+                .meetingDescription(meetingRequestDTO.getMeetingDescription())
+                .meetingDate(meetingRequestDTO.getMeetingDate())
+                .meetingPlace(meetingRequestDTO.getMeetingPlace())
+                .meetingPeople(meetingRequestDTO.getMeetingPeople())
+                .meetingImage(meetingRequestDTO.getMeetingImage())
+                .createdBy(meetingRequestDTO.getCreatedBy())
                 .build();
 
 
         meetingMapper.addMeeting(meetingInfo);
     }
-
-    public MeetingDTO getMeeting() {
-        return meetingMapper.getMeeting();
-    }
-
-
 }
