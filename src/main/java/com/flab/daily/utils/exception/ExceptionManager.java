@@ -20,8 +20,8 @@ public class ExceptionManager {
     }
 
     //데이터가 DB 존재여부를 확인할 때 사용되는 exception
-    @ExceptionHandler(ValidCheckException.class)
-    public ErrorResponse validCheckExceptionHandler(ValidCheckException e) {
+    @ExceptionHandler(IsValidCheckException.class)
+    public ErrorResponse isValidCheckExceptionHandler(IsValidCheckException e) {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
         return response;
     }
