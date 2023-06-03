@@ -5,8 +5,7 @@ import com.flab.daily.dto.request.RequestMeetingDTO;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.utils.exception.ErrorCode;
-import com.flab.daily.utils.exception.ValidCheckException;
-import jakarta.validation.Valid;
+import com.flab.daily.utils.exception.IsValidCheckException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class AdminMeetingService {
         int checkCategory = categoryMapper.isValidExist(requestMeetingDTO.getCategoryId());
 
         if(checkCategory!=1){
-            throw new ValidCheckException(ErrorCode.NOT_FOUND_CATEGORY);
+            throw new IsValidCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
 
         MeetingDAO meetingInfo = MeetingDAO.builder()
