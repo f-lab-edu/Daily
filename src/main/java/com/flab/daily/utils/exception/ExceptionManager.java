@@ -9,15 +9,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class APIExceptionHandler {
+public class ExceptionManager {
 
     //@Valid Exception 확인 메소드
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse invalidRequestHandler(MethodArgumentNotValidException e) {
-
         ErrorResponse response = new ErrorResponse(400, "Validation Failed", e.getFieldError().getDefaultMessage());
+        return response;
+    }
 
+    //데이터가 DB 존재여부를 확인할 때 사용되는 exception
+    @ExceptionHandler(ValidCheckException.class)
+    public ErrorResponse validCheckExceptionHandler(ValidCheckException e) {
+        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
         return response;
     }
 }
