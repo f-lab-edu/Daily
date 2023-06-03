@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeetingRequestDTO {
+public class MeetingRequestDto {
 
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")
-    private Long categoryId;
+    private long categoryId;
 
     @Size(min = 0, max = 45, message = "45자 미만으로만 작성이 가능합니다.")
     @NotBlank(message = "소모임 이름을 입력해 주세요.")
