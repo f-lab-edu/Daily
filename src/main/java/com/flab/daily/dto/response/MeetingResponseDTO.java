@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseMeetingDTO {
+public class MeetingResponseDTO {
     private Long categoryId;
     private String meetingName;
     private String meetingDescription;

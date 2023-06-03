@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionManager {
+public class ErrorHandler {
 
     //@Valid Exception 확인 메소드
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -20,8 +20,8 @@ public class ExceptionManager {
     }
 
     //데이터가 DB 존재여부를 확인할 때 사용되는 exception
-    @ExceptionHandler(IsValidCheckException.class)
-    public ErrorResponse isValidCheckExceptionHandler(IsValidCheckException e) {
+    @ExceptionHandler(IsExistCheckException.class)
+    public ErrorResponse isExistCheckExceptionHandler(IsExistCheckException e) {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
         return response;
     }
