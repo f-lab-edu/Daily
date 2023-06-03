@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class APIException extends RuntimeException  {
+public class ValidCheckException extends RuntimeException  {
     private final ErrorCode errorCode;
 }
