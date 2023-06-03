@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.flab.daily.mapper.CategoryMapper">
-    <select id="isValidExist" parameterType="long" resultType="int">
+<mapper namespace="com.flab.daily.mapper.MemberMapper">
+    <select id="isValidExist" parameterType="java.lang.String" resultType="int">
         select
         exists(
-        select * from category
-        where category_id = #{categoryId});
+        select * from member
+        where created_by = #{createdBy});
     </select>
 </mapper>
 

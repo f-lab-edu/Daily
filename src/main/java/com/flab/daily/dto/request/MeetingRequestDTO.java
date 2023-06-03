@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestMeetingDTO {
+public class MeetingRequestDTO {
 
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")
@@ -44,7 +44,8 @@ public class RequestMeetingDTO {
     @JsonProperty(value = "meeting_image")
     private String meetingImage;
 
-    @Email(message = "유효하지 않는 이메일 형식입니다.")
+    @Email(message = "유효하지 않는 이메일 형식입니다.",
+            regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     @NotEmpty
     @JsonProperty(value = "created_by")
     private String createdBy;
