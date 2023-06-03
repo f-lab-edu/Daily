@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class MeetingDAO {
+public class MeetingDao {
     private Long categoryId;
     private String meetingName;
     private String meetingDescription;
