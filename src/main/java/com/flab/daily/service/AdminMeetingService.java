@@ -21,14 +21,14 @@ public class AdminMeetingService {
     private final MemberMapper memberMapper;
 
     public void addMeeting(MeetingRequestDto meetingRequestDTO) {
-        int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
-        int createdByEmail = memberMapper.isValidExist(meetingRequestDTO.getCreatedBy());
-
         //유효한 카테고리인지 검사
+        int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
         if(checkCategory!=1){
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
+
         //유효한 Email인지 검사
+        int createdByEmail = memberMapper.isValidExist(meetingRequestDTO.getCreatedBy());
         if(createdByEmail!=1){
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
