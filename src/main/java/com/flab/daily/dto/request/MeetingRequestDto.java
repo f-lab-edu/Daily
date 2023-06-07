@@ -18,12 +18,12 @@ public class MeetingRequestDto {
     private long categoryId;
 
     @Size(min = 0, max = 45, message = "45자 미만으로만 작성이 가능합니다.")
-    @NotBlank(message = "소모임 이름을 입력해 주세요.")
+    @NotNull(message = "소모임 이름을 입력해 주세요.")
     @JsonProperty(value = "meeting_name")
     private String meetingName;
 
     @Size(min = 0, max = 255, message = "255자 미만으로만 작성이 가능합니다.")
-    @NotBlank(message = "소모임에 대해 소개해 주세요.")
+    @NotNull(message = "소모임에 대해 소개해 주세요.")
     @JsonProperty(value = "meeting_description")
     private String meetingDescription;
 
@@ -33,11 +33,12 @@ public class MeetingRequestDto {
     private LocalDateTime meetingDate;
 
     @Size(min = 0, max = 255, message = "45자 미만으로만 작성이 가능합니다.")
-    @NotBlank(message = "소모임 장소를 입력해 주세요.")
+    @NotNull(message = "소모임 장소를 입력해 주세요.")
     @JsonProperty(value = "meeting_place")
     private String meetingPlace;
 
     @NotNull(message = "소모임 모집 인원수를 입력해 주세요.")
+    @Min(value = 2, message = "참여 인원수는 2명 이상부터 가능합니다.")
     @JsonProperty(value = "meeting_people")
     private Integer meetingPeople;
 
