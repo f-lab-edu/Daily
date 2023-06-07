@@ -6,9 +6,15 @@
 
 <mapper namespace="com.flab.daily.mapper.MemberMapper">
 
-    <insert id="insertMember" parameterType="com.flab.daily.dto.Member">
+    <insert id="insertMember" parameterType="com.flab.daily.dao.MemberDAO">
         insert into member(email, password, nickname, member_type, created_date)
         values (#{email}, #{password}, #{nickname}, #{memberType}, now())
     </insert>
+
+    <select id="getMember" parameterType="com.flab.daily.dao.MemberDAO" resultType="com.flab.daily.dto.response.MemberResponseDTO">
+        SELECT *
+        FROM member
+        WHERE email = #{email}
+    </select>
 
 </mapper>

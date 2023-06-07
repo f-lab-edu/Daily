@@ -1,9 +1,11 @@
 package com.flab.daily.mapper;
 
-import com.flab.daily.dto.Member;
+import com.flab.daily.dto.response.MemberResponseDTO;
+import com.flab.daily.dao.MemberDAO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MemberMapper {
-    void insertMember(Member member);
+    void insertMember(MemberDAO member);
+    MemberResponseDTO getMember(MemberDAO member);
 }

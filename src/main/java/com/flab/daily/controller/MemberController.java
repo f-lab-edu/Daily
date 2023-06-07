@@ -1,6 +1,6 @@
 package com.flab.daily.controller;
 
-import com.flab.daily.dto.Member;
+import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ public class MemberController {
 
 
     @PostMapping("/members")
-    public ResponseEntity<Void> signUp(final @RequestBody @Valid Member member) {
-        memberService.signUp(member);
+    public ResponseEntity<Void> signUp(@RequestBody @Valid MemberRequestDTO memberRequestDTO) {
+        memberService.signUp(memberRequestDTO);
         return ResponseEntity.noContent().build();
     }
 
