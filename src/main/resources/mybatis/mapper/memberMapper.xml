@@ -7,7 +7,7 @@
         select
         exists(
         select * from member
-        where created_by = #{createdBy});
+        where email = #{createdBy});
     </select>
 </mapper>
 
