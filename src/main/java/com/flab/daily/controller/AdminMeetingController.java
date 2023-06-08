@@ -2,8 +2,8 @@ package com.flab.daily.controller;
 
 import com.flab.daily.dto.request.MeetingRequestDto;
 import com.flab.daily.service.AdminMeetingService;
-import com.flab.daily.utils.exception.ErrorCode;
-import com.flab.daily.utils.exception.IsInvalidLocalDateException;
+import com.flab.daily.exception.ErrorCode;
+import com.flab.daily.exception.IsInvalidLocalDateException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class AdminMeetingController {
             throw new IsInvalidLocalDateException(ErrorCode.INVALID_LOCALDATE);
         }
         adminMeetingService.addMeeting(meetingRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created.
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

@@ -1,10 +1,10 @@
-package com.flab.daily.utils.exception;
+package com.flab.daily.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class IsExistCheckException extends RuntimeException  {
+public class IsInvalidLocalDateException extends RuntimeException{
     private final ErrorCode errorCode;
 }

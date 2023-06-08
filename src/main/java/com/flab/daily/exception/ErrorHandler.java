@@ -1,4 +1,4 @@
-package com.flab.daily.utils.exception;
+package com.flab.daily.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
