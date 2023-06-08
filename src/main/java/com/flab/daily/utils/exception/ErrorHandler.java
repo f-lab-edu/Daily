@@ -21,6 +21,7 @@ public class ErrorHandler {
     }
 
     //데이터가 DB 존재여부를 확인할 때 사용되는 exception
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IsExistCheckException.class)
     public ErrorResponse isExistCheckExceptionHandler(IsExistCheckException e) {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
@@ -32,6 +33,14 @@ public class ErrorHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResponse notReadableExceptionHandler(HttpMessageNotReadableException e) {
         ErrorResponse response = new ErrorResponse(400, "Validation Failed", "데이터 타입이 맞지 않습니다.");
+        return response;
+    }
+
+    //소모임 날짜 Exception
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IsInvalidLocalDateException.class)
+    public ErrorResponse IsInvalidLocalDateExceptionHandler(IsInvalidLocalDateException e) {
+        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
         return response;
     }
 }
