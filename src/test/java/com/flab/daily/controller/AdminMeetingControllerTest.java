@@ -45,7 +45,7 @@ public class AdminMeetingControllerTest {
         message = "$..message";
     }
 
-    //이메일 형식 체크
+    //이메일 형식 검사
     @Test
     @DisplayName("@Email Format Check.")
     void test_Email_Format_False() throws Exception {
@@ -73,7 +73,7 @@ public class AdminMeetingControllerTest {
                 .andExpect(jsonPath(message).value("유효하지 않는 이메일 형식입니다."));
     }
 
-    //글자수 초과
+    //글자수 검사
     @Test
     @DisplayName("@Max Character Count Check.")
     void test_Character_Count_False() throws Exception {
@@ -91,8 +91,6 @@ public class AdminMeetingControllerTest {
                 .createdBy("1234@gmail.com")
                 .build();
 
-        doNothing().when(adminMeetingService).addMeeting(any());
-
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meetingRequestDto)))
@@ -100,10 +98,12 @@ public class AdminMeetingControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
                 .andExpect(jsonPath(result).value("Validation Failed"))
-                .andExpect(jsonPath(message).value("45자 미만으로만 작성이 가능합니다."));
+                .andExpect(jsonPath(message).value("45자까지 작성이 가능합니다."));
+
+        doNothing().when(adminMeetingService).addMeeting(any());
     }
 
-    //null 값 확인
+    //null 값 검사
     @Test
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
@@ -132,7 +132,7 @@ public class AdminMeetingControllerTest {
     }
 
 
-    //whitespace값, @Size 확인
+    //whitespace값, @Size 검사
     @Test
     @DisplayName("@NotBlank, @Size Check.")
     void test_Not_WhiteSpace_False() throws Exception {
@@ -160,10 +160,12 @@ public class AdminMeetingControllerTest {
                 .andExpect(jsonPath(message).value("소모임에 대해 소개해 주세요."));
     }
 
-    //Integer 타입에 String 값 입력 상황 체크
+    //Integer 타입에 String 값 입력 상황 검사
     @Test
     @DisplayName("Invalid DataType Check.")
     void test_Invalid_DataType_False() throws Exception {
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(MockMvcRequestBuilders.post("/admin/meetings")
                         .param("meetingPeople", "두명")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -174,7 +176,7 @@ public class AdminMeetingControllerTest {
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
     }
     
-    //소모임 진행 날짜가 작성 날짜보다 이후인지 확인
+    //소모임 진행 날짜가 작성 날짜보다 이후인지 검사
     @Test
     @DisplayName("Invalid LocalDate Check.")
     void test_Invalid_LocalDate_False() throws Exception {
@@ -204,10 +206,12 @@ public class AdminMeetingControllerTest {
                 .andExpect(jsonPath(message).value("소모임 날짜가 현재보다 이전일 수 없습니다."));
     }
 
-    //날짜 형식 체크
+    //날짜 형식 검사
     @Test
     @DisplayName("Invalid LocalDateTime Format Check.")
     void test_LocalDate_Format_False() throws Exception {
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(MockMvcRequestBuilders.post("/admin/meetings")
                         .param("meetingDate", "20223-10-23")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -216,6 +220,32 @@ public class AdminMeetingControllerTest {
                 .andExpect(jsonPath(code).value(400))
                 .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
+    }
+
+    //유효성 검사를 통과한 후에도 잘 넘어가지는지 검사
+    @Test
+    @DisplayName("isCreated Check")
+    void isCreated_Success() throws Exception {
+
+        doNothing().when(adminMeetingService).addMeeting(any());
+
+        meetingRequestDto = MeetingRequestDto.builder()
+                .categoryId(1)
+                .meetingName("축구하기")
+                .meetingDescription("축구 같이 하실래요?")
+                .meetingDate(LocalDateTime.now().plusDays(20))
+                .meetingPlace("잠실운동장")
+                .meetingPeople(10)
+                .meetingImage(null)
+                .createdBy("1234@gmail.com")
+                .build();
+
+        mockMvc.perform(post("/admin/meetings")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(meetingRequestDto)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+
     }
 
 }
