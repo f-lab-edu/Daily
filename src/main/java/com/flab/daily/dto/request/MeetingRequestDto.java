@@ -28,6 +28,7 @@ public class MeetingRequestDto {
     private String meetingDescription;
 
     @NotNull(message = "소모임 날짜를 입력해 주세요.")
+    @Future(message = "소모임 날짜가 현재보다 이전일 수 없습니다.")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     @JsonProperty(value = "meeting_date")
     private LocalDateTime meetingDate;
