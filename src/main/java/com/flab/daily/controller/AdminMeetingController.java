@@ -17,10 +17,6 @@ public class AdminMeetingController {
 
     @PostMapping("/meetings")
     public ResponseEntity<Object> addMeeting(@Valid @RequestBody MeetingRequestDto meetingRequestDTO) {
-        //소모임 날짜가 현재 날짜보다 이후인지 확인
-//        if(meetingRequestDTO.getMeetingDate().isBefore(LocalDateTime.now())) {
-//            throw new IsInvalidLocalDateException(ErrorCode.INVALID_LOCALDATE);
-//        }
         adminMeetingService.addMeeting(meetingRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
