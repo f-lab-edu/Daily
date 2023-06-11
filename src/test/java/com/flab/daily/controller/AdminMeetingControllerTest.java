@@ -35,8 +35,6 @@ public class AdminMeetingControllerTest {
     String result;
     String message;
 
-    // jsonPath의 사용될 값들 초기화 -> 넘어올 json 데이터중 code, result, message 값 사용
-    // $ : root 개념
     @BeforeEach
     void beforeEach() {
         code = "$..code";
@@ -48,7 +46,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@Email Format Check.")
     void test_Email_Format_False() throws Exception {
-        //유효성 검사에 사용될 dto 작성
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
@@ -74,7 +71,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@Max Character Count Check.")
     void test_Character_Count_False() throws Exception {
-
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구가 너무 하고 싶은 사람들이 많이 모인 소모임이고 " +
@@ -102,7 +98,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
-
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
@@ -129,7 +124,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotBlank, @Size Check.")
     void test_Not_WhiteSpace_False() throws Exception {
-
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
@@ -211,7 +205,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("isCreated Check")
     void isCreated_Success() throws Exception {
-
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
