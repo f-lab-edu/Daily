@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     NOT_FOUND_CATEGORY(900, "Validation Failed", "유효하지 않은 카테고리입니다."),
-    NOT_FOUND_EMAIL(901, "Validation Failed", "유효하지 않는 Email입니다."),
-    INVALID_LOCALDATE(800, "Validation Failed", "소모임 날짜가 현재보다 이전일 수 없습니다.");
+    NOT_FOUND_EMAIL(901, "Validation Failed", "유효하지 않는 Email입니다.");
 
     private final int code;
     private final String result;

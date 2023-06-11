@@ -35,12 +35,4 @@ public class ErrorHandler {
         ErrorResponse response = new ErrorResponse(400, "Validation Failed", "데이터 타입이 맞지 않습니다.");
         return response;
     }
-
-    //소모임 날짜 Exception
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IsInvalidLocalDateException.class)
-    public ErrorResponse IsInvalidLocalDateExceptionHandler(IsInvalidLocalDateException e) {
-        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
-        return response;
-    }
 }
