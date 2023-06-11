@@ -11,10 +11,13 @@
         values (#{email}, #{password}, #{nickname}, #{memberType}, now())
     </insert>
 
-    <select id="getMember" parameterType="com.flab.daily.dao.MemberDAO" resultType="com.flab.daily.dto.response.MemberResponseDTO">
-        SELECT *
-        FROM member
-        WHERE email = #{email}
+    <select id="getMember" parameterType="com.flab.daily.dao.MemberDAO" resultType="int">
+        SELECT
+               COUNT(*)
+        FROM
+                member
+        WHERE
+                email = #{email}
     </select>
 
 </mapper>

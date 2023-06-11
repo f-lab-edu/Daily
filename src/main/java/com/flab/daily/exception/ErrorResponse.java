@@ -1,16 +1,11 @@
 package com.flab.daily.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class ErrorResponse {
-    private List<ErrorCode> error;
+    private int code;
+    private String message;
 }

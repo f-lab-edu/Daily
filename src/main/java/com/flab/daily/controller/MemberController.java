@@ -13,12 +13,9 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     @PostMapping("/members")
     public ResponseEntity<Void> signUp(@RequestBody @Valid MemberRequestDTO memberRequestDTO) {
         memberService.signUp(memberRequestDTO);
         return ResponseEntity.noContent().build();
     }
-
-
 }

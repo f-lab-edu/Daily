@@ -17,10 +17,10 @@ public class MemberRequestDTO {
     private String email;
 
 
-    // TODO:현재 특수문자, 영문자, 영어(대소문자 구분 없이) 입력 되게 되어있음 확인후 변경
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z|A-Z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$"
-            , message = "영문, 숫자, 특수문자 중 2종류 이상을 조합하여 최소 10자 이상 입력해 주세요")
+            , message = "영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자 이상 입력해 주세요")
     private String password;
+
 
     @NotEmpty(message = "닉네임은 필수 값입니다.")
     private String nickname;

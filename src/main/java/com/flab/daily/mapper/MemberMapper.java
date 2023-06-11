@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberMapper {
     void insertMember(MemberDAO member);
-    MemberResponseDTO getMember(MemberDAO member);
+    int getMember(MemberDAO member);
 }

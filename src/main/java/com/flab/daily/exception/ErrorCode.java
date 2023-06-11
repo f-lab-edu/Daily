@@ -1,16 +1,12 @@
 package com.flab.daily.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
+import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ErrorCode {
-    private HttpStatus status;
-    private String message;
+public enum ErrorCode {
+    DUPLICATE_EMAIL(903, "중복된 이메일입니다.");
+
+    private final int code;
+    private final String message;
 }

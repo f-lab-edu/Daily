@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DuplicateCheckException extends RuntimeException{
+public class DuplicateCheckException extends RuntimeException {
     private final ErrorCode errorCode;
 }
