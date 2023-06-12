@@ -102,7 +102,6 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
-
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
