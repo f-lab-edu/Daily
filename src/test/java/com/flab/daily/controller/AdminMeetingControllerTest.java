@@ -57,6 +57,8 @@ public class AdminMeetingControllerTest {
                 .createdBy("1234@gmailcom") //맞지 않은 email 양식 주입
                 .build();
 
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(meetingRequestDto)))
@@ -84,6 +86,8 @@ public class AdminMeetingControllerTest {
                 .createdBy("1234@gmail.com")
                 .build();
 
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meetingRequestDto)))
@@ -98,6 +102,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
+
         meetingRequestDto = MeetingRequestDto.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
@@ -108,6 +113,8 @@ public class AdminMeetingControllerTest {
                 .meetingImage(null)
                 .createdBy("1234@gmail.com")
                 .build();
+
+        doNothing().when(adminMeetingService).addMeeting(any());
 
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -135,6 +142,8 @@ public class AdminMeetingControllerTest {
                 .createdBy("1234@gmail.com")
                 .build();
 
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meetingRequestDto)))
@@ -149,6 +158,8 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("Invalid DataType Check.")
     void test_Invalid_DataType_False() throws Exception {
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
                         .param("meetingPeople", "두명")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -177,6 +188,8 @@ public class AdminMeetingControllerTest {
                 .createdBy("1234@gmail.com")
                 .build();
 
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meetingRequestDto)))
@@ -191,8 +204,10 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("Invalid LocalDateTime Format Check.")
     void test_LocalDate_Format_False() throws Exception {
+        doNothing().when(adminMeetingService).addMeeting(any());
+
         mockMvc.perform(post("/admin/meetings")
-                        .param("meetingDate", "20223-10-23")
+                        .param("meetingDate", "2022-10-23")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
@@ -215,6 +230,8 @@ public class AdminMeetingControllerTest {
                 .meetingImage(null)
                 .createdBy("1234@gmail.com")
                 .build();
+
+        doNothing().when(adminMeetingService).addMeeting(any());
 
         mockMvc.perform(post("/admin/meetings")
                 .contentType(MediaType.APPLICATION_JSON)
