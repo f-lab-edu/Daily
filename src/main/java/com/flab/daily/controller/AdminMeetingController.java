@@ -1,6 +1,6 @@
 package com.flab.daily.controller;
 
-import com.flab.daily.dto.request.MeetingRequestDto;
+import com.flab.daily.dto.request.MeetingRequestDAO;
 import com.flab.daily.service.AdminMeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class AdminMeetingController {
     private final AdminMeetingService adminMeetingService;
 
     @PostMapping("/meetings")
-    public ResponseEntity<Object> addMeeting(@Valid @RequestBody MeetingRequestDto meetingRequestDTO) {
-        adminMeetingService.addMeeting(meetingRequestDTO);
+    public ResponseEntity<Object> addMeeting(@Valid @RequestBody MeetingRequestDAO meetingRequestDAO) {
+        adminMeetingService.addMeeting(meetingRequestDAO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

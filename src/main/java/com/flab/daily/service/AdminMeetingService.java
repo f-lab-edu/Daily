@@ -1,7 +1,7 @@
 package com.flab.daily.service;
 
-import com.flab.daily.dao.MeetingDao;
-import com.flab.daily.dto.request.MeetingRequestDto;
+import com.flab.daily.dao.MeetingDAO;
+import com.flab.daily.dto.request.MeetingRequestDAO;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.mapper.MemberMapper;
@@ -20,28 +20,28 @@ public class AdminMeetingService {
     private final CategoryMapper categoryMapper;
     private final MemberMapper memberMapper;
 
-    public void addMeeting(MeetingRequestDto meetingRequestDTO) {
+    public void addMeeting(MeetingRequestDAO meetingRequestDAO) {
         //유효한 카테고리인지 검사
-        int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
+        int checkCategory = categoryMapper.isValidExist(meetingRequestDAO.getCategoryId());
         if(checkCategory!=1){
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
 
         //유효한 Email인지 검사
-        int createdByEmail = memberMapper.isValidExist(meetingRequestDTO.getCreatedBy());
+        int createdByEmail = memberMapper.isValidExist(meetingRequestDAO.getCreatedBy());
         if(createdByEmail!=1){
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
 
-        MeetingDao meetingInfo = MeetingDao.builder()
-                .categoryId(meetingRequestDTO.getCategoryId())
-                .meetingName(meetingRequestDTO.getMeetingName())
-                .meetingDescription(meetingRequestDTO.getMeetingDescription())
-                .meetingDate(meetingRequestDTO.getMeetingDate())
-                .meetingPlace(meetingRequestDTO.getMeetingPlace())
-                .meetingPeople(meetingRequestDTO.getMeetingPeople())
-                .meetingImage(meetingRequestDTO.getMeetingImage())
-                .createdBy(meetingRequestDTO.getCreatedBy())
+        MeetingDAO meetingInfo = MeetingDAO.builder()
+                .categoryId(meetingRequestDAO.getCategoryId())
+                .meetingName(meetingRequestDAO.getMeetingName())
+                .meetingDescription(meetingRequestDAO.getMeetingDescription())
+                .meetingDate(meetingRequestDAO.getMeetingDate())
+                .meetingPlace(meetingRequestDAO.getMeetingPlace())
+                .meetingPeople(meetingRequestDAO.getMeetingPeople())
+                .meetingImage(meetingRequestDAO.getMeetingImage())
+                .createdBy(meetingRequestDAO.getCreatedBy())
                 .build();
 
         meetingMapper.addMeeting(meetingInfo);
