@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MeetingDAO {
-    private Long categoryId;
+    private long categoryId;
     private String meetingName;
     private String meetingDescription;
     private LocalDateTime meetingDate;
