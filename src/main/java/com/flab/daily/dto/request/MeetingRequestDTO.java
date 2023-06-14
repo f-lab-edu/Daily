@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeetingRequestDAO {
+public class MeetingRequestDTO {
 
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")

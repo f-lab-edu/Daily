@@ -1,7 +1,7 @@
 package com.flab.daily.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.daily.dto.request.MeetingRequestDAO;
+import com.flab.daily.dto.request.MeetingRequestDTO;
 import com.flab.daily.service.AdminMeetingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ public class AdminMeetingControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    MeetingRequestDAO meetingRequestDAO;
+    MeetingRequestDTO meetingRequestDTO;
     String code;
     String result;
     String message;
@@ -46,7 +46,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@Email Format Check.")
     void test_Email_Format_False() throws Exception {
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
@@ -61,7 +61,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                    .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
@@ -73,7 +73,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@Max Character Count Check.")
     void test_Character_Count_False() throws Exception {
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구가 너무 하고 싶은 사람들이 많이 모인 소모임이고 " +
                         "공이 없어도 되고 신발도 없어도 되고 유니폼도 없어도 되고 " +
@@ -90,7 +90,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                        .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
@@ -102,7 +102,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
                 .meetingDescription(null) // null 주입
@@ -117,7 +117,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                        .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
@@ -130,7 +130,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("@NotBlank, @Size Check.")
     void test_Not_WhiteSpace_False() throws Exception {
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
                 .meetingDescription(" ") // whitespace
@@ -145,7 +145,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                        .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
@@ -176,7 +176,7 @@ public class AdminMeetingControllerTest {
         //현재보다 이전 날짜 주입
         LocalDateTime localDateTime = LocalDateTime.of(2021, 9, 21, 06, 31);
 
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
@@ -191,7 +191,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                        .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
@@ -219,7 +219,7 @@ public class AdminMeetingControllerTest {
     @Test
     @DisplayName("isCreated Check")
     void isCreated_Success() throws Exception {
-        meetingRequestDAO = MeetingRequestDAO.builder()
+        meetingRequestDTO = MeetingRequestDTO.builder()
                 .categoryId(1)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
@@ -234,7 +234,7 @@ public class AdminMeetingControllerTest {
 
         mockMvc.perform(post("/admin/meetings")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(meetingRequestDAO)))
+                .content(objectMapper.writeValueAsString(meetingRequestDTO)))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
