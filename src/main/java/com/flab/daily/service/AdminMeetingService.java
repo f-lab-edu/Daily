@@ -23,16 +23,16 @@ public class AdminMeetingService {
     private final CategoryMapper categoryMapper;
     private final MemberMapper memberMapper;
 
-    public void addMeeting(MeetingRequestDTO meetingRequestDTO){
+    public void addMeeting(MeetingRequestDTO meetingRequestDTO) {
         //유효한 카테고리인지 검사
         int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
-        if(checkCategory!=1){
+        if (checkCategory != 1) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
 
         //유효한 Email인지 검사
         int createdByEmail = memberMapper.isValidExist(meetingRequestDTO.getCreatedBy());
-        if(createdByEmail!=1){
+        if (createdByEmail != 1) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
 
@@ -47,19 +47,11 @@ public class AdminMeetingService {
                 .createdBy(meetingRequestDTO.getCreatedBy())
                 .build();
 
-        try {
-            meetingMapper.addMeeting(meetingInfo);
-        } catch (DataAccessException e) {
-            e.printStackTrace();
+        int result = meetingMapper.addMeeting(meetingInfo);
+
+        if (result == 0) {
+            throw new RuntimeException("Failed to add meeting."); // RuntimeException 발생
         }
-
-//        int result = meetingMapper.addMeeting(meetingInfo);
-//
-//
-//        if(result!=1) {
-//            throw new DataAccessException();
-//        }
-
     }
 
 }
