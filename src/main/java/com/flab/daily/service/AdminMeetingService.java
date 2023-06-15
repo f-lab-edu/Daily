@@ -8,8 +8,11 @@ import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +23,7 @@ public class AdminMeetingService {
     private final CategoryMapper categoryMapper;
     private final MemberMapper memberMapper;
 
-    public void addMeeting(MeetingRequestDTO meetingRequestDTO) {
+    public void addMeeting(MeetingRequestDTO meetingRequestDTO){
         //유효한 카테고리인지 검사
         int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
         if(checkCategory!=1){
@@ -44,7 +47,19 @@ public class AdminMeetingService {
                 .createdBy(meetingRequestDTO.getCreatedBy())
                 .build();
 
-        meetingMapper.addMeeting(meetingInfo);
+        try {
+            meetingMapper.addMeeting(meetingInfo);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+//        int result = meetingMapper.addMeeting(meetingInfo);
+//
+//
+//        if(result!=1) {
+//            throw new DataAccessException();
+//        }
+
     }
 
 }

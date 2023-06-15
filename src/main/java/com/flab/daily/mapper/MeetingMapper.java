@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MeetingMapper {
-    void addMeeting(MeetingDAO meetingDAO);
+    int addMeeting(MeetingDAO meetingDAO);
 }
