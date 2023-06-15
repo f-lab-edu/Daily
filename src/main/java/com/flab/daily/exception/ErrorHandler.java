@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.ConnectException;
+import java.sql.SQLNonTransientConnectionException;
+
 @RestControllerAdvice
 public class ErrorHandler {
 
@@ -19,4 +22,8 @@ public class ErrorHandler {
         return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
     }
 
+    @ExceptionHandler({SQLNonTransientConnectionException.class, ConnectException.class})
+    public ErrorResponse sqlNonTransientConnectionException(SQLNonTransientConnectionException e) {
+        return new ErrorResponse(500, e.getMessage());
+    }
 }

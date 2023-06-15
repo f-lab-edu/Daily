@@ -1,5 +1,6 @@
 package com.flab.daily.dto.request;
 
+import com.flab.daily.type.MemberType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -24,5 +25,7 @@ public class MemberRequestDTO {
 
     @NotEmpty(message = "닉네임은 필수 값입니다.")
     private String nickname;
+
+    private MemberType memberType;
 
 }

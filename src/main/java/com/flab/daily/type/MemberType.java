@@ -1,4 +1,4 @@
-package com.flab.daily.constant;
+package com.flab.daily.type;
 
 public enum MemberType {
     ADMIN,
