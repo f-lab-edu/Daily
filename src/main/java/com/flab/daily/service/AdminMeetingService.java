@@ -8,11 +8,8 @@ import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +47,7 @@ public class AdminMeetingService {
         int result = meetingMapper.addMeeting(meetingInfo);
 
         if (result == 0) {
-            throw new RuntimeException("Failed to add meeting."); // RuntimeException 발생
+            throw new RuntimeException("Failed to addMeeting."); // RuntimeException 발생
         }
     }
 

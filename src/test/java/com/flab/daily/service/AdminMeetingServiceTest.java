@@ -6,8 +6,6 @@ import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.mapper.MemberMapper;
-import com.sun.nio.sctp.Association;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DataAccessException;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -62,8 +58,6 @@ public class AdminMeetingServiceTest {
         //given
         //categoryMapper.isValidExist를 호출하였을 때 에러 발생하도록 설정
         when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(0);
-        //memberMapper.isValidExist를 호출하였을 때 정상 설정
-        when(memberMapper.isValidExist(meetingRequestDTO.getCreatedBy())).thenReturn(1);
         //when-then
         assertThrows(IsExistCheckException.class, () -> adminMeetingService.addMeeting(meetingRequestDTO));
     }
@@ -80,10 +74,8 @@ public class AdminMeetingServiceTest {
         //when-then
         assertThrows(IsExistCheckException.class, () -> adminMeetingService.addMeeting(meetingRequestDTO));
     }
-    
-    //DB 서버 다운 : ConnectException, CannotCreateTransactionException
 
-    //SQL Exception - SQLNonTransientConnectionException, DataAccessException
+    //addMeeting 작업이 실패할 경우 -> meetingMapper의 addMeeting 결과 return 0 인 경우
     @Test
     @DisplayName("False addMeeting By SQLException Check.")
     void addMeetingFalseBySqlException() {
@@ -131,6 +123,5 @@ public class AdminMeetingServiceTest {
 
         //when - given
         assertThat(meetingMapper.addMeeting(meetingDAO)).isEqualTo(1);
-
     }
 }
