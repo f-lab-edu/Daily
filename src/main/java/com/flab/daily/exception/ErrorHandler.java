@@ -20,10 +20,18 @@ public class ErrorHandler {
         return response;
     }
 
-    //데이터가 DB 존재여부를 확인할 때 사용되는 exception
+    //데이터가 DB에 없을 때 발생하는 메소드
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IsExistCheckException.class)
     public ErrorResponse isExistCheckExceptionHandler(IsExistCheckException e) {
+        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
+        return response;
+    }
+
+    //데이터가 DB에 없을 때 발생하는 메소드
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateCheckException.class)
+    public ErrorResponse duplicateCheckExceptionHandler(DuplicateCheckException e) {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
         return response;
     }
