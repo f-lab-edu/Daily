@@ -28,7 +28,7 @@ public class AdminMeetingService {
         }
 
         //유효한 Email인지 검사
-        int createdByEmail = memberMapper.isValidExist(meetingRequestDTO.getCreatedBy());
+        int createdByEmail = memberMapper.getMember(meetingRequestDTO.getCreatedBy());
         if (createdByEmail != 1) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
