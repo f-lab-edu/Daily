@@ -36,6 +36,7 @@ public class AdminCategoryService {
                 .categoryName(categoryRequestDTO.getCategoryName())
                 .createdBy(categoryRequestDTO.getCreatedBy())
                 .build();
+
         int result = categoryMapper.addCategory(categoryInfo);
 
         if(result != 1) {

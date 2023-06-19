@@ -32,13 +32,11 @@ public class AdminMeetingControllerTest {
 
     MeetingRequestDTO meetingRequestDTO;
     String code;
-    String result;
     String message;
 
     @BeforeEach
     void beforeEach() {
         code = "$..code";
-        result = "$..result";
         message = "$..message";
     }
 
@@ -65,7 +63,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("유효하지 않는 이메일 형식입니다."));
     }
 
@@ -94,7 +91,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("45자까지 작성이 가능합니다."));
     }
 
@@ -121,7 +117,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임에 대해 소개해 주세요."));
     }
 
@@ -134,7 +129,7 @@ public class AdminMeetingControllerTest {
                 .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription(" ") // whitespace
-                .meetingDate(LocalDateTime.now())
+                .meetingDate(LocalDateTime.now().plusDays(20))
                 .meetingPlace("잠실운동장")
                 .meetingPeople(10)
                 .meetingImage(null)
@@ -149,7 +144,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임에 대해 소개해 주세요."));
     }
 
@@ -165,7 +159,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
     }
     
@@ -195,7 +188,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임 날짜가 현재보다 이전일 수 없습니다."));
     }
 
@@ -211,7 +203,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
     }
 

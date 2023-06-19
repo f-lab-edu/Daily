@@ -28,7 +28,7 @@ public class ErrorHandler {
         return response;
     }
 
-    //데이터가 DB에 없을 때 발생하는 메소드
+    //데이터 중복시 발생하는 메소드
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateCheckException.class)
     public ErrorResponse duplicateCheckExceptionHandler(DuplicateCheckException e) {
