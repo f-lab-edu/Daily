@@ -16,7 +16,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse invalidRequestHandler(MethodArgumentNotValidException e) {
-        ErrorResponse response = new ErrorResponse(400, "Validation Failed", e.getFieldError().getDefaultMessage());
+        ErrorResponse response = new ErrorResponse(400, e.getFieldError().getDefaultMessage());
         return response;
     }
 
@@ -24,7 +24,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IsExistCheckException.class)
     public ErrorResponse isExistCheckExceptionHandler(IsExistCheckException e) {
-        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getResult(), e.getErrorCode().getMessage());
+        ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
         return response;
     }
 
@@ -32,7 +32,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResponse notReadableExceptionHandler(HttpMessageNotReadableException e) {
-        ErrorResponse response = new ErrorResponse(400, "Validation Failed", "데이터 타입이 맞지 않습니다.");
+        ErrorResponse response = new ErrorResponse(400,  "데이터 타입이 맞지 않습니다.");
         return response;
     }
 }

@@ -70,7 +70,7 @@ public class AdminMeetingServiceTest {
         //categoryMapper.isValidExist를 호출하였을 때 정상 설정
         when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(1);
         //memberMapper.isValidExist를 호출하였을 때 에러 발생하도록 설정
-        when(memberMapper.isValidExist(meetingRequestDTO.getCreatedBy())).thenReturn(0);
+        when(memberMapper.getMember(meetingRequestDTO.getCreatedBy())).thenReturn(0);
         //when-then
         assertThrows(IsExistCheckException.class, () -> adminMeetingService.addMeeting(meetingRequestDTO));
     }
@@ -83,7 +83,7 @@ public class AdminMeetingServiceTest {
         //categoryMapper.isValidExist를 호출하였을 때 정상 설정
         when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(1);
         //memberMapper.isValidExist를 호출하였을 때 정상 설정
-        when(memberMapper.isValidExist(meetingRequestDTO.getCreatedBy())).thenReturn(1);
+        when(memberMapper.getMember(meetingRequestDTO.getCreatedBy())).thenReturn(1);
 
         meetingDAO = MeetingDAO.builder()
                 .categoryId(meetingRequestDTO.getCategoryId())
