@@ -47,7 +47,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@Email Format Check.")
     void test_Email_Format_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(LocalDateTime.now())
@@ -74,7 +74,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@Max Character Count Check.")
     void test_Character_Count_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구가 너무 하고 싶은 사람들이 많이 모인 소모임이고 " +
                         "공이 없어도 되고 신발도 없어도 되고 유니폼도 없어도 되고 " +
                         "아무나 오시면 되는 축구 소모임입니다.") //45자 이상 주입
@@ -103,7 +103,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription(null) // null 주입
                 .meetingDate(LocalDateTime.now())
@@ -131,7 +131,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@NotBlank, @Size Check.")
     void test_Not_WhiteSpace_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription(" ") // whitespace
                 .meetingDate(LocalDateTime.now())
@@ -177,7 +177,7 @@ public class AdminMeetingControllerTest {
         LocalDateTime localDateTime = LocalDateTime.of(2021, 9, 21, 06, 31);
 
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(localDateTime)
@@ -220,7 +220,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("isCreated Check")
     void isCreated_Success() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(LocalDateTime.now().plusDays(20))

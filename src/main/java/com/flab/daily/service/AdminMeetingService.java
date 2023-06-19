@@ -22,7 +22,7 @@ public class AdminMeetingService {
 
     public void addMeeting(MeetingRequestDTO meetingRequestDTO) {
         //유효한 카테고리인지 검사
-        int checkCategory = categoryMapper.isValidExist(meetingRequestDTO.getCategoryId());
+        int checkCategory = categoryMapper.getCategoryById(meetingRequestDTO.getCategoryId());
         if (checkCategory != 1) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }

@@ -40,7 +40,7 @@ public class AdminMeetingServiceTest {
     void beforeEach() {
         //Test에 사용될 DTO
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(LocalDateTime.now().plusDays(20))
@@ -57,7 +57,7 @@ public class AdminMeetingServiceTest {
     void addMeetingFalseByInvalidCategoryId() {
         //given
         //categoryMapper.isValidExist를 호출하였을 때 에러 발생하도록 설정
-        when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(0);
+        when(categoryMapper.getCategoryById(meetingRequestDTO.getCategoryId())).thenReturn(0);
         //when-then
         assertThrows(IsExistCheckException.class, () -> adminMeetingService.addMeeting(meetingRequestDTO));
     }
@@ -68,7 +68,7 @@ public class AdminMeetingServiceTest {
     void addMeetingFalseByInvalidEmail() {
         //given
         //categoryMapper.isValidExist를 호출하였을 때 정상 설정
-        when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(1);
+        when(categoryMapper.getCategoryById(meetingRequestDTO.getCategoryId())).thenReturn(1);
         //memberMapper.isValidExist를 호출하였을 때 에러 발생하도록 설정
         when(memberMapper.getMember(meetingRequestDTO.getCreatedBy())).thenReturn(0);
         //when-then
@@ -81,7 +81,7 @@ public class AdminMeetingServiceTest {
     void addMeetingFalseBySqlException() {
         //given
         //categoryMapper.isValidExist를 호출하였을 때 정상 설정
-        when(categoryMapper.isValidExist(meetingRequestDTO.getCategoryId())).thenReturn(1);
+        when(categoryMapper.getCategoryById(meetingRequestDTO.getCategoryId())).thenReturn(1);
         //memberMapper.isValidExist를 호출하였을 때 정상 설정
         when(memberMapper.getMember(meetingRequestDTO.getCreatedBy())).thenReturn(1);
 
