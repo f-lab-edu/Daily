@@ -15,7 +15,7 @@ public class MeetingRequestDTO {
 
     @NotNull(message = "카테고리를 선택해 주세요.")
     @JsonProperty(value = "category_id")
-    private long categoryId;
+    private Long categoryId;
 
     @Size(max = 45, message = "45자까지 작성이 가능합니다.")
     @NotBlank(message = "소모임 이름을 입력해 주세요.")
