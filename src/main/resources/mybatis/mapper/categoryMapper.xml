@@ -17,6 +17,7 @@
                 where category_name = #{categoryName});
     </select>
 
+    <!-- insert한 PK 값 추출하도록 구현    -->
     <insert id="addCategory" parameterType="com.flab.daily.dao.CategoryDAO"  useGeneratedKeys="true" keyProperty="categoryId" keyColumn="category_id">
             insert into category (
                 category_name,
