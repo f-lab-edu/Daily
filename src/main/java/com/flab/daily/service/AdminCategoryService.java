@@ -37,9 +37,11 @@ public class AdminCategoryService {
                 .createdBy(categoryRequestDTO.getCreatedBy())
                 .build();
 
-        int result = categoryMapper.addCategory(categoryInfo);
+        categoryMapper.addCategory(categoryInfo);
 
-        if(result != 1) {
+        //insert한 데이터 PK값 추출해서 확인
+        Long result = categoryInfo.getCategoryId();
+        if(result == 0) {
             throw new RuntimeException("Failed to addCategory.");
         }
     }

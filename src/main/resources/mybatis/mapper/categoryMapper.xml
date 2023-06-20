@@ -17,19 +17,19 @@
                 where category_name = #{categoryName});
     </select>
 
-    <insert id="addCategory" parameterType="com.flab.daily.dao.CategoryDAO">
-        insert into category (
-            category_name,
-            created_by,
-            updated_by,
-            created_date,
-            updated_date)
-        values (
-            #{categoryName},
-            #{createdBy},
-            #{createdBy},
-            now(),
-            now())
+    <insert id="addCategory" parameterType="com.flab.daily.dao.CategoryDAO"  useGeneratedKeys="true" keyProperty="categoryId" keyColumn="category_id">
+            insert into category (
+                category_name,
+                created_by,
+                updated_by,
+                created_date,
+                updated_date)
+            values (
+                #{categoryName},
+                #{createdBy},
+                #{createdBy},
+                now(),
+                now())
     </insert>
 </mapper>
 
