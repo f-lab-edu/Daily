@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    DUPLICATE_EMAIL(903, "중복된 이메일입니다.");
+    DUPLICATE_EMAIL(901, "중복된 이메일입니다.");
 
     private final int code;
     private final String message;
