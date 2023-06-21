@@ -9,12 +9,16 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MeetingDAO {
-    private long categoryId;
+    private Long meetingId;
+    private Long categoryId;
     private String meetingName;
     private String meetingDescription;
     private LocalDateTime meetingDate;
     private String meetingPlace;
     private Integer meetingPeople;
+    private Integer CurrentPeople;
     private String meetingImage;
     private String createdBy;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

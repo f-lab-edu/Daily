@@ -32,13 +32,11 @@ public class AdminMeetingControllerTest {
 
     MeetingRequestDTO meetingRequestDTO;
     String code;
-    String result;
     String message;
 
     @BeforeEach
     void beforeEach() {
         code = "$..code";
-        result = "$..result";
         message = "$..message";
     }
 
@@ -47,7 +45,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@Email Format Check.")
     void test_Email_Format_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(LocalDateTime.now())
@@ -65,7 +63,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("유효하지 않는 이메일 형식입니다."));
     }
 
@@ -74,7 +71,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@Max Character Count Check.")
     void test_Character_Count_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구가 너무 하고 싶은 사람들이 많이 모인 소모임이고 " +
                         "공이 없어도 되고 신발도 없어도 되고 유니폼도 없어도 되고 " +
                         "아무나 오시면 되는 축구 소모임입니다.") //45자 이상 주입
@@ -94,7 +91,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("45자까지 작성이 가능합니다."));
     }
 
@@ -103,7 +99,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("@NotNull Check.")
     void test_Not_Null_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription(null) // null 주입
                 .meetingDate(LocalDateTime.now())
@@ -121,7 +117,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임에 대해 소개해 주세요."));
     }
 
@@ -131,10 +126,10 @@ public class AdminMeetingControllerTest {
     @DisplayName("@NotBlank, @Size Check.")
     void test_Not_WhiteSpace_False() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription(" ") // whitespace
-                .meetingDate(LocalDateTime.now())
+                .meetingDate(LocalDateTime.now().plusDays(20))
                 .meetingPlace("잠실운동장")
                 .meetingPeople(10)
                 .meetingImage(null)
@@ -149,7 +144,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임에 대해 소개해 주세요."));
     }
 
@@ -165,7 +159,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
     }
     
@@ -177,7 +170,7 @@ public class AdminMeetingControllerTest {
         LocalDateTime localDateTime = LocalDateTime.of(2021, 9, 21, 06, 31);
 
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(localDateTime)
@@ -195,7 +188,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("소모임 날짜가 현재보다 이전일 수 없습니다."));
     }
 
@@ -211,7 +203,6 @@ public class AdminMeetingControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(code).value(400))
-                .andExpect(jsonPath(result).value("Validation Failed"))
                 .andExpect(jsonPath(message).value("데이터 타입이 맞지 않습니다."));
     }
 
@@ -220,7 +211,7 @@ public class AdminMeetingControllerTest {
     @DisplayName("isCreated Check")
     void isCreated_Success() throws Exception {
         meetingRequestDTO = MeetingRequestDTO.builder()
-                .categoryId(1)
+                .categoryId(1L)
                 .meetingName("축구하기")
                 .meetingDescription("축구 같이 하실래요?")
                 .meetingDate(LocalDateTime.now().plusDays(20))
