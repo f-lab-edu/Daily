@@ -21,14 +21,8 @@ public class MeetingController {
 
     private final MeetingService meetingService;
 
-    @GetMapping
-    public ResponseEntity<List<MeetingResponseDTO>> findMeetingList() {
-        List<MeetingResponseDTO> meetingList = meetingService.findMeetingList();
-        return ResponseEntity.status(HttpStatus.OK).body(meetingList);
-    }
-
-    @GetMapping("/{meetingId}")
-    public ResponseEntity<MeetingResponseDTO> findMeetingOneById(@PathVariable @Valid Long meetingId) {
+    @GetMapping(value="/meeting/{meetingId}")
+    public ResponseEntity<MeetingResponseDTO> findMeetingOneById(@PathVariable Long meetingId) {
         MeetingResponseDTO meetingResponseDTO = meetingService.findMeetingOneById(meetingId);
         return ResponseEntity.status(HttpStatus.OK).body(meetingResponseDTO);
     }
