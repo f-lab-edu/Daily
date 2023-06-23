@@ -21,6 +21,6 @@ public class MeetingController {
     @GetMapping(value="/meeting/{meetingId}")
     public ResponseEntity<MeetingResponseDTO> findMeetingOneById(@PathVariable Long meetingId) {
         MeetingResponseDTO meetingResponseDTO = meetingService.findMeetingOneById(meetingId);
-        return new ResponseEntity<>(meetingResponseDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(meetingResponseDTO, HttpStatus.OK);
     }
 }
