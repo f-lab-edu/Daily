@@ -4,6 +4,7 @@ import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.service.MeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,4 @@ public class MeetingController {
         MeetingResponseDTO meetingResponseDTO = meetingService.findMeetingOneById(meetingId);
         return ResponseEntity.status(HttpStatus.OK).body(meetingResponseDTO);
     }
-
-
 }
