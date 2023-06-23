@@ -16,16 +16,11 @@ public class MeetingService {
     private final MeetingMapper meetingMapper;
 
     public MeetingResponseDTO findMeetingOneById(Long meetingId) {
-
         MeetingResponseDTO meetingResponseDTO = meetingMapper.findMeetingOneById(meetingId);
-
         if(meetingResponseDTO == null) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_MEETING);
         } else {
             return meetingResponseDTO;
         }
-
     }
-
-
 }

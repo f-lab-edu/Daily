@@ -12,12 +12,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MeetingResponseDTO {
+    private Long meetingId;
     private Long categoryId;
     private String meetingName;
     private String meetingDescription;
     private LocalDateTime meetingDate;
     private String meetingPlace;
     private Integer meetingPeople;
+    private Integer currentPeople;
     private String meetingImage;
     private String createdBy;
     private LocalDateTime createdDate;
