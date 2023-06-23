@@ -36,4 +36,12 @@ public class ErrorHandler {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
         return response;
     }
+
+    //타입 일치 Exception 메소드
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ErrorResponse notReadableExceptionHandler(HttpMessageNotReadableException e) {
+        ErrorResponse response = new ErrorResponse(400,  "데이터 타입이 맞지 않습니다.");
+        return response;
+    }
 }
