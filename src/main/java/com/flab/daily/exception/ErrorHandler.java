@@ -17,8 +17,8 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(DuplicateCheckException.class)
-    public ErrorResponse DuplicateCheckException(DuplicateCheckException e) {
+    @ExceptionHandler(IsExistUserByEmail.class)
+    public ErrorResponse DuplicateCheckException(IsExistUserByEmail e) {
         return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
     }
 

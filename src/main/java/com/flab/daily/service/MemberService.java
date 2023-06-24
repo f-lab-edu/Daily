@@ -2,10 +2,11 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberRequestDTO;
-import com.flab.daily.exception.DuplicateCheckException;
+import com.flab.daily.exception.IsExistUserByEmail;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.SHA256Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberMapper memberMapper;
+    public final MemberMapper memberMapper;
 
 
     public void signUp(MemberRequestDTO memberRequestDTO) {
@@ -23,12 +24,12 @@ public class MemberService {
         int isMember = memberMapper.getMember(memberRequestDTO.getEmail());
 
         if (isMember > 0) {
-            throw new DuplicateCheckException(ErrorCode.DUPLICATE_EMAIL);
+            throw new IsExistUserByEmail(ErrorCode.IS_EXIST_USER_BY_EMAIL);
         }
 
         MemberDAO memberDAO = MemberDAO.builder()
                 .email(memberRequestDTO.getEmail())
-                .password(memberRequestDTO.getPassword())
+                .password(SHA256Util.encrypt(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
                 .memberType(MemberType.USER)
                 .build();
