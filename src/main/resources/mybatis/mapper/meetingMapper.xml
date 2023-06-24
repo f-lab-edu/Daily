@@ -30,6 +30,10 @@
             now())
     </insert>
 
+    <select id="findMeetingList" resultType="java.util.Map">
+        select * from meeting
+    </select>
+
     <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
         select * from meeting where meeting_id = #{meetingId}
     </select>

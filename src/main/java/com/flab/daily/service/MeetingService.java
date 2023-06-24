@@ -8,12 +8,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MeetingService {
 
     private final MeetingMapper meetingMapper;
+
+    public List<MeetingResponseDTO> findMeetingList() {
+        List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList();
+        return meetingList;
+    }
 
     public MeetingResponseDTO findMeetingOneById(Long meetingId) {
         MeetingResponseDTO meetingResponseDTO = meetingMapper.findMeetingOneById(meetingId);
