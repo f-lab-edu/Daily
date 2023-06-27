@@ -37,6 +37,22 @@ public class MeetingControllerTest {
         message = "$..message";
     }
 
+    /* 잘못된 파라미터 타입이 넘어온 경우 */
+    @Test
+    @DisplayName("Invalid Parameter Input False Check.")
+    public void findMeetingOne_InvalidParameter_False() throws Exception{
+        /*given*/
+        when(meetingService.findMeetingOneById(1L)).thenReturn(null);
+
+        /*when - then*/
+        mockMvc.perform(get("/meeting/소모임")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath(code).value(700))
+                .andExpect(jsonPath(message).value("잘못된 파라미터 값입니다."));
+    }
+
     /* 소모임 단건 검색 성공 */
     @Test
     @DisplayName("FindMeetingOneById Success Check.")
