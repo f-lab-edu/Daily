@@ -29,5 +29,9 @@
             now(),
             now())
     </insert>
+
+    <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
+        select * from meeting where meeting_id = #{meetingId}
+    </select>
 </mapper>
 

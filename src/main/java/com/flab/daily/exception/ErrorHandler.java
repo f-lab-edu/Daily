@@ -7,12 +7,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
 
-    //@Valid Exception 확인 메소드
+    //@Valid Exception Handler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse invalidRequestHandler(MethodArgumentNotValidException e) {
@@ -20,7 +21,7 @@ public class ErrorHandler {
         return response;
     }
 
-    //데이터가 DB에 없을 때 발생하는 메소드
+    //데이터가 DB에 없을 때 Exception Handler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IsExistCheckException.class)
     public ErrorResponse isExistCheckExceptionHandler(IsExistCheckException e) {
@@ -28,19 +29,11 @@ public class ErrorHandler {
         return response;
     }
 
-    //데이터 중복시 발생하는 메소드
+    //데이터 중복 Exception Handler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateCheckException.class)
     public ErrorResponse duplicateCheckExceptionHandler(DuplicateCheckException e) {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
-        return response;
-    }
-
-    //타입 일치 Exception 메소드
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ErrorResponse notReadableExceptionHandler(HttpMessageNotReadableException e) {
-        ErrorResponse response = new ErrorResponse(400,  "데이터 타입이 맞지 않습니다.");
         return response;
     }
 }
