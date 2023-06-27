@@ -45,7 +45,6 @@ public class AdminMeetingService {
                 .build();
 
         int result = meetingMapper.addMeeting(meetingInfo);
-
         if (result == 0) {
             throw new RuntimeException("Failed to addMeeting."); // RuntimeException 발생
         }

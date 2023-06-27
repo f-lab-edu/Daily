@@ -36,22 +36,4 @@ public class ErrorHandler {
         ErrorResponse response = new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
         return response;
     }
-
-    //타입 불일치 Exception
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ErrorResponse notReadableExceptionHandler(HttpMessageNotReadableException e) {
-        ErrorResponse response = ErrorResponse.builder().code(ErrorCode.INVALID_DATATYPE.getCode())
-                .message(ErrorCode.NOT_FOUND_MEETING.getMessage()).build();
-        return response;
-    }
-
-    //잘못된 파라미터값 Exception
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ErrorResponse notReadableExceptionHandler(MethodArgumentTypeMismatchException e) {
-        ErrorResponse response = ErrorResponse.builder().code(ErrorCode.INVALID_INPUT_PARAMETER.getCode())
-                .message(ErrorCode.INVALID_INPUT_PARAMETER.getMessage()).build();
-        return response;
-    }
 }
