@@ -4,6 +4,7 @@ import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
+import com.flab.daily.util.Pageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +18,11 @@ public class MeetingService {
 
     private final MeetingMapper meetingMapper;
 
-    public List<MeetingResponseDTO> findMeetingList() {
-        List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList();
+    public List<MeetingResponseDTO> findMeetingList(int size, int page) {
+        Pageable pageable = new Pageable(size, page);
+        System.out.println("size : " + pageable.getSize());
+        System.out.println("page : " + pageable.getPage());
+        List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList(pageable);
         return meetingList;
     }
 
