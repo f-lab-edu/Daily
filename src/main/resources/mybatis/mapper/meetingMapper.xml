@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.daily.mapper.MeetingMapper">
     <insert id="addMeeting" parameterType="com.flab.daily.dao.MeetingDAO">
-        insert into meeting (
+        INSERT INTO meeting (
             category_id,
             meeting_name,
             meeting_description,
@@ -16,7 +16,7 @@
             created_by,
             created_date,
             updated_date)
-        values (
+        VALUES (
             #{categoryId},
             #{meetingName},
             #{meetingDescription},
@@ -30,12 +30,12 @@
             now())
     </insert>
 
-    <select id="findMeetingList" resultType="java.util.Map">
-        select * from meeting
+    <select id="findMeetingList" parameterType="com.flab.daily.util.Pageable" resultType="java.util.Map">
+        SELECT * FROM meeting LIMIT #{size} OFFSET #{page}
     </select>
 
     <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
-        select * from meeting where meeting_id = #{meetingId}
+        SELECT * FROM meeting WHERE meeting_id = #{meetingId}
     </select>
 </mapper>
 

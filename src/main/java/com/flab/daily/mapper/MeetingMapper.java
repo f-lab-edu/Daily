@@ -2,6 +2,7 @@ package com.flab.daily.mapper;
 
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dto.response.MeetingResponseDTO;
+import com.flab.daily.util.Pageable;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface MeetingMapper {
     int addMeeting(MeetingDAO meetingDAO);
 
-    List<MeetingResponseDTO> findMeetingList();
+    List<MeetingResponseDTO> findMeetingList(Pageable pageable);
 
     MeetingResponseDTO findMeetingOneById(Long meetingId);
 }
