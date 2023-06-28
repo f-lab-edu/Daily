@@ -8,7 +8,6 @@ import java.util.List;
 public class PaginationResponseDTO {
     private List<Object> dataList = new ArrayList<>();
     private Pagination pagination;
-
     public PaginationResponseDTO(List<Object> dataList, Pagination pagination) {
         this.dataList.addAll(dataList);
         this.pagination = pagination;
