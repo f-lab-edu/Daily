@@ -19,7 +19,9 @@ public class MeetingService {
     private final MeetingMapper meetingMapper;
 
     public List<MeetingResponseDTO> findMeetingList(int size, int page) {
-        Pageable pageable = new Pageable(size, page);
+        Pageable pageable = new Pageable();
+        pageable.setPage(page);
+        pageable.setSize(size);
         int totalSize = meetingMapper.countMeetingAll();
 
         List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList(pageable);
