@@ -30,12 +30,16 @@
             now())
     </insert>
 
-    <select id="findMeetingList" parameterType="com.flab.daily.util.Pageable" resultType="java.util.Map">
+    <select id="findMeetingList" parameterType="com.flab.daily.paging.Pageable" resultType="java.util.Map">
         SELECT * FROM meeting LIMIT #{size} OFFSET #{page}
     </select>
 
     <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
         SELECT * FROM meeting WHERE meeting_id = #{meetingId}
+    </select>
+
+    <select id="countMeetingAll" resultType="int">
+        SELECT COUNT(*) FROM meeting
     </select>
 </mapper>
 

@@ -12,8 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -28,72 +30,67 @@ public class MeetingControllerTest {
     MockMvc mockMvc;
 
     MeetingResponseDTO meetingResponseDTO;
-    String code;
-    String message;
+    int size;
+    int page;
 
     @BeforeEach
     void beforeEach() {
-        code = "$..code";
-        message = "$..message";
+        size = 12;
+        page = 1;
+
+        meetingResponseDTO = MeetingResponseDTO.builder()
+            .meetingId(1L)
+            .categoryId(1L)
+            .meetingName("야구하기")
+            .meetingDescription("야구 같이 하실래요?")
+            .meetingDate(LocalDateTime.now().plusDays(20).withNano(0))
+            .meetingPlace("잠실운동장")
+            .meetingPeople(5)
+            .currentPeople(0)
+            .meetingImage("0")
+            .createdBy("1234@gmail.com")
+            .createdDate(LocalDateTime.now().withNano(0))
+            .updatedDate(LocalDateTime.now().withNano(0))
+            .build();
     }
 
-    /* 잘못된 파라미터 타입이 넘어온 경우 */
+    /*소모임 전체 검색 성공*/
     @Test
-    @DisplayName("Invalid Parameter Input False Check.")
-    public void findMeetingOne_InvalidParameter_False() throws Exception{
+    @DisplayName("소모임 목록 검색 : 성공")
+    public void findMeetingList_Success() throws Exception {
         /*given*/
-        when(meetingService.findMeetingOneById(1L)).thenReturn(null);
-
-        /*when - then*/
-        mockMvc.perform(get("/meeting/소모임")
+        when(meetingService.findMeetingList(size, page)).thenReturn(List.of());
+        /*when-then*/
+        mockMvc.perform(get("/meeting")
+                        .param("size", "12")
+                        .param("page", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath(code).value(700))
-                .andExpect(jsonPath(message).value("잘못된 파라미터 값입니다."));
+                .andExpect(status().isOk());
     }
 
     /* 소모임 단건 검색 성공 */
     @Test
-    @DisplayName("FindMeetingOneById Success Check.")
+    @DisplayName("소모임 단건 검색 : 성공")
     public void findMeetingOne_Success() throws Exception {
         /*given*/
-        LocalDateTime meetingDate = LocalDateTime.now().plusDays(20).withNano(0);
-        LocalDateTime createUpdateDate = LocalDateTime.now().withNano(0);
-
-        meetingResponseDTO = MeetingResponseDTO.builder()
-                .meetingId(1L)
-                .categoryId(1L)
-                .meetingName("야구하기")
-                .meetingDescription("야구 같이 하실래요?")
-                .meetingDate(meetingDate)
-                .meetingPlace("잠실운동장")
-                .meetingPeople(5)
-                .currentPeople(0)
-                .meetingImage("0")
-                .createdBy("1234@gmail.com")
-                .createdDate(createUpdateDate)
-                .updatedDate(createUpdateDate)
-                .build();
-
         when(meetingService.findMeetingOneById(1L)).thenReturn(meetingResponseDTO);
-
         /*when - then*/
         mockMvc.perform(get("/meeting/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$..meetingId").value(1))
-                .andExpect(jsonPath("$..categoryId").value(1))
-                .andExpect(jsonPath("$..meetingName").value("야구하기"))
-                .andExpect(jsonPath("$..meetingDescription").value("야구 같이 하실래요?"))
-                .andExpect(jsonPath("$..meetingDate").value(meetingDate.toString()))
-                .andExpect(jsonPath("$..meetingPlace").value("잠실운동장"))
-                .andExpect(jsonPath("$..meetingPeople").value(5))
-                .andExpect(jsonPath("$..currentPeople").value(0))
-                .andExpect(jsonPath("$..meetingImage").value("0"))
-                .andExpect(jsonPath("$..createdBy").value("1234@gmail.com"))
-                .andExpect(jsonPath("$..createdDate").value(createUpdateDate.toString()))
-                .andExpect(jsonPath("$..updatedDate").value(createUpdateDate.toString()));
+                .andExpect(jsonPath("$..meeting_id").value(1))
+                .andExpect(jsonPath("$..category_id").value(1))
+                .andExpect(jsonPath("$..meeting_name").value("야구하기"))
+                .andExpect(jsonPath("$..meeting_description").value("야구 같이 하실래요?"))
+                .andExpect(jsonPath("$..meeting_date").value(LocalDateTime.now().plusDays(20).withNano(0).toString()))
+                .andExpect(jsonPath("$..meeting_place").value("잠실운동장"))
+                .andExpect(jsonPath("$..meeting_people").value(5))
+                .andExpect(jsonPath("$..current_people").value(0))
+                .andExpect(jsonPath("$..meeting_image").value("0"))
+                .andExpect(jsonPath("$..created_by").value("1234@gmail.com"))
+                .andExpect(jsonPath("$..created_date").value(LocalDateTime.now().withNano(0).toString()))
+                .andExpect(jsonPath("$..updated_date").value(LocalDateTime.now().withNano(0).toString()));
     }
 }

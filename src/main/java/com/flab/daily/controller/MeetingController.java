@@ -33,6 +33,4 @@ public class MeetingController {
         MeetingResponseDTO meetingResponseDTO = meetingService.findMeetingOneById(meetingId);
         return ResponseEntity.status(HttpStatus.OK).body(meetingResponseDTO);
     }
-
-
 }
