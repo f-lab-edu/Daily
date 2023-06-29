@@ -51,9 +51,8 @@
 ![Daily](https://github.com/f-lab-edu/Daily/assets/9190171/2921bbb0-f0f1-4224-ae7e-53f499ab1cf2)
 
 - category
-  - 모임의 카테고리에 대한 정보를 가지고 있는 테이블
-  - 하나의 카테고리에는 여러개의 meeting이 등록될 수 있다.
-        
+    - 모임의 카테고리에 대한 정보를 가지고 있는 테이블
+    - 하나의 카테고리에는 여러개의 meeting이 등록될 수 있다.
         
         | Name | Description  | Constraints |
         | --- | --- | --- |
