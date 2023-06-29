@@ -8,7 +8,7 @@ public class Pagination {
     private int page; /*접속한 페이지*/
     private int startSize; /*시작할 데이터 순서 -> OFFSET에 사용*/
 
-    private int totalSize = 0; /*데이터 전체 수*/
+    private Integer totalSize = 0; /*데이터 전체 수*/
     private int totalPage = 0; /*전체 페이지 수*/
     private boolean prevPage = false; /*이전 페이지 유무*/
     private boolean nextPage= false; /*다음 페이지 유무*/
