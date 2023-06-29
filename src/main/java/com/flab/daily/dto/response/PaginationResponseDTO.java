@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /*응답 메세지에 함께 담겨서 보내질 Paging 정보 클래스*/
 @Builder
 @Getter
@@ -16,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PaginationResponseDTO {
     @JsonProperty(value="total_size")
-    private Integer totalSize; /*데이터 전체 수*/
+    private Long totalSize; /*데이터 전체 수*/
 
     @JsonProperty(value="page_size")
     private int pageSize; /*한 페이지당 보여지는 데이터 갯수*/
