@@ -50,4 +50,4 @@
 ## 📝 ERD
 ![Daily](https://github.com/f-lab-edu/Daily/assets/9190171/2921bbb0-f0f1-4224-ae7e-53f499ab1cf2)
 
-### ➡️ [ERD 설계 WIKI 페이지](https://github.com/f-lab-edu/Daily/wiki/ERD-%EC%84%A4%EA%B3%84)
+➡️ [ERD 설계 WIKI 페이지](https://github.com/f-lab-edu/Daily/wiki/ERD-%EC%84%A4%EA%B3%84)
