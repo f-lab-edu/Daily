@@ -1,9 +1,6 @@
 package com.flab.daily.paging;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 
 @Getter
 public class Pagination {
@@ -25,8 +22,10 @@ public class Pagination {
     }
 
     private void calculate() {
-        totalPage = ((totalSize-1)/size+1); /*전체 페이지 추출*/
-        prevPage = (page != 1); /*현재 페이지가 1이 아니면 true*/
-        nextPage = (page < totalPage); /*현재 페이지가 전체 페이지 수보다 작으면 true*/
+        if(totalSize != 0) {
+            totalPage = ((totalSize-1)/size+1); /*전체 페이지 추출*/
+            prevPage = (page != 1); /*현재 페이지가 1이 아니면 true*/
+            nextPage = (page < totalPage); /*현재 페이지가 전체 페이지 수보다 작으면 true*/
+        }
     }
 }
