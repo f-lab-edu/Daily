@@ -21,7 +21,7 @@
 
 <br>
 
-## 💿 [설치 및 설정](https://github.com/f-lab-edu/Daily/wiki/About-Daily-Project-Book-%F0%9F%93%95)
+## 💿 [설치 및 설정](https://github.com/f-lab-edu/Daily/wiki/About-Daily-Project-%F0%9F%93%95)
 - Spring 3.0.6
 - JDK17
 - Tomcat
