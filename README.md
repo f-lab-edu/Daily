@@ -43,7 +43,7 @@
 <br>
 
 ## 📃 API
-[기능별 API 페이지로 이동합니다.]
+[기능별 API 페이지로 이동합니다.](https://github.com/f-lab-edu/Daily/wiki/%EA%B8%B0%EB%8A%A5%EB%B3%84-API-%EC%A0%95%EB%A6%AC)
 
 <br>
 
