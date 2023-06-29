@@ -1,38 +1,58 @@
 <img src="https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=Daily&fontSize=90" />
 
-## 1. 프로젝트 목적
-- 요구사항 정의된 백엔드 기능을 모두 구현
-- 기능 구현에 필요한 개념을 모두 습득하고 이해
-- 프로젝트 진행중에 생긴 오류들 이해하고 기록하고 정리
-- 코드 리뷰를 통해서 개선된 분들 기록하고 정리
+## 📌 프로젝트 목적
+- 요구사항 정의된 백엔드 기능을 모두 구현하기
+- 기능 구현에 필요한 개념을 모두 습득하고 이해하기
+- 프로젝트 진행중에 생긴 오류들 이해하고 해결하기
+- 코드 리뷰를 통해서 개선된 사항들 이해하고 내 것으로 만들기
+- 테스트 코드 완벽하게 이해하기
+  
+  <br>
+  
+## 📍 프로젝트 요구사항
+- 권한
+  <br>
+  회원 : 로그인, 회원가입, 소모임 신청, 회원정보 수정
+  <br>
+  관리자 : 소모임 관리(등록, 수정, 삭제), 카테고리 관리(등록, 수정, 삭제), 회원 관리(관리자 권한 생성, 삭제)
+- 기능
+  <br>
+  관리자가 소모임을 등록하면 회원이 소모임에 신청한다.
 
-## 2. 프로젝트 요구사항
+<br>
 
+## 💿 [설치 및 설정](https://github.com/f-lab-edu/Daily/wiki/About-Daily-Project-%F0%9F%93%95)
+- Spring 3.0.6
+- JDK17
+- Tomcat
+- Jar
 
-## 3. 설치 및 진행
+<br>
 
-
-## 4. 기술 스택
+## 🔧 기술 스택
 - [MariaDB](https://github.com/f-lab-edu/Daily/wiki/DB-:-MariaDB)
 - [Gradle](https://github.com/f-lab-edu/Daily/wiki/Build-Tool-:-Gradle)
 - AWS
+- MyBatis
 
-## 5. 화면 구성
+<br>
 
+## 🖼 화면 구성
+[Daily 델리 화면 구성 링크입니다.](https://ovenapp.io/view/CgBLAqU04G0hykV5P9lgNLVb5RXT5QVu/ElvAn)
 
-## 6. 주요 기능
+<br>
 
+## 📃 API
+[기능별 API 페이지로 이동합니다.](https://github.com/f-lab-edu/Daily/wiki/%EA%B8%B0%EB%8A%A5%EB%B3%84-API-%EC%A0%95%EB%A6%AC)
 
-## 7. 아키텍처
+<br>
 
-
-## 8. ERD
+## 📝 ERD
 ![Daily](https://github.com/f-lab-edu/Daily/assets/9190171/2921bbb0-f0f1-4224-ae7e-53f499ab1cf2)
 
 - category
     - 모임의 카테고리에 대한 정보를 가지고 있는 테이블
     - 하나의 카테고리에는 여러개의 meeting이 등록될 수 있다.
-        
         
         | Name | Description  | Constraints |
         | --- | --- | --- |
@@ -64,8 +84,8 @@
         | updated_date | 모임을 수정한 시간 |  |
 
 - member_meeting
-    - 모임과과 모임에 참석할 멤버의 정보를 가지고 있는 테이블
-    - member_metting은 여러 metting과 여러 member를 가질 수 있다.
+    - 모임과 모임에 참석할 멤버의 정보를 가지고 있는 테이블
+    - member_meeting은 여러 meeting과 여러 member를 가질 수 있다.
         
         
         | Name | Description  | Constraints |
@@ -77,7 +97,7 @@
         
 - member
     - 멤버에 대한 정보를 가지고 있는 테이블
-    - 하명의 member는 여러 member_meeting에 등록될 수 있다.
+    - 한명의 member는 여러 member_meeting에 등록될 수 있다.
         
         
         | Name | Description  | Constraints |
