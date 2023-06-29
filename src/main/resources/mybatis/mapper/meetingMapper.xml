@@ -30,8 +30,8 @@
             now())
     </insert>
 
-    <select id="findMeetingList" parameterType="com.flab.daily.paging.Pageable" resultType="java.util.Map">
-        SELECT * FROM meeting LIMIT #{size} OFFSET #{page}
+    <select id="findMeetingList" parameterType="com.flab.daily.paging.Pagination" resultType="java.util.Map">
+        SELECT * FROM meeting ORDER BY created_date ASC LIMIT #{size} OFFSET #{startSize}
     </select>
 
     <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
