@@ -38,7 +38,7 @@
 <br>
 
 ## 🖼 화면 구성
-[Daily 델리 화면 구성 링크입니다.](https://ovenapp.io/view/CgBLAqU04G0hykV5P9lgNLVb5RXT5QVu/ElvAn)
+[Daily 델리 화면 구성 링크입니다.](https://ovenapp.io/view/CgBLAqU04G0hykV5P9lgNLVb5RXT5QVu/ojYPk)
 
 <br>
 
