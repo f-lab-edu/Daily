@@ -3,6 +3,7 @@ package com.flab.daily.service;
 import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
+import com.flab.daily.paging.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +29,7 @@ public class MeetingServiceTest {
     MeetingService meetingService;
 
     MeetingResponseDTO meetingResponseDTO;
+    Pagination pagination;
 
     @BeforeEach
     void beforeEach() {
@@ -47,14 +49,31 @@ public class MeetingServiceTest {
             .build();
     }
 
-    /*Paging Test*/
+    /*소모임 전체 갯수, 페이징 처리된 목록 조회 확인*/
     @Test
-    @DisplayName("소모임 전체 조회 : 페이징 처리")
-    public void findMeetingList_Paging_False() {
+    @DisplayName("소모임 전체 조회 : 갯수 추출, 페이징 적용 확인")
+    public void findMeetingList_Paging_Check() {
         /*given*/
-//        when(meetingMapper.findMeetingList(pageable)).thenReturn(List.of());
-//        /*when-then*/
-//        verify(meetingMapper, times(1)).findMeetingList(pageable);
+        pagination = new Pagination(18L, 12, 1);
+        when(meetingMapper.countMeetingAll()).thenReturn(18L); /*올바르게 데이터 수를 가져온다고 가정*/
+        when(meetingMapper.findMeetingList(pagination)).thenReturn(List.of()); /*올바르게 소모임 목록을 가져온다고 가정*/
+        /*when*/
+        meetingMapper.countMeetingAll();
+        meetingMapper.findMeetingList(pagination);
+        /*then*/
+        verify(meetingMapper, times(1)).countMeetingAll();
+        verify(meetingMapper, times(1)).findMeetingList(pagination);
+    }
+
+    /*소모임 목록 성공 후 Map 반환 확인*/
+    @Test
+    @DisplayName("소모임 전체 조회 : 성공")
+    public void findMeetingList_Success() {
+        /*given*/
+        pagination = new Pagination(18L, 12, 1);
+        when(meetingMapper.findMeetingList(pagination)).thenReturn(List.of());
+        /*when-then*/
+        assertThat(meetingMapper.findMeetingList(pagination)).isEqualTo(List.of());
     }
 
     /* DB에 없는 MeetingId인 경우 */
