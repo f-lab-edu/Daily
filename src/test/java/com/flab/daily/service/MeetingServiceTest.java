@@ -65,7 +65,7 @@ public class MeetingServiceTest {
         verify(meetingMapper, times(1)).findMeetingList(pagination);
     }
 
-    /*소모임 목록 성공 후 Map 반환 확인*/
+    /*소모임 목록 성공*/
     @Test
     @DisplayName("소모임 전체 조회 : 성공")
     public void findMeetingList_Success() {
