@@ -14,7 +14,7 @@
   <br>
   회원 : 로그인, 회원가입, 소모임 신청, 회원정보 수정
   <br>
-  관리자 : 소모임 관리(등록, 수정, 삭제), 카테고리 관리(등록, 수정, 삭제), 회워 관리(관리자 권한 생성, 삭제)
+  관리자 : 소모임 관리(등록, 수정, 삭제), 카테고리 관리(등록, 수정, 삭제), 회원 관리(관리자 권한 생성, 삭제)
 - 기능
   <br>
   관리자가 소모임을 등록하면 회원이 소모임에 신청한다.
@@ -51,8 +51,8 @@
 ![Daily](https://github.com/f-lab-edu/Daily/assets/9190171/2921bbb0-f0f1-4224-ae7e-53f499ab1cf2)
 
 - category
-    - 모임의 카테고리에 대한 정보를 가지고 있는 테이블
-    - 하나의 카테고리에는 여러개의 meeting이 등록될 수 있다.
+  - 모임의 카테고리에 대한 정보를 가지고 있는 테이블
+  - 하나의 카테고리에는 여러개의 meeting이 등록될 수 있다.
         
         
         | Name | Description  | Constraints |
@@ -85,8 +85,8 @@
         | updated_date | 모임을 수정한 시간 |  |
 
 - member_meeting
-    - 모임과과 모임에 참석할 멤버의 정보를 가지고 있는 테이블
-    - member_metting은 여러 metting과 여러 member를 가질 수 있다.
+    - 모임과 모임에 참석할 멤버의 정보를 가지고 있는 테이블
+    - member_meeting은 여러 meeting과 여러 member를 가질 수 있다.
         
         
         | Name | Description  | Constraints |
@@ -98,7 +98,7 @@
         
 - member
     - 멤버에 대한 정보를 가지고 있는 테이블
-    - 하명의 member는 여러 member_meeting에 등록될 수 있다.
+    - 한명의 member는 여러 member_meeting에 등록될 수 있다.
         
         
         | Name | Description  | Constraints |
