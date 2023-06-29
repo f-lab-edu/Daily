@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PaginationResponseDTO {
     @JsonProperty(value="total_size")
-    private int totalSize; /*데이터 전체 수*/
+    private Integer totalSize; /*데이터 전체 수*/
 
     @JsonProperty(value="page_size")
     private int pageSize; /*한 페이지당 보여지는 데이터 갯수*/
