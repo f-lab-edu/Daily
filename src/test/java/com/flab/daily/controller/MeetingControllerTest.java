@@ -75,7 +75,6 @@ public class MeetingControllerTest {
     public void findMeetingOne_Success() throws Exception {
         /*given*/
         when(meetingService.findMeetingOneById(1L)).thenReturn(meetingResponseDTO);
-
         /*when - then*/
         mockMvc.perform(get("/meeting/1")
                 .contentType(MediaType.APPLICATION_JSON))
