@@ -21,6 +21,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
@@ -36,8 +39,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16
 	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
 
-	// https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
-	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.4.0'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
