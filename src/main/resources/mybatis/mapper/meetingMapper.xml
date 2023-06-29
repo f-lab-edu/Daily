@@ -38,7 +38,7 @@
         SELECT * FROM meeting WHERE meeting_id = #{meetingId}
     </select>
 
-    <select id="countMeetingAll" resultType="java.lang.Integer">
+    <select id="countMeetingAll" resultType="java.lang.Long">
         SELECT COUNT(*) FROM meeting
     </select>
 </mapper>

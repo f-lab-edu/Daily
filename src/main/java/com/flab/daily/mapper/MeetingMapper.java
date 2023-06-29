@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface MeetingMapper {
     int addMeeting(MeetingDAO meetingDAO);
-    int countMeetingAll();
+    Long countMeetingAll();
     List<MeetingResponseDTO> findMeetingList(Pagination pagination);
     MeetingResponseDTO findMeetingOneById(Long meetingId);
 }
