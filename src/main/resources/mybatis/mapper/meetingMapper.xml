@@ -31,15 +31,15 @@
     </insert>
 
     <select id="findMeetingList" parameterType="com.flab.daily.paging.Pagination" resultType="java.util.Map">
-        SELECT * FROM member_meeting ORDER BY created_date ASC LIMIT #{size} OFFSET #{startSize}
+        SELECT * FROM meeting ORDER BY created_date ASC LIMIT #{size} OFFSET #{startSize}
     </select>
 
     <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
         SELECT * FROM meeting WHERE meeting_id = #{meetingId}
     </select>
 
-    <select id="countMeetingAll" resultType="int">
-        SELECT COUNT(*) FROM member_meeting
+    <select id="countMeetingAll" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM meeting
     </select>
 </mapper>
 

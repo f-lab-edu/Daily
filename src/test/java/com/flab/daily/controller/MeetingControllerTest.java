@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -59,7 +59,7 @@ public class MeetingControllerTest {
     @DisplayName("소모임 목록 검색 : 성공")
     public void findMeetingList_Success() throws Exception {
         /*given*/
-        when(meetingService.findMeetingList(size, page)).thenReturn(List.of());
+        when(meetingService.findMeetingList(size, page)).thenReturn(Map.of());
         /*when-then*/
         mockMvc.perform(get("/meeting")
                         .param("size", "12")

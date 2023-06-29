@@ -23,7 +23,7 @@ public class MeetingService {
 
     public Map<String, Object> findMeetingList(int size, int page) {
         /*총 소모임 수*/
-        int totalMeetingSize = meetingMapper.countMeetingAll();
+        Integer totalMeetingSize = meetingMapper.countMeetingAll();
 
         /*Paging 정보 처리*/
         Pagination pagination = new Pagination(totalMeetingSize, size, page);
