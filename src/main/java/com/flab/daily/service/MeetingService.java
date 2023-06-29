@@ -36,7 +36,7 @@ public class MeetingService {
                 .totalSize(pagination.getTotalSize())
                 .pageSize(pagination.getSize())
                 .totalPage(pagination.getTotalPage())
-                .currentPage(pagination.getCurrentPage())
+                .currentPage(pagination.getPage())
                 .prevPage(pagination.isPrevPage())
                 .nextPage(pagination.isNextPage())
                 .build();
