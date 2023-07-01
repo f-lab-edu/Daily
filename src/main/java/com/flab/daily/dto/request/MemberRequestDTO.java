@@ -1,5 +1,6 @@
 package com.flab.daily.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flab.daily.type.MemberType;
 import com.flab.daily.validator.EnumValidator;
 import jakarta.validation.constraints.Email;
@@ -42,6 +43,7 @@ public class MemberRequestDTO {
     @NotBlank(message = "닉네임은 필수 값입니다.")
     private String nickname;
 
+    @JsonProperty(value = "member_type")
     @NotNull(message = "맴버 타입은 필수 값입니다.")
     @EnumValidator(enumClass = MemberType.class, message = "멤버 형식이 일치하지 않습니다.")
     private MemberType memberType;

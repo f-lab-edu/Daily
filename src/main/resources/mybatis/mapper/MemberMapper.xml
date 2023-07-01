@@ -7,8 +7,8 @@
 <mapper namespace="com.flab.daily.mapper.MemberMapper">
 
     <insert id="insertMember" parameterType="com.flab.daily.dao.MemberDAO">
-        insert into member(email, password, nickname, member_type, created_date)
-        values (#{email}, #{password}, #{nickname}, #{memberType}, now())
+        insert into member(email, password, nickname, member_type, created_date, updated_date)
+        values (#{email}, #{password}, #{nickname}, #{memberType}, now(), now())
     </insert>
 
     <select id="getMember" parameterType="java.lang.String" resultType="int">
