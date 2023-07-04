@@ -1,5 +1,6 @@
 package com.flab.daily.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.dto.response.PagingDTO;
@@ -32,6 +33,9 @@ public class MeetingControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     MeetingResponseDTO meetingResponseDTO;
     List<MeetingResponseDTO> meetingResponseDTOList;
     LocalDateTime localDateTime;
@@ -57,6 +61,7 @@ public class MeetingControllerTest {
     }
 
     /*소모임 전체 검색 성공*/
+    /*service로 데이터를 잘 보내고 service에서 받은 데이터를 잘 전달하는지 확인*/
     @Test
     @DisplayName("소모임 목록 검색 : 성공")
     public void findMeetingList_Success() throws Exception {
@@ -65,7 +70,7 @@ public class MeetingControllerTest {
         PagingUtil pagingUtil = new PagingUtil(5, pagination);
 
         meetingResponseDTOList = new ArrayList<>();
-        for(int i=0 ; i<20 ; i++) {
+        for(int i=0 ; i<5 ; i++) {
             meetingResponseDTOList.add(meetingResponseDTO);
         }
 
@@ -73,7 +78,7 @@ public class MeetingControllerTest {
                 .pagingUtil(pagingUtil)
                 .dataList(meetingResponseDTOList).build();
 
-        when(meetingService.findMeetingList(5, 1)).thenReturn(pagingDTO);
+        when(meetingService.findMeetingList(3, 1)).thenReturn(pagingDTO);
 
         /*when-then*/
         mockMvc.perform(get("/meeting")
@@ -81,7 +86,8 @@ public class MeetingControllerTest {
                         .param("page", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(pagingDTO)));
     }
 
     /* 소모임 단건 검색 성공 */

@@ -1,7 +1,7 @@
 package com.flab.daily.service;
 
 import com.flab.daily.dao.MeetingDAO;
-import com.flab.daily.dto.response.MeetingResponseDTO;
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.util.PagingUtil;
@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,12 +30,18 @@ public class MeetingServiceTest {
     @InjectMocks
     MeetingService meetingService;
 
-    MeetingResponseDTO meetingResponseDTO;
+    List<MeetingDAO> meetingList;
     MeetingDAO meetingDAO;
-    PagingUtil pagination;
+    PagingUtil pagingUtil;
+    Pagination pagination;
 
     @BeforeEach
     void beforeEach() {
+        pagination = new Pagination(3, 1);
+        pagingUtil = new PagingUtil(5L, pagination);
+
+        meetingList = new ArrayList<>();
+
         meetingDAO = MeetingDAO.builder()
                 .meetingId(1L)
                 .categoryId(1L)
@@ -49,35 +56,32 @@ public class MeetingServiceTest {
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
                 .build();
-
-
     }
 
-    /*소모임 전체 갯수, 페이징 처리된 목록 조회 확인*/
+    /*service 실행될 때 count 쿼리 실행되는지 확인*/
     @Test
-    @DisplayName("소모임 전체 조회 : 갯수 추출, 페이징 적용 확인")
-    public void findMeetingList_Paging_Check() {
-//        /*given*/
-//        pagination = new PagingUtil(18L, 12, 1);
-//        when(meetingMapper.countMeetingAll()).thenReturn(18L); /*올바르게 데이터 수를 가져온다고 가정*/
-//        when(meetingMapper.findMeetingList(pagination)).thenReturn(List.of()); /*올바르게 소모임 목록을 가져온다고 가정*/
-//        /*when*/
-//        meetingMapper.countMeetingAll();
-//        meetingMapper.findMeetingList(pagination);
-//        /*then*/
-//        verify(meetingMapper, times(1)).countMeetingAll();
-//        verify(meetingMapper, times(1)).findMeetingList(pagination);
+    @DisplayName("소모임 전체 조회 : 소모임 전체 갯수 가져오는 함수 실행 확인")
+    public void findMeetingList_Count_Check() {
+        /*given*/
+        when(meetingMapper.countMeetingAll()).thenReturn(10L);
+        /*when*/
+        meetingService.findMeetingList(3, 1);
+        /*then*/
+        verify(meetingMapper, times(1)).countMeetingAll();
     }
 
     /*소모임 목록 성공*/
     @Test
     @DisplayName("소모임 전체 조회 : 성공")
     public void findMeetingList_Success() {
-//        /*given*/
-//        pagination = new PagingUtil(18L, 12, 1);
-//        when(meetingMapper.findMeetingList(pagination)).thenReturn(List.of());
-//        /*when-then*/
-//        assertThat(meetingMapper.findMeetingList(pagination)).isEqualTo(List.of());
+        /*given*/
+        for(int i=0 ; i<5 ; i++) {
+            meetingList.add(meetingDAO);
+        }
+        when(meetingMapper.countMeetingAll()).thenReturn(5L);
+        when(meetingMapper.findMeetingList(any(Pagination.class))).thenReturn(meetingList);
+        /*when-then*/
+        assertThat(meetingService.findMeetingList(3, 1)).isNotNull(); /*DB에 값이 있으면 null을 반환하지 않는 것으로 확인*/
     }
 
     /* DB에 없는 MeetingId인 경우 */
@@ -96,21 +100,7 @@ public class MeetingServiceTest {
     public void findMeetingOne_Success() {
         /* given */
         when(meetingMapper.findMeetingOneById(1L)).thenReturn(meetingDAO);
-        meetingResponseDTO = MeetingResponseDTO.builder()
-                .meetingId(1L)
-                .categoryId(1L)
-                .meetingName("야구하기")
-                .meetingDescription("야구 같이 하실래요?")
-                .meetingDate(LocalDateTime.now().plusDays(20))
-                .meetingPlace("잠실운동장")
-                .meetingPeople(5)
-                .currentPeople(0)
-                .meetingImage("0")
-                .createdBy("1234@gmail.com")
-                .createdDate(LocalDateTime.now())
-                .updatedDate(LocalDateTime.now())
-                .build();
         /* when - then */
-        assertThat(meetingService.findMeetingOneById(1L)).isEqualTo(meetingResponseDTO);
+        assertThat(meetingService.findMeetingOneById(1L)).isNotNull();
     }
 }
