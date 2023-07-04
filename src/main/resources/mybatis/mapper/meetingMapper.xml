@@ -30,11 +30,11 @@
             now())
     </insert>
 
-    <select id="findMeetingList" parameterType="com.flab.daily.dao.Pagination" resultType="java.util.Map">
+    <select id="findMeetingList" parameterType="com.flab.daily.dao.Pagination" resultType="com.flab.daily.dao.MeetingDAO">
         SELECT * FROM meeting ORDER BY created_date ASC LIMIT #{size} OFFSET #{startSize}
     </select>
 
-    <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dto.response.MeetingResponseDTO">
+    <select id="findMeetingOneById" parameterType="java.lang.Long" resultType="com.flab.daily.dao.MeetingDAO">
         SELECT * FROM meeting WHERE meeting_id = #{meetingId}
     </select>
 

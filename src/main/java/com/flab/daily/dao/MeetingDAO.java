@@ -16,7 +16,7 @@ public class MeetingDAO {
     private LocalDateTime meetingDate;
     private String meetingPlace;
     private Integer meetingPeople;
-    private Integer CurrentPeople;
+    private Integer currentPeople;
     private String meetingImage;
     private String createdBy;
     private LocalDateTime createdDate;

@@ -11,6 +11,6 @@ import java.util.List;
 public interface MeetingMapper {
     int addMeeting(MeetingDAO meetingDAO);
     Long countMeetingAll();
-    List<MeetingResponseDTO> findMeetingList(Pagination pagination);
-    MeetingResponseDTO findMeetingOneById(Long meetingId);
+    List<MeetingDAO> findMeetingList(Pagination pagination);
+    MeetingDAO findMeetingOneById(Long meetingId);
 }
