@@ -1,11 +1,13 @@
 package com.flab.daily.exception;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -17,8 +19,8 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IsExistUserByEmail.class)
-    public ErrorResponse DuplicateCheckException(IsExistUserByEmail e) {
+    @ExceptionHandler(DuplicateCheckException.class)
+    public ErrorResponse DuplicateCheckException(DuplicateCheckException e) {
         return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
     }
 
@@ -27,6 +29,5 @@ public class ErrorHandler {
     public ErrorResponse HttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return new ErrorResponse(400, e.getMessage());
     }
-
-
 }
+

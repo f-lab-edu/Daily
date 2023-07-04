@@ -3,18 +3,18 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberRequestDTO;
-import com.flab.daily.exception.ErrorCode;
-import com.flab.daily.exception.IsExistUserByEmail;
+import com.flab.daily.exception.DuplicateCheckException;
 import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.SHA256Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -24,15 +24,20 @@ public class MemberServiceTest {
     @Mock
     MemberMapper memberMapper;
 
+    @InjectMocks
+    MemberService memberService;
+
     MemberRequestDTO memberRequestDTO;
 
     MemberDAO memberDAO;
 
 
+
+
     @BeforeEach
     void init() {
         memberRequestDTO = MemberRequestDTO.builder()
-                .email("tesstt1@naver.com")
+                .email("test12@naver.com")
                 .password("test12312")
                 .nickname("tese")
                 .memberType(MemberType.USER)
@@ -43,7 +48,7 @@ public class MemberServiceTest {
     public MemberDAO setMemberDAO(MemberRequestDTO memberRequestDTO) {
         memberDAO = MemberDAO.builder()
                 .email(memberRequestDTO.getEmail())
-                .password(memberRequestDTO.getPassword())
+                .password(SHA256Util.encrypt(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
                 .memberType(MemberType.USER)
                 .build();
@@ -52,31 +57,42 @@ public class MemberServiceTest {
 
 
     @Test
-    @DisplayName("회원 가입 성공")
+    @DisplayName("회원 가입 정상 작동")
     void signUpSuccess() {
-        // 중복 검사 통과
+        // 이메일이 중복되지 않는 경우 0을 반환
         when(memberMapper.getMember(memberRequestDTO.getEmail())).thenReturn(0);
-        assertThat(memberMapper.getMember(memberRequestDTO.getEmail())).isEqualTo(0);
         memberDAO = setMemberDAO(memberRequestDTO);
+        // 삽입이 정상적으로 이루어진 경우 1을 반환
         when(memberMapper.insertMember(memberDAO)).thenReturn(1);
-        assertThat(memberMapper.insertMember(memberDAO)).isEqualTo(1);
+        
+        memberService.signUp(memberRequestDTO);
+
+        // 함수가 정상적으로 실행 되었는지 검사
+        verify(memberMapper, times(1)).getMember(memberRequestDTO.getEmail());
+        verify(memberMapper, times(1)).insertMember(memberDAO);
     }
 
     @Test
-    @DisplayName("이메일 중복")
+    @DisplayName("이메일 중복으로 인한 가입 실패")
     void isExistUserByEmail() {
-        when(memberMapper.getMember(memberRequestDTO.getEmail())).thenThrow(new IsExistUserByEmail(ErrorCode.IS_EXIST_USER_BY_EMAIL));
-        assertThrows(IsExistUserByEmail.class, () -> memberMapper.getMember(memberRequestDTO.getEmail()));
+        // 이메일이 중복되었을 경우 1을 반환
+        when(memberMapper.getMember(memberRequestDTO.getEmail())).thenReturn(1);
+        assertThrows(DuplicateCheckException.class, () -> memberService.signUp(memberRequestDTO));
     }
-
 
     @Test
-    @DisplayName("가입 실패")
+    @DisplayName("insert()가 정상적으로 작동하지 안았을 경우")
     void signUpFailed() {
+        // 이메일이 중복되지 않는 경우 0을 반환
         when(memberMapper.getMember(memberRequestDTO.getEmail())).thenReturn(0);
-        assertThat(memberMapper.getMember(memberRequestDTO.getEmail())).isEqualTo(0);
         memberDAO = setMemberDAO(memberRequestDTO);
+        // 삽입이 정상적으로 이루어지지 않았을 경우 0을 반환
         when(memberMapper.insertMember(memberDAO)).thenReturn(0);
-        assertThat(memberMapper.insertMember(memberDAO)).isEqualTo(0);
+
+        memberService.signUp(memberRequestDTO);
+
+        verify(memberMapper, times(1)).getMember(memberRequestDTO.getEmail());
+        verify(memberMapper, times(1)).insertMember(memberDAO);
     }
+
 }
