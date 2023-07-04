@@ -1,6 +1,7 @@
 package com.flab.daily.exception;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 
 @Getter
