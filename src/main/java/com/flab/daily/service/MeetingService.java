@@ -5,7 +5,7 @@ import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
-import com.flab.daily.mapper.Pagination;
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.util.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class MeetingService {
         /*총 소모임 수*/
         long totalMeetingSize = meetingMapper.countMeetingAll();
 
-        /*페이징 Mapper 정보 처리*/
+        /*DB로 보내질 페이징 정보 처리*/
         Pagination pagination = new Pagination(size, page);
         /*페이지에 맞는 소모임 리스트*/
         List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList(pagination);

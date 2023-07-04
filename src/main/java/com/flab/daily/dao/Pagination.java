@@ -1,4 +1,4 @@
-package com.flab.daily.mapper;
+package com.flab.daily.dao;
 
 import lombok.Getter;
 

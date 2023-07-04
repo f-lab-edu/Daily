@@ -1,7 +1,7 @@
 package com.flab.daily.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.flab.daily.mapper.Pagination;
+import com.flab.daily.dao.Pagination;
 import lombok.Getter;
 
 @Getter
