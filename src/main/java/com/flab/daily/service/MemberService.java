@@ -3,10 +3,8 @@ package com.flab.daily.service;
 import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.exception.DuplicateCheckException;
-
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.mapper.MemberMapper;
-import com.flab.daily.type.MemberType;
 import com.flab.daily.utils.SHA256Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class MemberService {
                 .email(memberRequestDTO.getEmail())
                 .password(SHA256Util.encrypt(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
-                .memberType(MemberType.USER)
+                .memberType(memberRequestDTO.getMemberType())
                 .build();
         memberMapper.insertMember(memberDAO);
     }
