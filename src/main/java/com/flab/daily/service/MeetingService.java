@@ -66,10 +66,25 @@ public class MeetingService {
 
     @Transactional(readOnly = true)
     public MeetingResponseDTO findMeetingOneById(Long meetingId) {
-        MeetingResponseDTO meetingResponseDTO = meetingMapper.findMeetingOneById(meetingId);
-        if(meetingResponseDTO == null) {
+        MeetingDAO meetingDAO = meetingMapper.findMeetingOneById(meetingId);
+        if(meetingDAO == null) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_MEETING);
         } else {
+            MeetingResponseDTO meetingResponseDTO = MeetingResponseDTO.builder()
+                    .meetingId(meetingDAO.getMeetingId())
+                    .categoryId(meetingDAO.getCategoryId())
+                    .meetingName(meetingDAO.getMeetingName())
+                    .meetingDescription(meetingDAO.getMeetingDescription())
+                    .meetingDate(meetingDAO.getMeetingDate())
+                    .meetingPlace(meetingDAO.getMeetingPlace())
+                    .meetingPeople(meetingDAO.getMeetingPeople())
+                    .currentPeople(meetingDAO.getCurrentPeople())
+                    .meetingImage(meetingDAO.getMeetingImage())
+                    .createdBy(meetingDAO.getCreatedBy())
+                    .createdDate(meetingDAO.getCreatedDate())
+                    .updatedDate(meetingDAO.getUpdatedDate())
+                    .build();
+
             return meetingResponseDTO;
         }
     }
