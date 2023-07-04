@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,16 +33,12 @@ public class MeetingServiceTest {
 
     List<MeetingDAO> meetingList;
     MeetingDAO meetingDAO;
-    PagingUtil pagingUtil;
     Pagination pagination;
 
     @BeforeEach
     void beforeEach() {
-        pagination = new Pagination(3, 1);
-        pagingUtil = new PagingUtil(5L, pagination);
-
         meetingList = new ArrayList<>();
-
+        pagination = new Pagination(3,1);
         meetingDAO = MeetingDAO.builder()
                 .meetingId(1L)
                 .categoryId(1L)
@@ -68,6 +65,20 @@ public class MeetingServiceTest {
         meetingService.findMeetingList(3, 1);
         /*then*/
         verify(meetingMapper, times(1)).countMeetingAll();
+    }
+
+    /*meetingList 추출하는 함수 실행되는지 확인*/
+    @Test
+    @DisplayName("소모임 전체 조회 : meetingList 추출하는 함수 실행 확인")
+    public void findMeetingList_Select_Check() {
+        /*given*/
+        when(meetingMapper.countMeetingAll()).thenReturn(10L);
+        when(meetingMapper.findMeetingList(any())).thenReturn(List.of());
+        /*when*/
+        meetingService.findMeetingList(3, 1);
+        /*when-then*/
+        verify(meetingMapper, times(1)).countMeetingAll();
+        verify(meetingMapper, times(1)).findMeetingList(any());
     }
 
     /*소모임 목록 성공*/

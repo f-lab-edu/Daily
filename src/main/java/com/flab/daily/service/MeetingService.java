@@ -17,11 +17,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class MeetingService {
 
     private final MeetingMapper meetingMapper;
 
+    @Transactional
     public PagingDTO findMeetingList(int size, int page) {
         /*총 소모임 수*/
         long totalMeetingSize = meetingMapper.countMeetingAll();
