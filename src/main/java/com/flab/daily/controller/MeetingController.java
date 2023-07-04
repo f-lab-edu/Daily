@@ -1,6 +1,7 @@
 package com.flab.daily.controller;
 
 import com.flab.daily.dto.response.MeetingResponseDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.service.MeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeting")
@@ -22,10 +21,10 @@ public class MeetingController {
 
     /*프론트에서 페이지와 페이지당 보여지는 데이터 갯수 보내준다고 가정*/
     @GetMapping
-    public ResponseEntity<Object> getMeetingList(int size, int page) {
-        /*Meeting 목록 정보와 Page 정보를 같이 담아 Map으로 반환*/
-        Map<String, Object> meetingResponseMap = meetingService.findMeetingList(size, page);
-        return ResponseEntity.status(HttpStatus.OK).body(meetingResponseMap);
+    public ResponseEntity<PagingDTO> getMeetingList(int size, int page) {
+        /*Meeting 목록 정보와 Page 정보를 가진 PagingDTO 반환*/
+        PagingDTO pagingDTO = meetingService.findMeetingList(size, page);
+        return ResponseEntity.status(HttpStatus.OK).body(pagingDTO);
     }
 
     @GetMapping("/{meetingId}")

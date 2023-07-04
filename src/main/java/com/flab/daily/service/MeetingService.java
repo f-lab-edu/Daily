@@ -1,18 +1,17 @@
 package com.flab.daily.service;
 
 import com.flab.daily.dto.response.MeetingResponseDTO;
-import com.flab.daily.dto.response.PaginationResponseDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
-import com.flab.daily.paging.Pagination;
+import com.flab.daily.mapper.Pagination;
+import com.flab.daily.util.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,32 +20,25 @@ public class MeetingService {
 
     private final MeetingMapper meetingMapper;
 
-    public Map<String, Object> findMeetingList(int size, int page) {
+    public PagingDTO findMeetingList(int size, int page) {
         /*총 소모임 수*/
-        Long totalMeetingSize = meetingMapper.countMeetingAll();
+        long totalMeetingSize = meetingMapper.countMeetingAll();
 
-        /*Paging 정보 처리*/
-        Pagination pagination = new Pagination(totalMeetingSize, size, page);
-
-        /*페이지에 맞는 소모임 리스트 추출*/
+        /*페이징 Mapper 정보 처리*/
+        Pagination pagination = new Pagination(size, page);
+        /*페이지에 맞는 소모임 리스트*/
         List<MeetingResponseDTO> meetingList = meetingMapper.findMeetingList(pagination);
 
-        /*응답 메세지에 보낼 페이지 정보를 저장*/
-        PaginationResponseDTO paginationInfo = PaginationResponseDTO.builder()
-                .totalSize(pagination.getTotalSize())
-                .pageSize(pagination.getSize())
-                .totalPage(pagination.getTotalPage())
-                .currentPage(pagination.getPage())
-                .prevPage(pagination.isPrevPage())
-                .nextPage(pagination.isNextPage())
+        /*응답 메세지에 담길 PagingUtil 정보 처리*/
+        PagingUtil pagingUtil = new PagingUtil(totalMeetingSize, pagination);
+
+        /*처리된 페이징 정보와 데이터 정보 저장하여 반환*/
+        PagingDTO paginationInfo = PagingDTO.builder()
+                .pagingUtil(pagingUtil)
+                .dataList(meetingList)
                 .build();
 
-        /*소모임 데이터와 페이지에 대한 정보 담아서 반환*/
-        Map<String, Object> meetingResponseMap = new HashMap<>();
-        meetingResponseMap.put("meetingList", meetingList);
-        meetingResponseMap.put("paginationInfo", paginationInfo);
-
-        return meetingResponseMap;
+        return paginationInfo;
     }
 
     public MeetingResponseDTO findMeetingOneById(Long meetingId) {
