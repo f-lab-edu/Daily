@@ -1,7 +1,10 @@
 package com.flab.daily.controller;
 
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.response.MeetingResponseDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.service.MeetingService;
+import com.flab.daily.util.PagingUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,27 +33,26 @@ public class MeetingControllerTest {
     MockMvc mockMvc;
 
     MeetingResponseDTO meetingResponseDTO;
-    int size;
-    int page;
+    List<MeetingResponseDTO> meetingResponseDTOList;
+    LocalDateTime localDateTime;
 
     @BeforeEach
     void beforeEach() {
-        size = 12;
-        page = 1;
+        localDateTime = LocalDateTime.now().plusDays(20).withNano(0);
 
         meetingResponseDTO = MeetingResponseDTO.builder()
             .meetingId(1L)
             .categoryId(1L)
             .meetingName("야구하기")
             .meetingDescription("야구 같이 하실래요?")
-            .meetingDate(LocalDateTime.now().plusDays(20).withNano(0))
+            .meetingDate(localDateTime)
             .meetingPlace("잠실운동장")
             .meetingPeople(5)
             .currentPeople(0)
             .meetingImage("0")
             .createdBy("1234@gmail.com")
-            .createdDate(LocalDateTime.now().withNano(0))
-            .updatedDate(LocalDateTime.now().withNano(0))
+            .createdDate(localDateTime)
+            .updatedDate(localDateTime)
             .build();
     }
 
@@ -58,10 +61,23 @@ public class MeetingControllerTest {
     @DisplayName("소모임 목록 검색 : 성공")
     public void findMeetingList_Success() throws Exception {
         /*given*/
-        when(meetingService.findMeetingList(size, page)).thenReturn(Map.of());
+        Pagination pagination = new Pagination(3, 1);
+        PagingUtil pagingUtil = new PagingUtil(5, pagination);
+
+        meetingResponseDTOList = new ArrayList<>();
+        for(int i=0 ; i<20 ; i++) {
+            meetingResponseDTOList.add(meetingResponseDTO);
+        }
+
+        PagingDTO pagingDTO = PagingDTO.builder()
+                .pagingUtil(pagingUtil)
+                .dataList(meetingResponseDTOList).build();
+
+        when(meetingService.findMeetingList(5, 1)).thenReturn(pagingDTO);
+
         /*when-then*/
         mockMvc.perform(get("/meeting")
-                        .param("size", "12")
+                        .param("size", "3")
                         .param("page", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -83,13 +99,13 @@ public class MeetingControllerTest {
                 .andExpect(jsonPath("$..category_id").value(1))
                 .andExpect(jsonPath("$..meeting_name").value("야구하기"))
                 .andExpect(jsonPath("$..meeting_description").value("야구 같이 하실래요?"))
-                .andExpect(jsonPath("$..meeting_date").value(LocalDateTime.now().plusDays(20).withNano(0).toString()))
+                .andExpect(jsonPath("$..meeting_date").value(localDateTime.toString()))
                 .andExpect(jsonPath("$..meeting_place").value("잠실운동장"))
                 .andExpect(jsonPath("$..meeting_people").value(5))
                 .andExpect(jsonPath("$..current_people").value(0))
                 .andExpect(jsonPath("$..meeting_image").value("0"))
                 .andExpect(jsonPath("$..created_by").value("1234@gmail.com"))
-                .andExpect(jsonPath("$..created_date").value(LocalDateTime.now().withNano(0).toString()))
-                .andExpect(jsonPath("$..updated_date").value(LocalDateTime.now().withNano(0).toString()));
+                .andExpect(jsonPath("$..created_date").value(localDateTime.toString()))
+                .andExpect(jsonPath("$..updated_date").value(localDateTime.toString()));
     }
 }
