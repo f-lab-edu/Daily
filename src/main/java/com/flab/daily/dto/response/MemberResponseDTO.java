@@ -16,7 +16,6 @@ public class MemberResponseDTO {
     private String memberType;
     @JsonProperty(value = "created_date")
     private LocalDateTime createdDate;
-    private LocalDateTime updateDate;
     @JsonProperty(value = "updated_date")
     private LocalDateTime updatedDate;
 }
