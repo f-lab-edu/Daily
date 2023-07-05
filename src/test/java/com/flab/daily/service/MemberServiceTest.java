@@ -23,16 +23,10 @@ public class MemberServiceTest {
 
     @Mock
     MemberMapper memberMapper;
-
     @InjectMocks
     MemberService memberService;
-
     MemberRequestDTO memberRequestDTO;
-
     MemberDAO memberDAO;
-
-
-
 
     @BeforeEach
     void init() {
@@ -43,7 +37,6 @@ public class MemberServiceTest {
                 .memberType(MemberType.USER)
                 .build();
     }
-
 
     public MemberDAO setMemberDAO(MemberRequestDTO memberRequestDTO) {
         memberDAO = MemberDAO.builder()
@@ -64,9 +57,7 @@ public class MemberServiceTest {
         memberDAO = setMemberDAO(memberRequestDTO);
         // 삽입이 정상적으로 이루어진 경우 1을 반환
         when(memberMapper.insertMember(memberDAO)).thenReturn(1);
-        
         memberService.signUp(memberRequestDTO);
-
         // 함수가 정상적으로 실행 되었는지 검사
         verify(memberMapper, times(1)).getMember(memberRequestDTO.getEmail());
         verify(memberMapper, times(1)).insertMember(memberDAO);
@@ -88,7 +79,6 @@ public class MemberServiceTest {
         memberDAO = setMemberDAO(memberRequestDTO);
         // 삽입이 정상적으로 이루어지지 않았을 경우 0을 반환
         when(memberMapper.insertMember(memberDAO)).thenThrow(new RuntimeException());
-
         // 예외 발생 검증
         assertThrows(RuntimeException.class, () -> memberService.signUp(memberRequestDTO));
     }
