@@ -33,8 +33,6 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
 
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-
-
 }
 
 tasks.named('test') {
