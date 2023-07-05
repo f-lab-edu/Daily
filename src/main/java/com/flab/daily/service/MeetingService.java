@@ -21,7 +21,7 @@ public class MeetingService {
 
     private final MeetingMapper meetingMapper;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PagingDTO findMeetingList(int size, int page) {
         /*총 소모임 수*/
         long totalMeetingSize = meetingMapper.countMeetingAll();
@@ -64,6 +64,7 @@ public class MeetingService {
         return paginationInfo;
     }
 
+    @Transactional(readOnly = true)
     public MeetingResponseDTO findMeetingOneById(Long meetingId) {
         MeetingDAO meetingDAO = meetingMapper.findMeetingOneById(meetingId);
         if(meetingDAO == null) {
