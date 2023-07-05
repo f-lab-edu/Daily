@@ -9,7 +9,6 @@ public class DailyApplication {
 		SpringApplication.run(DailyApplication.class, args);
 		System.out.println("Spring Boot Start!");
 	}
-
 }
 
 

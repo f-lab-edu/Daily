@@ -12,5 +12,4 @@ class DailyApplicationTests {
 		System.out.println("Test!");
 	}
 
-
 }
