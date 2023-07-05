@@ -1,4 +1,4 @@
-package com.flab.daily.util;
+package com.flab.daily.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flab.daily.dao.Pagination;

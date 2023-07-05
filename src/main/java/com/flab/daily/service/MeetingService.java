@@ -7,7 +7,7 @@ import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.dao.Pagination;
-import com.flab.daily.util.PagingUtil;
+import com.flab.daily.utils.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package com.flab.daily.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.flab.daily.util.PagingUtil;
+import com.flab.daily.utils.PagingUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

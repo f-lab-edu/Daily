@@ -5,7 +5,7 @@ import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.service.MeetingService;
-import com.flab.daily.util.PagingUtil;
+import com.flab.daily.utils.PagingUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
