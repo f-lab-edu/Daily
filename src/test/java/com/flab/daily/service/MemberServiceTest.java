@@ -87,10 +87,10 @@ public class MemberServiceTest {
         when(memberMapper.getMember(memberRequestDTO.getEmail())).thenReturn(0);
         memberDAO = setMemberDAO(memberRequestDTO);
         // 삽입이 정상적으로 이루어지지 않았을 경우 0을 반환
-        when(memberMapper.insertMember(memberDAO)).thenReturn(0);
+        when(memberMapper.insertMember(memberDAO)).thenThrow(new RuntimeException());
 
-        memberService.signUp(memberRequestDTO);
-
+        // 예외 발생 및 호출 확인
+        assertThrows(RuntimeException.class, () -> memberService.signUp(memberRequestDTO));
         verify(memberMapper, times(1)).getMember(memberRequestDTO.getEmail());
         verify(memberMapper, times(1)).insertMember(memberDAO);
     }
