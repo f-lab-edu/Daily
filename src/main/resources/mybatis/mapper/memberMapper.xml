@@ -13,11 +13,11 @@
 
     <select id="getMember" parameterType="java.lang.String" resultType="int">
         SELECT
-            COUNT(*)
+        COUNT(*)
         FROM
-            member
+        member
         WHERE
-            email = #{email}
+        email = #{email}
     </select>
 </mapper>
 
