@@ -41,11 +41,6 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
-
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 }
 
 tasks.named('test') {
