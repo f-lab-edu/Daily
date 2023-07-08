@@ -8,4 +8,5 @@ public interface CategoryMapper {
     int isExistCategoryById(Long categoryId);
     int isExistCategoryByName(String categoryName);
     int addCategory(CategoryDAO categoryDAO);
+    int updateCategory(CategoryDAO categoryDAO);
 }

@@ -22,7 +22,7 @@ public class AdminCategoryService {
     public void addCategory(CategoryRequestDTO categoryRequestDTO) {
         //카테고리명 중복 확인
         int checkCategory = categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName());
-        if(checkCategory != 0) {
+        if (checkCategory != 0) {
             throw new DuplicateCheckException(ErrorCode.VALUE_ALREADY_EXISTS);
         }
 
@@ -41,8 +41,42 @@ public class AdminCategoryService {
 
         //insert한 데이터 PK값 추출해서 확인
         Long result = categoryInfo.getCategoryId();
-        if(result == 0) {
+        if (result == 0) {
             throw new RuntimeException("Failed to addCategory.");
+        }
+    }
+
+    public void changeCategory(CategoryRequestDTO categoryRequestDTO, Long categoryId) {
+
+        int checkCategory = categoryMapper.isExistCategoryById(categoryId);
+        if (checkCategory == 0) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
+        }
+        checkedCategoryNameValidation(categoryRequestDTO.getCategoryName());
+        checkedEmailValidation(categoryRequestDTO.getUpdatedBy());
+        CategoryDAO categoryInfo = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        categoryMapper.updateCategory(categoryInfo);
+
+    }
+
+    // 이메일 및 카테고리 확인
+    private void checkedEmailValidation(String email) {
+        //유효한 Email인지 검사
+        int createdByEmail = memberMapper.getMember(email);
+        if (createdByEmail != 1) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
+        }
+    }
+
+    // 카테고리 이름 체크
+    private void checkedCategoryNameValidation(String categoryName) {
+        int checkCategoryName = categoryMapper.isExistCategoryByName(categoryName);
+        if (checkCategoryName != 0) {
+            throw new DuplicateCheckException(ErrorCode.VALUE_ALREADY_EXISTS);
         }
     }
 }
