@@ -52,7 +52,7 @@ public class AdminCategoryService {
         if (checkCategory == 0) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
-        checkedCategoryNameValidation(categoryRequestDTO.getCategoryName());
+        checkedCategoryNameDuplication(categoryRequestDTO.getCategoryName());
         checkedEmailValidation(categoryRequestDTO.getUpdatedBy());
         CategoryDAO categoryInfo = CategoryDAO.builder()
                 .categoryId(categoryId)
@@ -66,17 +66,17 @@ public class AdminCategoryService {
     // 이메일 및 카테고리 확인
     private void checkedEmailValidation(String email) {
         //유효한 Email인지 검사
-        int createdByEmail = memberMapper.getMember(email);
-        if (createdByEmail != 1) {
+        int checkedEmail = memberMapper.getMember(email);
+        if (checkedEmail != 1) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
     }
 
-    // 카테고리 이름 체크
-    private void checkedCategoryNameValidation(String categoryName) {
-        int checkCategoryName = categoryMapper.isExistCategoryByName(categoryName);
-        if (checkCategoryName != 0) {
-            throw new DuplicateCheckException(ErrorCode.VALUE_ALREADY_EXISTS);
+    // 카테고리 이름 중복 체크
+    private void checkedCategoryNameDuplication(String categoryName) {
+        int checkedCategoryName = categoryMapper.isExistCategoryByName(categoryName);
+        if (checkedCategoryName != 0) {
+            throw new DuplicateCheckException(ErrorCode.DUPLICATED_BY_CATEGORY_NAME);
         }
     }
 }
