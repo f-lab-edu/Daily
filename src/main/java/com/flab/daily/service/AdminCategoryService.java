@@ -47,36 +47,26 @@ public class AdminCategoryService {
     }
 
     public void changeCategory(CategoryRequestDTO categoryRequestDTO, Long categoryId) {
-
+        // 카테고리 유효성 검사
         int checkCategory = categoryMapper.isExistCategoryById(categoryId);
         if (checkCategory == 0) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
         }
-        checkedCategoryNameDuplication(categoryRequestDTO.getCategoryName());
-        checkedEmailValidation(categoryRequestDTO.getUpdatedBy());
+        // 카테고리 이름 중복 검사
+        int checkedCategoryName = categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName());
+        if (checkedCategoryName != 0) {
+            throw new DuplicateCheckException(ErrorCode.DUPLICATED_BY_CATEGORY_NAME);
+        }
+        // 이메일 유효성 검사
+        int checkedEmail = memberMapper.getMember(categoryRequestDTO.getUpdatedBy());
+        if (checkedEmail != 1) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
+        }
         CategoryDAO categoryInfo = CategoryDAO.builder()
                 .categoryId(categoryId)
                 .categoryName(categoryRequestDTO.getCategoryName())
                 .updatedBy(categoryRequestDTO.getUpdatedBy())
                 .build();
         categoryMapper.updateCategory(categoryInfo);
-
-    }
-
-    // 이메일 및 카테고리 확인
-    private void checkedEmailValidation(String email) {
-        //유효한 Email인지 검사
-        int checkedEmail = memberMapper.getMember(email);
-        if (checkedEmail != 1) {
-            throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
-        }
-    }
-
-    // 카테고리 이름 중복 체크
-    private void checkedCategoryNameDuplication(String categoryName) {
-        int checkedCategoryName = categoryMapper.isExistCategoryByName(categoryName);
-        if (checkedCategoryName != 0) {
-            throw new DuplicateCheckException(ErrorCode.DUPLICATED_BY_CATEGORY_NAME);
-        }
     }
 }
