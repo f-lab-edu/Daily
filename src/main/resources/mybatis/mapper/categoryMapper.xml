@@ -32,5 +32,11 @@
                 now(),
                 now())
     </insert>
+
+    <update id="updateCategory" parameterType="com.flab.daily.dao.CategoryDAO">
+        UPDATE category
+        SET category_name = #{categoryName}, updated_by=#{updatedBy}, updated_date = now()
+        WHERE category_id = #{categoryId}
+    </update>
 </mapper>
 

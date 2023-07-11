@@ -16,7 +16,8 @@ public enum ErrorCode {
     NOT_FOUND_MEETING(900,"유효하지 않는 소모임입니다."),
 
     VALUE_ALREADY_EXISTS(901, "이미 존재하는 데이터입니다."),
-    IS_EXIST_USER_BY_EMAIL(901, "중복된 이메일입니다.");
+    IS_EXIST_USER_BY_EMAIL(901, "중복된 이메일입니다."),
+    DUPLICATED_BY_CATEGORY_NAME(901, "중복된 카테고리 이름입니다.");
 
     private final int code;
     private final String message;
