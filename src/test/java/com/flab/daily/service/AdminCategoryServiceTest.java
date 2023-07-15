@@ -17,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class AdminCategoryServiceTest {
@@ -37,6 +39,7 @@ public class AdminCategoryServiceTest {
         categoryRequestDTO = CategoryRequestDTO.builder()
                 .categoryName("미술")
                 .createdBy("test@naver.com")
+                .updatedBy("test@naver.com")
                 .build();
     }
 
@@ -97,5 +100,99 @@ public class AdminCategoryServiceTest {
 
         //when-then
         assertThat(categoryMapper.addCategory(categoryDAO)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("카테고리가 정상적으로 변경된 경우")
+    void changeCategorySuccess() {
+        Long categoryId = 12L;
+        // 카테고리가 존재한 경우
+        when(categoryMapper.isExistCategoryById(categoryId)).thenReturn(1);
+        // 동일한 카테고리 이름이 존재하지 않을 경우
+        when(categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName())).thenReturn(0);
+        // 이메일이 존재할 경우
+        when(memberMapper.getMember(categoryRequestDTO.getUpdatedBy())).thenReturn(1);
+        categoryDAO = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        adminCategoryService.changeCategory(categoryRequestDTO, categoryId);
+        // then
+        verify(categoryMapper, times(1)).isExistCategoryById(categoryId);
+        verify(categoryMapper, times(1)).isExistCategoryByName(categoryRequestDTO.getCategoryName());
+    }
+
+
+    @Test
+    @DisplayName("카테고리가 존재하지 않는 경우")
+    void changeCategoryEmptyCategory() {
+        Long categoryId = 12L;
+        // 카테고리가 존재하지 않는 경우
+        when(categoryMapper.isExistCategoryById(categoryId)).thenReturn(0);
+        categoryDAO = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        // then
+        assertThrows(IsExistCheckException.class, () -> adminCategoryService.changeCategory(categoryRequestDTO, categoryId));
+    }
+
+    @Test
+    @DisplayName("카테고리 이름이 중복된 경우")
+    void changeCategoryDuplicationCategory() {
+        Long categoryId = 12L;
+        // 카테고리가 존재한 경우
+        when(categoryMapper.isExistCategoryById(categoryId)).thenReturn(1);
+        // 동일한 카테고리 이름이 있는 경우
+        when(categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName())).thenReturn(1);
+        categoryDAO = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        // then
+        assertThrows(DuplicateCheckException.class, () -> adminCategoryService.changeCategory(categoryRequestDTO, categoryId));
+    }
+
+    @Test
+    @DisplayName("이메일이 없는 경우")
+    void changeCategoryIsNotMember() {
+        Long categoryId = 12L;
+        // 카테고리가 존재한 경우
+        when(categoryMapper.isExistCategoryById(categoryId)).thenReturn(1);
+        // 동일한 카테고리 이름이 존재하지 않을 경우
+        when(categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName())).thenReturn(0);
+        // 이메일이 존재하지 않을경우
+        when(memberMapper.getMember(categoryRequestDTO.getUpdatedBy())).thenReturn(0);
+        categoryDAO = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        // then
+        assertThrows(IsExistCheckException.class, () -> adminCategoryService.changeCategory(categoryRequestDTO, categoryId));
+    }
+
+
+    @Test
+    @DisplayName("updqte가 정상적으로 작동하지 않는경우")
+    void changeCategoryFailed() {
+        Long categoryId = 12L;
+        // 카테고리가 존재한 경우
+        when(categoryMapper.isExistCategoryById(categoryId)).thenReturn(1);
+        // 동일한 카테고리 이름이 존재하지 않을 경우
+        when(categoryMapper.isExistCategoryByName(categoryRequestDTO.getCategoryName())).thenReturn(0);
+        // 이메일이 존재할 경우
+        when(memberMapper.getMember(categoryRequestDTO.getUpdatedBy())).thenReturn(1);
+        categoryDAO = CategoryDAO.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryRequestDTO.getCategoryName())
+                .updatedBy(categoryRequestDTO.getUpdatedBy())
+                .build();
+        when(categoryMapper.updateCategory(categoryDAO)).thenThrow(new RuntimeException());
+        // then
+        assertThrows(RuntimeException.class, () -> adminCategoryService.changeCategory(categoryRequestDTO, categoryId));
     }
 }
