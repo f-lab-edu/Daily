@@ -5,8 +5,8 @@ import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.exception.DuplicateCheckException;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.mapper.MemberMapper;
-import com.flab.daily.utils.SHA256Util;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +21,12 @@ public class MemberService {
     public void signUp(MemberRequestDTO memberRequestDTO) {
         int isMember = memberMapper.getMember(memberRequestDTO.getEmail());
         if (isMember > 0) throw new DuplicateCheckException(ErrorCode.IS_EXIST_USER_BY_EMAIL);
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
         MemberDAO memberDAO = MemberDAO.builder()
                 .email(memberRequestDTO.getEmail())
-                .password(SHA256Util.encrypt(memberRequestDTO.getPassword()))
+                .password(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
                 .memberType(memberRequestDTO.getMemberType())
                 .build();
