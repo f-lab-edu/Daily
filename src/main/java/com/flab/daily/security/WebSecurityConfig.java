@@ -1,6 +1,8 @@
-package com.flab.config;
+package com.flab.daily.security;
 
+import com.flab.daily.jwt.JwtAuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 /*스프링 시큐리티 설정을 위한 빈 생성을 위한 어노테이션*/
@@ -19,6 +22,10 @@ import org.springframework.security.web.SecurityFilterChain;
 -> 내부적으로 SpringSecurityFilterChain이 동작하여 모든 URL에 적용됨*/
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
@@ -40,19 +47,15 @@ public class WebSecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable);
 
         httpSecurity.authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/members", "/meeting").permitAll() /*메인 페이지, 소모임페이지, 회원가입 페이지 외 제한*/
+                        .requestMatchers("/", "/login", "/members", "/meeting").permitAll() /*메인, 소모임, 로그인, 회원가입 페이지 외 제한*/
                 .anyRequest().authenticated());
 
 
         /*Session 비활성화*/
         httpSecurity.sessionManagement((session) -> session
-                /*SpringSecurity Session 정책 SessionCreationPolicy
-                 * ALWAYS : 항상 세션 생성
-                 * IF_REQUIRED : 필요할 때(Default)
-                 * NEVER : 새로 생성하지 않고 기존에 있는 Session 사용
-                 * STATELESS : 새로 생성하지도 않고 기존에 있는 Session도 사용하지 않음 -> Session을 사용하지 않는 경우 선택
-                 * */
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        httpSecurity.addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

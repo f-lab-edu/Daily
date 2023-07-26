@@ -16,5 +16,14 @@
         WHERE
         email = #{email}
     </select>
+
+    <select id="selectMemberByEmail" parameterType="java.lang.String" resultType="com.flab.daily.dao.MemberDAO">
+        SELECT
+        *
+        FROM
+        member
+        WHERE
+        email = #{email}
+    </select>
 </mapper>
 
