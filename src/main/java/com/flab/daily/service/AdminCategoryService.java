@@ -43,11 +43,10 @@ public class AdminCategoryService {
                 categoryResponseDTOList.add(categoryResponseDTO);
             }
         }
-        PagingDTO pagingDTO = PagingDTO.builder()
+        return PagingDTO.builder()
                 .dataList(categoryResponseDTOList)
                 .pagingUtil(pagingUtil)
                 .build();
-        return pagingDTO;
     }
 
     public void addCategory(CategoryRequestDTO categoryRequestDTO) {
