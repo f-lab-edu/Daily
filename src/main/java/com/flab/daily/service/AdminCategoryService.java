@@ -34,12 +34,14 @@ public class AdminCategoryService {
         // 카테고리 목록
         List<CategoryDAO> categoryDAOList = categoryMapper.getCategoryList(pagination);
         List<CategoryResponseDTO> categoryResponseDTOList = new ArrayList<>();
-        for (CategoryDAO categoryDAO : categoryDAOList) {
-            CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.builder()
-                    .categoryId(categoryDAO.getCategoryId())
-                    .categoryName(categoryDAO.getCategoryName())
-                    .build();
-            categoryResponseDTOList.add(categoryResponseDTO);
+        if (categoryDAOList != null) {
+            for (CategoryDAO categoryDAO : categoryDAOList) {
+                CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.builder()
+                        .categoryId(categoryDAO.getCategoryId())
+                        .categoryName(categoryDAO.getCategoryName())
+                        .build();
+                categoryResponseDTOList.add(categoryResponseDTO);
+            }
         }
         PagingDTO pagingDTO = PagingDTO.builder()
                 .dataList(categoryResponseDTOList)
