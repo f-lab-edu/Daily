@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Slf4j
 /*스프링 시큐리티 설정을 위한 빈 생성을 위한 어노테이션*/
 @Configuration
-/*모든 URL 요청은 스프링 시큐리티를 거치게 하는 어노테이션
+/*모든 URL 요청이 해당 클래스를 거치게 하여 스프링 시큐리티의 보안을 활성화 시켜 처리되게 하는 어노테이션
 -> 내부적으로 SpringSecurityFilterChain이 동작하여 모든 URL에 적용됨*/
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -33,7 +33,6 @@ public class WebSecurityConfig {
     }
 
     /*스프링 시큐리티 체인 빈 생성 - 요청 URL 설정*/
-    /*기본 필터 설정*/
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
