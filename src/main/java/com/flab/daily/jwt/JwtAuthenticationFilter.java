@@ -23,7 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /*SecurityContextHolder에 JWT를 저장하는 함수*/
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        /*요청 메세지에서 JWT 추출*/
         String jwt = jwtProvider.resolveToken(request);
         /*토큰 검증*/
         if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
