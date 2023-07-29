@@ -18,12 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     public final MemberMapper memberMapper;
+    public final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void signUp(MemberRequestDTO memberRequestDTO) {
         int isMember = memberMapper.getMember(memberRequestDTO.getEmail());
         if (isMember > 0) throw new DuplicateCheckException(ErrorCode.IS_EXIST_USER_BY_EMAIL);
-
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         MemberDAO memberDAO = MemberDAO.builder()
                 .email(memberRequestDTO.getEmail())
@@ -31,8 +30,6 @@ public class MemberService {
                 .nickname(memberRequestDTO.getNickname())
                 .memberType(memberRequestDTO.getMemberType())
                 .build();
-
-        log.info("MemberDAO : " + memberDAO);
 
         memberMapper.insertMember(memberDAO);
     }
