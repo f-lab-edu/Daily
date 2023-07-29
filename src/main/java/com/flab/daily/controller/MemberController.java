@@ -24,16 +24,13 @@ public class MemberController {
 
     @PostMapping("/members")
     public ResponseEntity<Void> signUp(@RequestBody @Valid MemberRequestDTO memberRequestDTO){
-        log.info("sign up");
         memberService.signUp(memberRequestDTO);
-        log.info("success");
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponseDTO> login(@RequestBody @Valid MemberLoginDTO memberLoginDTO) {
         JwtResponseDTO jwtResponseDTO = memberService.login(memberLoginDTO);
-        log.info("LOGIN 결과 : " + jwtResponseDTO.getResult());
         return ResponseEntity.status(OK).body(jwtResponseDTO);
     }
 }
