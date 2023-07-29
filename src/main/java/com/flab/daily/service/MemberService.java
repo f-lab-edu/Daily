@@ -33,16 +33,12 @@ public class MemberService {
         int isMember = memberMapper.getMember(memberRequestDTO.getEmail());
         if (isMember > 0) throw new DuplicateCheckException(ErrorCode.IS_EXIST_USER_BY_EMAIL);
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
         MemberDAO memberDAO = MemberDAO.builder()
                 .email(memberRequestDTO.getEmail())
                 .password(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
                 .memberType(memberRequestDTO.getMemberType())
                 .build();
-
-        log.info("MemberDAO : " + memberDAO);
 
         memberMapper.insertMember(memberDAO);
     }

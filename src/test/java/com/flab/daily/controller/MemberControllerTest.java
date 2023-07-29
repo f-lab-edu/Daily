@@ -155,7 +155,6 @@ public class MemberControllerTest {
                 .andExpect(jsonPath("$.message").value("영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자 이상 입력해 주세요"));
     }
 
-
     @Test
     @DisplayName("회원 가입 : 닉네임 없음")
     void signUpNotNcikName() throws Exception {
@@ -179,6 +178,4 @@ public class MemberControllerTest {
                 .andExpect(jsonPath("$.code").value("400"))
                 .andExpect(jsonPath("$.message").value("닉네임은 필수 값입니다."));
     }
-
-
 }
