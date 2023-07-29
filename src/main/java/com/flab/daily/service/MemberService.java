@@ -62,8 +62,11 @@ public class MemberService {
         /*반환 객체*/
         JwtResponseDTO jwtResponseDTO = JwtResponseDTO.builder()
                 .result("success")
+                .email(authentication.getName())
+                .role(authentication.getAuthorities().toString())
                 .accessToken(accessToken)
                 .build();
+
         return jwtResponseDTO;
     }
 }
