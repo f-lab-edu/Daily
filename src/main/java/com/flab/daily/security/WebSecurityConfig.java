@@ -15,9 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Slf4j
 /*스프링 시큐리티 설정을 위한 빈 생성을 위한 어노테이션*/
 @Configuration
-/*사용자 정의된 스프링 보안 설정 활성화
--> 내부적으로 SpringSecurityFilterChain이 동작하여 모든 URL에 적용됨*/
-@EnableWebSecurity
 public class WebSecurityConfig {
     /*암호화에 사용될 Bcrypt 빈 생성*/
     @Bean
