@@ -1,6 +1,7 @@
 package com.flab.daily.security;
 
 import com.flab.daily.jwt.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 /*스프링 시큐리티 설정을 위한 빈 생성을 위한 어노테이션*/
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig {
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    /*암호화에 사용될 Bcrypt 빈 생성*/
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,7 +35,6 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /*스프링 시큐리티 체인 빈 생성 - 요청 URL 설정*/
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
