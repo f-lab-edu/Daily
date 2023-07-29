@@ -1,4 +1,4 @@
-package com.flab.daily.jwt;
+package com.flab.daily.security.jwt;
 
 
 import com.flab.daily.exception.JwtCustomException;

@@ -7,7 +7,7 @@ import com.flab.daily.dto.response.JwtResponseDTO;
 import com.flab.daily.exception.DuplicateCheckException;
 import com.flab.daily.exception.ErrorCode;
 import com.flab.daily.exception.IsExistCheckException;
-import com.flab.daily.jwt.JwtProvider;
+import com.flab.daily.security.jwt.JwtProvider;
 import com.flab.daily.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
