@@ -42,11 +42,6 @@ public class JwtProvider {
 
     /*Access Token 생성 함수*/
     public String generateAccessToken(Authentication authentication) {  /*Authentication 클래스를 인자로 받음*/
-        /*사용자 권한 확인*/
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(", "));
-
         long currentTime = (new Date()).getTime();
 
         /*JWT Payload에 들어갈 정보*/
@@ -55,7 +50,7 @@ public class JwtProvider {
                 .setSubject(authentication.getName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(currentTime+expireTime));
-        claims.put("auth", authorities);
+        claims.put("auth", authentication.getAuthorities().toString());
 
         /*토큰 생성*/
         String accessToken = Jwts.builder()
