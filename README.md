@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=wave&color=auto&height=350&section=header&text=Daily&fontSize=150" />
+<img src="https://capsule-render.vercel.app/api?type=wave&color=auto&height=350&section=header&text=Daily&fontSize=130" />
 
 **" 개발 과정에 대해선 Issues, PR에서 확인하실 수 있으며,  기술적인 문제 및 결정 과정에 대해서는 WIKI에서 확인하실 수 있습니다. "**
 <br>
