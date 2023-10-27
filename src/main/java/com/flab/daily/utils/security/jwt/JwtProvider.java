@@ -38,26 +38,25 @@ public class JwtProvider {
     }
 
     /*Access Token 생성 함수*/
-    public String generateAccessToken(Authentication authentication) {  /*Authentication 클래스를 인자로 받음*/
+    public String generateAccessToken(String email) {  /*Authentication 클래스를 인자로 받음*/
         long currentTime = (new Date()).getTime();
 
         /*JWT Payload에 들어갈 정보*/
         Claims claims = Jwts.claims()
                 .setSubject("access_token")
-                .setSubject(authentication.getName())
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(currentTime+expireTime));
-        claims.put("auth", authentication.getAuthorities().toString());
 
         /*토큰 생성*/
-        String accessToken = Jwts.builder()
+        String accessToken = "Bearer " + Jwts.builder()
                 /*Header*/
                 .setHeaderParam("alg", "HS256")
                 .setHeaderParam("type", "JWT")
                 /*Payload*/
                 .setClaims(claims)
                 /*Signature*/
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(getSecretKey(key), SignatureAlgorithm.HS256)
                 .compact();
 
         return accessToken;
@@ -66,6 +65,7 @@ public class JwtProvider {
     /*request header로부터 토큰 정보 갖고 오는 함수*/
     String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization"); /*Authorization: Bearer (JWT String값)*/
+        System.out.println("추출된 token 값 : " + bearerToken);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
@@ -75,9 +75,9 @@ public class JwtProvider {
     /*토큰으로부터 사용자 정보 확인 함수*/
     public Authentication getAuthentication(String accessToken) {
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(accessToken).getBody();
-        if (claims.get("auth") == null) {
+        /*if (claims.get("auth") == null) {
             throw null;
-        }
+        }*/
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetailsService, "", userDetails.getAuthorities());
     }
@@ -85,7 +85,7 @@ public class JwtProvider {
     /*토큰 유효성 검증 확인 함수 : 기간, 만료일자*/
     public boolean validateToken(String jwt) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(jwt);
+            Jwts.parser().setSigningKey(getSecretKey(key)).parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
             throw new JwtCustomException(ErrorCode.INVALID_TOKEN);

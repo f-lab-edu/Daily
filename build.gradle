@@ -38,12 +38,15 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 	implementation "org.springframework.boot:spring-boot-starter-security"
 
-	/*SHA256*/
-	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
-
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
+
+	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
 }
 
 tasks.named('test') {

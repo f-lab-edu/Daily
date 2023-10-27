@@ -31,5 +31,9 @@ public class ErrorHandler {
     public ErrorResponse DuplicateCheckException(DuplicateCheckException e) {
         return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
     }
+    @ExceptionHandler(JwtCustomException.class)
+    public ErrorResponse JwtCustomException(JwtCustomException e) {
+        return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
+    }
 }
 
