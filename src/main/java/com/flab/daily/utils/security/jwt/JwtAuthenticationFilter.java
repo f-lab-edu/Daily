@@ -1,7 +1,7 @@
-package com.flab.daily.security.jwt;
+package com.flab.daily.utils.security.jwt;
 
-import com.flab.daily.exception.ErrorCode;
-import com.flab.daily.exception.JwtCustomException;
+import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.JwtCustomException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

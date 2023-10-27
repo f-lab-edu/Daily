@@ -1,10 +1,10 @@
-package com.flab.daily.exception;
+package com.flab.daily.utils.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class JwtCustomException extends RuntimeException{
+public class DuplicateCheckException extends RuntimeException{
     private final ErrorCode errorCode;
 }

@@ -1,6 +1,6 @@
-package com.flab.daily.security;
+package com.flab.daily.utils.security;
 
-import com.flab.daily.security.jwt.JwtAuthenticationFilter;
+import com.flab.daily.utils.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

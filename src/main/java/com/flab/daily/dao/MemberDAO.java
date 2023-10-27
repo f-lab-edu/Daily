@@ -1,6 +1,6 @@
 package com.flab.daily.dao;
 
-import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.type.MemberType;
 import lombok.Builder;
 import lombok.Data;
 

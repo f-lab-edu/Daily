@@ -3,7 +3,7 @@ package com.flab.daily.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.service.MemberService;
-import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.type.MemberType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.flab.daily.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.flab.daily.type.MemberType;
-import com.flab.daily.validator.EnumValidator;
+import com.flab.daily.utils.type.MemberType;
+import com.flab.daily.utils.validator.EnumValidator;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

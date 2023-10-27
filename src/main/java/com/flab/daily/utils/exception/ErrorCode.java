@@ -1,4 +1,4 @@
-package com.flab.daily.exception;
+package com.flab.daily.utils.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

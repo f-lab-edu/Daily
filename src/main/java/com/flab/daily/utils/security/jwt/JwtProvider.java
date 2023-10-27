@@ -1,8 +1,8 @@
-package com.flab.daily.security.jwt;
+package com.flab.daily.utils.security.jwt;
 
 
-import com.flab.daily.exception.JwtCustomException;
-import com.flab.daily.security.UserDetailsServiceImpl;
+import com.flab.daily.utils.exception.JwtCustomException;
+import com.flab.daily.utils.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import com.flab.daily.exception.ErrorCode;
+import com.flab.daily.utils.exception.ErrorCode;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
