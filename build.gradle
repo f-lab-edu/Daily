@@ -25,18 +25,26 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+	/*Maria DB*/
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.4'
 
-	// https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+	/*MyBatis*/
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2")
 
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	/*Valid*/
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.1.0'
 
-	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16
-	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
+	/*Spring Security 적용*/
+	implementation 'org.springframework.security:spring-security-test'
+	implementation "org.springframework.boot:spring-boot-starter-security"
 
+	/*JWT*/
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5',
+			'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	/*SHA256*/
+	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'

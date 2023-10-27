@@ -2,7 +2,6 @@ package com.flab.daily.mapper;
 
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dao.Pagination;
-import com.flab.daily.dto.response.MeetingResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

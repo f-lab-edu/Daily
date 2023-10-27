@@ -3,17 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.daily.mapper.MemberMapper">
-
-
     <insert id="insertMember" parameterType="com.flab.daily.dao.MemberDAO">
-        insert into member(email, password, nickname, member_type, created_date, updated_date)
-        values (#{email}, #{password}, #{nickname}, #{memberType}, now(), now())
+        INSERT INTO member(email, password, nickname, member_type, created_date, updated_date)
+        VALUES (#{email}, #{password}, #{nickname}, #{memberType}, now(), now())
     </insert>
-
 
     <select id="getMember" parameterType="java.lang.String" resultType="int">
         SELECT
         COUNT(*)
+        FROM
+        member
+        WHERE
+        email = #{email}
+    </select>
+
+    <select id="selectMemberByEmail" parameterType="java.lang.String" resultType="com.flab.daily.dao.MemberDAO">
+        SELECT
+        *
         FROM
         member
         WHERE
