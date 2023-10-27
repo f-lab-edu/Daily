@@ -38,11 +38,6 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 	implementation "org.springframework.boot:spring-boot-starter-security"
 
-	/*JWT*/
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5',
-			'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
 	/*SHA256*/
 	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
 
