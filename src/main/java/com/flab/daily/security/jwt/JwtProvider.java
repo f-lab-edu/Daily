@@ -2,7 +2,7 @@ package com.flab.daily.security.jwt;
 
 
 import com.flab.daily.exception.JwtCustomException;
-import com.flab.daily.security.MemberDetailsService;
+import com.flab.daily.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import com.flab.daily.exception.ErrorCode;
@@ -21,7 +21,6 @@ import com.flab.daily.exception.ErrorCode;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -32,8 +31,7 @@ public class JwtProvider {
     @Value(("${jwt.token-length}"))
     private long expireTime;
 
-    private final MemberDetailsService memberDetailsService;
-
+    private final UserDetailsServiceImpl userDetailsService;
 
     private Key getSecretKey(String key) {
         byte[] KeyBytes = key.getBytes(StandardCharsets.UTF_8);
@@ -81,8 +79,8 @@ public class JwtProvider {
         if (claims.get("auth") == null) {
             throw null;
         }
-        UserDetails memberDetails = memberDetailsService.loadUserByUsername(claims.getSubject());
-        return new UsernamePasswordAuthenticationToken(memberDetailsService, "", memberDetails.getAuthorities());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+        return new UsernamePasswordAuthenticationToken(userDetailsService, "", userDetails.getAuthorities());
     }
 
     /*토큰 유효성 검증 확인 함수 : 기간, 만료일자*/

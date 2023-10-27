@@ -4,6 +4,7 @@ import com.flab.daily.dto.request.MemberLoginDTO;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.dto.response.JwtResponseDTO;
 import com.flab.daily.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponseDTO> login(@RequestBody @Valid MemberLoginDTO memberLoginDTO) {
+    public ResponseEntity<String> login(@RequestBody @Valid MemberLoginDTO memberLoginDTO, HttpServletResponse response) {
         JwtResponseDTO jwtResponseDTO = memberService.login(memberLoginDTO);
-        return ResponseEntity.status(OK).body(jwtResponseDTO);
+        response.setHeader("Authentication", jwtResponseDTO.getAccessToken());
+        return ResponseEntity.status(OK).body(jwtResponseDTO.getResult());
     }
 }

@@ -48,7 +48,7 @@ public class MemberService {
         /*비밀번호 확인*/
         MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberLoginDTO.getEmail());
         if(!bCryptPasswordEncoder.matches(memberLoginDTO.getPassword(), memberDAO.getPassword())) {
-            log.error("LOGIN FAIL : 아이디, 비밀번호 불일치");
+            log.error("ERROR : LOGIN FAIL");
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
 
@@ -57,16 +57,14 @@ public class MemberService {
                 new UsernamePasswordAuthenticationToken(memberLoginDTO.getEmail(),
                         memberLoginDTO.getPassword())
         );
+
         String accessToken = jwtProvider.generateAccessToken(authentication);
 
-        /*반환 객체*/
-        JwtResponseDTO jwtResponseDTO = JwtResponseDTO.builder()
+        return JwtResponseDTO.builder()
                 .result("success")
                 .email(authentication.getName())
                 .role(authentication.getAuthorities().toString())
                 .accessToken(accessToken)
                 .build();
-
-        return jwtResponseDTO;
     }
 }
