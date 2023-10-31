@@ -38,8 +38,16 @@
         SELECT * FROM meeting WHERE meeting_id = #{meetingId}
     </select>
 
-    <select id="countMeetingAll" resultType="long">
+    <select id="countMeetingAll" resultType="java.lang.Long">
         SELECT COUNT(*) FROM meeting
+    </select>
+
+    <select id="countMeetingByCategoryId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM meeting WHERE category_id = #{categoryId}
+    </select>
+
+    <select id="findMeetingListByCategoryId" parameterType="map" resultType="com.flab.daily.dao.MeetingDAO">
+        SELECT * FROM meeting WHERE category_id = #{categoryId} ORDER BY created_date ASC LIMIT #{pagination.size} OFFSET #{pagination.startSize}
     </select>
 </mapper>
 
