@@ -35,9 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             if(jwt == null) {
-                log.error("NOT EXIST TOKEN.");
-                jwtExceptionMessage(response, ErrorCode.NOT_EXIST_TOKEN.getMessage(), ErrorCode.NOT_EXIST_TOKEN.getCode());
-                return;
+               log.error("NOT EXIST TOKEN.");
             }
             /*토큰 검증*/
             if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
@@ -48,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch(JwtCustomException e) {
             SecurityContextHolder.clearContext();
             log.error("INVALID JWT TOKEN.");
-            jwtExceptionMessage(response, ErrorCode.INVALID_TOKEN.getMessage(), ErrorCode.INVALID_TOKEN.getCode());
+            jwtExceptionMessage(response, e.getErrorCode().getMessage(), e.getErrorCode().getCode());
             return;
         }
         filterChain.doFilter(request, response); /*다음 필터 체인으로 넘어가도록 함*/
