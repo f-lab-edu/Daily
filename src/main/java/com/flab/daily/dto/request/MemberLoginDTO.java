@@ -20,7 +20,5 @@ public class MemberLoginDTO {
     private String email;
 
     @NotNull(message = "패스워드는 필수 값입니다.")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z|A-Z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$"
-            , message = "영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자 이상 입력해 주세요")
     private String password;
 }

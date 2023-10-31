@@ -1,12 +1,13 @@
-package com.flab.daily.security.jwt;
+package com.flab.daily.utils.security.jwt;
 
-import com.flab.daily.exception.ErrorCode;
-import com.flab.daily.exception.JwtCustomException;
+import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.JwtCustomException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 /*JWT 토큰으로 인증하고 SecurityContextHolder에 추가하는 필터를 커스텀하는 클래스*/
 @RequiredArgsConstructor
@@ -26,7 +28,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = jwtProvider.resolveToken(request);
+        System.out.println("추출된 JWT : " + jwt);
+
         try {
+            if(jwt == null) {
+                throw new JwtCustomException(ErrorCode.NOT_EXIST_TOKEN);
+            }
             /*토큰 검증*/
             if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
                 Authentication authentication = jwtProvider.getAuthentication(jwt);
@@ -35,8 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch(JwtCustomException e) {
             SecurityContextHolder.clearContext();
-            response.sendError(ErrorCode.INVALID_TOKEN.getCode(), ErrorCode.INVALID_TOKEN.getMessage());
-            return;
+            log.error("INVALID JWT TOKEN.");
         }
         filterChain.doFilter(request, response); /*다음 필터 체인으로 넘어가도록 함*/
     }

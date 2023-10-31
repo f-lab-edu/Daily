@@ -4,10 +4,10 @@ import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberLoginDTO;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.dto.response.JwtResponseDTO;
-import com.flab.daily.exception.DuplicateCheckException;
-import com.flab.daily.exception.ErrorCode;
-import com.flab.daily.exception.IsExistCheckException;
-import com.flab.daily.security.jwt.JwtProvider;
+import com.flab.daily.utils.exception.DuplicateCheckException;
+import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.IsExistCheckException;
+import com.flab.daily.utils.security.jwt.JwtProvider;
 import com.flab.daily.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,23 +47,21 @@ public class MemberService {
     public JwtResponseDTO login(MemberLoginDTO memberLoginDTO) {
         /*비밀번호 확인*/
         MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberLoginDTO.getEmail());
-        if(!bCryptPasswordEncoder.matches(memberLoginDTO.getPassword(), memberDAO.getPassword())) {
-            log.error("ERROR : LOGIN FAIL");
+        if(memberDAO == null) {
+            log.error("ERROR : INVALID EMAIL");
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
+        if(!bCryptPasswordEncoder.matches(memberLoginDTO.getPassword(), memberDAO.getPassword())) {
+            log.error("ERROR : LOGIN FAIL");
+            throw new IsExistCheckException(ErrorCode.INVALID_ACCOUNT_USER);
+        }
 
-        /*JWT 생성*/
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(memberLoginDTO.getEmail(),
-                        memberLoginDTO.getPassword())
-        );
-
-        String accessToken = jwtProvider.generateAccessToken(authentication);
+        String accessToken = jwtProvider.generateAccessToken(memberLoginDTO.getEmail());
 
         return JwtResponseDTO.builder()
                 .result("success")
-                .email(authentication.getName())
-                .role(authentication.getAuthorities().toString())
+                .email(memberDAO.getEmail())
+                .role(memberDAO.getMemberType())
                 .accessToken(accessToken)
                 .build();
     }

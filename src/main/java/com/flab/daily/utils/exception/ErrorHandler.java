@@ -1,6 +1,5 @@
-package com.flab.daily.exception;
+package com.flab.daily.utils.exception;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +29,10 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateCheckException.class)
     public ErrorResponse DuplicateCheckException(DuplicateCheckException e) {
+        return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
+    }
+    @ExceptionHandler(JwtCustomException.class)
+    public ErrorResponse JwtCustomException(JwtCustomException e) {
         return new ErrorResponse(e.getErrorCode().getCode(), e.getErrorCode().getMessage());
     }
 }

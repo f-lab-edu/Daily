@@ -32,7 +32,7 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid MemberLoginDTO memberLoginDTO, HttpServletResponse response) {
         JwtResponseDTO jwtResponseDTO = memberService.login(memberLoginDTO);
-        response.setHeader("Authentication", jwtResponseDTO.getAccessToken());
+        response.setHeader("Authorization", jwtResponseDTO.getAccessToken());
         return ResponseEntity.status(OK).body(jwtResponseDTO.getResult());
     }
 }

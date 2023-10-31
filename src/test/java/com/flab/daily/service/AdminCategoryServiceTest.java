@@ -2,8 +2,8 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.CategoryDAO;
 import com.flab.daily.dto.request.CategoryRequestDTO;
-import com.flab.daily.exception.DuplicateCheckException;
-import com.flab.daily.exception.IsExistCheckException;
+import com.flab.daily.utils.exception.DuplicateCheckException;
+import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MemberMapper;
 import org.junit.jupiter.api.BeforeEach;

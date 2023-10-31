@@ -2,7 +2,7 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dto.request.MeetingRequestDTO;
-import com.flab.daily.exception.IsExistCheckException;
+import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.mapper.MemberMapper;

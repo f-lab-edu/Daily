@@ -1,7 +1,7 @@
-package com.flab.daily.security;
+package com.flab.daily.utils.security;
 
 import com.flab.daily.dao.MemberDAO;
-import com.flab.daily.exception.ErrorCode;
+import com.flab.daily.utils.exception.ErrorCode;
 import com.flab.daily.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

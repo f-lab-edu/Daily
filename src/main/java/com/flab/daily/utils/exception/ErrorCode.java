@@ -1,4 +1,4 @@
-package com.flab.daily.exception;
+package com.flab.daily.utils.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +16,7 @@ public enum ErrorCode {
     NOT_FOUND_CATEGORY(900,"유효하지 않은 카테고리입니다."),
     NOT_FOUND_EMAIL(900,"유효하지 않는 Email입니다."),
     NOT_FOUND_MEETING(900,"유효하지 않는 소모임입니다."),
+    INVALID_ACCOUNT_USER(900, "아이디와 비밀번호가 일치하지 않습니다."),
 
     /*중복된 데이터인 경우*/
     VALUE_ALREADY_EXISTS(901, "이미 존재하는 데이터입니다."),
@@ -23,7 +24,8 @@ public enum ErrorCode {
     DUPLICATED_BY_CATEGORY_NAME(901, "중복된 카테고리 이름입니다."),
 
     /*JWT*/
-    INVALID_TOKEN(800, "유효하지 않은 토큰입니다.");
+    INVALID_TOKEN(800, "유효하지 않은 토큰입니다."),
+    NOT_EXIST_TOKEN(801, "존재하지 않는 토큰입니다.");
 
     private final int code;
     private final String message;
