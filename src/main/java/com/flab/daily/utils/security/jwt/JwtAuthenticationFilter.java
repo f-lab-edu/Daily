@@ -1,6 +1,8 @@
 package com.flab.daily.utils.security.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.ErrorResponse;
 import com.flab.daily.utils.exception.JwtCustomException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -32,7 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             if(jwt == null) {
-                throw new JwtCustomException(ErrorCode.NOT_EXIST_TOKEN);
+                log.error("NOT EXIST TOKEN.");
+                jwtExceptionMessage(response, ErrorCode.NOT_EXIST_TOKEN.getMessage(), ErrorCode.NOT_EXIST_TOKEN.getCode());
+                return;
             }
             /*토큰 검증*/
             if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
@@ -43,7 +48,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch(JwtCustomException e) {
             SecurityContextHolder.clearContext();
             log.error("INVALID JWT TOKEN.");
+            jwtExceptionMessage(response, ErrorCode.INVALID_TOKEN.getMessage(), ErrorCode.INVALID_TOKEN.getCode());
+            return;
         }
         filterChain.doFilter(request, response); /*다음 필터 체인으로 넘어가도록 함*/
+    }
+
+    public void jwtExceptionMessage(HttpServletResponse response, String message, int httpStatus) {
+        response.setStatus(httpStatus);
+        response.setContentType("application/json");
+        try {
+            String responseJson = new ObjectMapper().writeValueAsString(new ErrorResponse(httpStatus, message));
+            response.getWriter().write(responseJson);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }

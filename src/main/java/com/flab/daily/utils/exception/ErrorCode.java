@@ -25,7 +25,7 @@ public enum ErrorCode {
 
     /*JWT*/
     INVALID_TOKEN(800, "유효하지 않은 토큰입니다."),
-    NOT_EXIST_TOKEN(801, "존재하지 않는 토큰입니다.");
+    NOT_EXIST_TOKEN(801, "토큰이 존재하지 않습니다.");
 
     private final int code;
     private final String message;
