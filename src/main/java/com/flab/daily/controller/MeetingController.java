@@ -28,8 +28,14 @@ public class MeetingController {
     }
 
     @GetMapping("/{meetingId}")
-    public ResponseEntity<MeetingResponseDTO> getMeetingOneById(@PathVariable @Valid Long meetingId) {
+    public ResponseEntity<MeetingResponseDTO> getMeetingOneById(@PathVariable Long meetingId) {
         MeetingResponseDTO meetingResponseDTO = meetingService.findMeetingOneById(meetingId);
         return ResponseEntity.status(HttpStatus.OK).body(meetingResponseDTO);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<PagingDTO> getMeetingListByCategoryId(int size, int page, @PathVariable Long categoryId) {
+        PagingDTO pagingDTO = meetingService.getMeetingListByCategoryId(size, page, categoryId);
+        return ResponseEntity.status(HttpStatus.OK).body(pagingDTO);
     }
 }
