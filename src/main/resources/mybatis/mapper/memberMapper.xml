@@ -25,5 +25,14 @@
         WHERE
         email = #{email}
     </select>
+
+    <update id="updateMemberInfo" parameterType="com.flab.daily.dao.MemberDAO">
+        UPDATE
+        member
+        SET
+        password = #{password}, nickname = #{nickname}
+        WHERE
+        email = #{email}
+    </update>
 </mapper>
 

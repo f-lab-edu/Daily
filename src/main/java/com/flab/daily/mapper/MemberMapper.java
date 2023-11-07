@@ -8,4 +8,5 @@ public interface MemberMapper {
     int insertMember(MemberDAO member);
     MemberDAO selectMemberByEmail(String email);
     int getMember(String email);
+    void updateMemberInfo(MemberDAO member);
 }

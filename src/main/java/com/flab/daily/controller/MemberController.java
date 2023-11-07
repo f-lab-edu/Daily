@@ -8,11 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -34,5 +33,11 @@ public class MemberController {
         JwtResponseDTO jwtResponseDTO = memberService.login(memberLoginDTO);
         response.setHeader("Authorization", jwtResponseDTO.getAccessToken());
         return ResponseEntity.status(OK).body(jwtResponseDTO.getResult());
+    }
+
+    @PatchMapping("/members/{memberId}")
+    public ResponseEntity<String> updateMemberInfo(@RequestBody @Valid MemberRequestDTO memberRequestDTO, @PathVariable Long memberId) {
+        memberService.updateMemberInfo(memberId, memberRequestDTO);
+        return ResponseEntity.status(OK).build();
     }
 }

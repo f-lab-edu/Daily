@@ -45,7 +45,6 @@ public class MemberService {
 
     /*로그인 함수*/
     public JwtResponseDTO login(MemberLoginDTO memberLoginDTO) {
-        /*비밀번호 확인*/
         MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberLoginDTO.getEmail());
         if(memberDAO == null) {
             log.error("ERROR : INVALID EMAIL");
@@ -64,5 +63,20 @@ public class MemberService {
                 .role(memberDAO.getMemberType())
                 .accessToken(accessToken)
                 .build();
+    }
+
+    public void updateMemberInfo(Long memberId, MemberRequestDTO memberRequestDTO) {
+        int memberCheck = memberMapper.getMember(memberRequestDTO.getEmail());
+        if (memberCheck == 0) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
+        }
+
+        MemberDAO member = MemberDAO.builder()
+                .email(memberRequestDTO.getEmail())
+                .password(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()))
+                .nickname(memberRequestDTO.getNickname())
+                .build();
+
+        memberMapper.updateMemberInfo(member);
     }
 }
