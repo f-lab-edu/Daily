@@ -38,7 +38,6 @@ public class MemberService {
                 .email(memberRequestDTO.getEmail())
                 .password(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()))
                 .nickname(memberRequestDTO.getNickname())
-                .memberType(memberRequestDTO.getMemberType())
                 .build();
 
         memberMapper.insertMember(memberDAO);

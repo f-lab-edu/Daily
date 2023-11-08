@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -92,5 +93,12 @@ public class JwtProvider {
         } catch (Exception e) {
             throw new JwtCustomException(ErrorCode.INVALID_TOKEN);
         }
+    }
+
+    /*토큰으로부터 사용자 정보를 갖고 오는 함수*/
+    public String getEmailByAccessToken(HttpServletRequest request) {
+        String accessToken = resolveToken(request);
+        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+        return claims.getSubject();
     }
 }
