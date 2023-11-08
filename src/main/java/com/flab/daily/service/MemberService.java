@@ -4,6 +4,7 @@ import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberLoginDTO;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.dto.response.JwtResponseDTO;
+import com.flab.daily.utils.dto.ResponseDTO;
 import com.flab.daily.utils.exception.DuplicateCheckException;
 import com.flab.daily.utils.exception.ErrorCode;
 import com.flab.daily.utils.exception.IsExistCheckException;
@@ -44,8 +45,7 @@ public class MemberService {
     }
 
     /*로그인 함수*/
-    public JwtResponseDTO login(MemberLoginDTO memberLoginDTO) {
-        /*비밀번호 확인*/
+    public ResponseDTO login(MemberLoginDTO memberLoginDTO) {
         MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberLoginDTO.getEmail());
         if(memberDAO == null) {
             log.error("ERROR : INVALID EMAIL");
@@ -56,13 +56,18 @@ public class MemberService {
             throw new IsExistCheckException(ErrorCode.INVALID_ACCOUNT_USER);
         }
 
-        String accessToken = jwtProvider.generateAccessToken(memberLoginDTO.getEmail());
+        return ResponseDTO.builder().result("success").build();
+    }
 
-        return JwtResponseDTO.builder()
-                .result("success")
-                .email(memberDAO.getEmail())
-                .role(memberDAO.getMemberType())
-                .accessToken(accessToken)
-                .build();
+    public void updateMemberInfo(MemberRequestDTO memberRequestDTO) {
+        MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberRequestDTO.getEmail());
+        if (memberDAO==null) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
+        }
+
+        memberDAO.setPassword(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()));
+        memberDAO.setNickname(memberRequestDTO.getNickname());
+
+        memberMapper.updateMemberInfo(memberDAO);
     }
 }

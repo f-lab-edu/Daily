@@ -28,7 +28,6 @@ public class MemberRequestDTO {
             message = "이메일 형식에 맞지 않습니다.")
     private String email;
 
-
     /**
      * ^ : 뒤에나오는 패턴이 일치한 경우
      * (?=.*\d) : 숫자를 사용한 패턴이 하위에 있는지 확인
@@ -37,8 +36,8 @@ public class MemberRequestDTO {
      *  ([^\s]){8,16}$ : 공백 없이 8~ 16 글자로 끝나는
      */
     @NotNull(message = "패스워드는 필수 값입니다.")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z|A-Z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$"
-            , message = "영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자 이상 입력해 주세요")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
+            , message = "비밀번호는 영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자 이상 입력해 주세요")
     private String password;
 
     @NotBlank(message = "닉네임은 필수 값입니다.")
