@@ -30,7 +30,7 @@
         UPDATE
         member
         SET
-        password = #{password}, nickname = #{nickname}
+        password = #{password}, nickname = #{nickname}, updated_date = now()
         WHERE
         email = #{email}
     </update>

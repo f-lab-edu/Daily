@@ -4,6 +4,7 @@ import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberLoginDTO;
 import com.flab.daily.dto.request.MemberRequestDTO;
 import com.flab.daily.dto.response.JwtResponseDTO;
+import com.flab.daily.utils.dto.ResponseDTO;
 import com.flab.daily.utils.exception.DuplicateCheckException;
 import com.flab.daily.utils.exception.ErrorCode;
 import com.flab.daily.utils.exception.IsExistCheckException;
@@ -44,7 +45,7 @@ public class MemberService {
     }
 
     /*로그인 함수*/
-    public JwtResponseDTO login(MemberLoginDTO memberLoginDTO) {
+    public ResponseDTO login(MemberLoginDTO memberLoginDTO) {
         MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberLoginDTO.getEmail());
         if(memberDAO == null) {
             log.error("ERROR : INVALID EMAIL");
@@ -55,28 +56,18 @@ public class MemberService {
             throw new IsExistCheckException(ErrorCode.INVALID_ACCOUNT_USER);
         }
 
-        String accessToken = jwtProvider.generateAccessToken(memberLoginDTO.getEmail());
-
-        return JwtResponseDTO.builder()
-                .result("success")
-                .email(memberDAO.getEmail())
-                .role(memberDAO.getMemberType())
-                .accessToken(accessToken)
-                .build();
+        return ResponseDTO.builder().result("success").build();
     }
 
-    public void updateMemberInfo(Long memberId, MemberRequestDTO memberRequestDTO) {
-        int memberCheck = memberMapper.getMember(memberRequestDTO.getEmail());
-        if (memberCheck == 0) {
+    public void updateMemberInfo(MemberRequestDTO memberRequestDTO) {
+        MemberDAO memberDAO = memberMapper.selectMemberByEmail(memberRequestDTO.getEmail());
+        if (memberDAO==null) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_EMAIL);
         }
 
-        MemberDAO member = MemberDAO.builder()
-                .email(memberRequestDTO.getEmail())
-                .password(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()))
-                .nickname(memberRequestDTO.getNickname())
-                .build();
+        memberDAO.setPassword(bCryptPasswordEncoder.encode(memberRequestDTO.getPassword()));
+        memberDAO.setNickname(memberRequestDTO.getNickname());
 
-        memberMapper.updateMemberInfo(member);
+        memberMapper.updateMemberInfo(memberDAO);
     }
 }
