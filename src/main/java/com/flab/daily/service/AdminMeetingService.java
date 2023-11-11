@@ -2,6 +2,7 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dto.request.MeetingRequestDTO;
+import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.mapper.MemberMapper;
@@ -50,4 +51,14 @@ public class AdminMeetingService {
         }
     }
 
+    public MeetingResponseDTO updateMeetingInfo(Long meetingId, String updatedEmail, MeetingResponseDTO meetingResponseDTO) {
+
+        /*1. meetingId 가 유효한 아이디값인지 확인*/
+
+        /*2. 업데이트한 사용자가 생성자가 맞는지 확인*/
+
+        /*3. 수정된 categoryId가 유효한 아이디값인지 확인*/
+
+        return null;
+    }
 }
