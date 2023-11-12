@@ -1,9 +1,12 @@
 package com.flab.daily.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.request.CategoryRequestDTO;
+import com.flab.daily.dto.response.CategoryResponseDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.service.AdminCategoryService;
+import com.flab.daily.utils.PagingUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,14 +17,21 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 
 @WebMvcTest(controllers = AdminCategoryController.class)
 public class AdminCategoryControllerTest {
@@ -228,6 +238,38 @@ public class AdminCategoryControllerTest {
         actions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("400"))
                 .andExpect(jsonPath("$.message").value("카테고리명은 20자까지 작성이 가능합니다."));
+    }
+
+    @Test
+    @DisplayName("카테고리 목록 조회 성공")
+    public void getCategoryListSuccess() throws Exception {
+        // given
+        int page = 1;
+        int size = 2;
+        int total = 3;
+        Pagination pagination = new Pagination(size,page);
+        PagingUtil pagingUtil = new PagingUtil(total, pagination);
+        var list = new ArrayList<CategoryResponseDTO>();
+        for (long i = 0; i < size; i++) {
+            CategoryResponseDTO categoryResponseDTO =  CategoryResponseDTO.builder()
+                    .categoryId(i + 1)
+                    .categoryName("카테고리" + (i + 1))
+                    .build();
+            list.add(categoryResponseDTO);
+        }
+        PagingDTO pagingDTO = PagingDTO.builder()
+                .dataList(list)
+                .pagingUtil(pagingUtil)
+                .build();
+        //when
+        when(adminCategoryService.getCategoryList(size, page)).thenReturn(pagingDTO);
+        ResultActions actions = mockMvc.perform(get("/admin/categories")
+                .param("size", "2")
+                .param("page", "1")
+                .contentType(MediaType.APPLICATION_JSON));
+        //Then
+        actions.andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(pagingDTO)));
     }
 
 }

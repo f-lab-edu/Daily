@@ -1,7 +1,9 @@
 package com.flab.daily.service;
 
 import com.flab.daily.dao.CategoryDAO;
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.request.CategoryRequestDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.utils.exception.DuplicateCheckException;
 import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.CategoryMapper;
@@ -14,8 +16,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
@@ -177,7 +183,7 @@ public class AdminCategoryServiceTest {
 
 
     @Test
-    @DisplayName("updqte가 정상적으로 작동하지 않는경우")
+    @DisplayName("update 정상적으로 작동하지 않는경우")
     void changeCategoryFailed() {
         Long categoryId = 12L;
         // 카테고리가 존재한 경우
@@ -194,5 +200,39 @@ public class AdminCategoryServiceTest {
         when(categoryMapper.updateCategory(categoryDAO)).thenThrow(new RuntimeException());
         // then
         assertThrows(RuntimeException.class, () -> adminCategoryService.changeCategory(categoryRequestDTO, categoryId));
+    }
+
+    @Test
+    @DisplayName("카테고리 목록 조회 성공")
+    void getMemberList() {
+        int size = 2;
+        int page = 1;
+        List<CategoryDAO> categoryDAOList = new ArrayList<>();
+        for (long i = 1; i <= size; i++) {
+            categoryDAO = CategoryDAO.builder()
+                    .categoryId(i)
+                    .categoryName("카테고리" + i)
+                    .build();
+            categoryDAOList.add(categoryDAO);
+        }
+        // 카테고리 목록 Total 조회
+        when(categoryMapper.getCategoryListTotal()).thenReturn(3L);
+        // 카테고리 데이터 조회
+        when(categoryMapper.getCategoryList(any(Pagination.class))).thenReturn(categoryDAOList);
+        PagingDTO pagingDTO = adminCategoryService.getCategoryList(size, page);
+        // then
+        assertThat(pagingDTO.getPagingUtil().getPageSize()).isEqualTo(2);
+        assertThat(pagingDTO.getPagingUtil().getCurrentPage()).isEqualTo(1);
+    }
+
+
+    @Test
+    @DisplayName("카테고리 목록 수 조회 실패")
+    void getCategoryListTotalFailed() {
+        int size = 2;
+        int page = 1;
+        // 카테고리 목록 수가 null 일 경우
+        when(categoryMapper.getCategoryListTotal()).thenReturn(null);
+        assertThrows(NullPointerException.class, () -> adminCategoryService.getCategoryList(size,page));
     }
 }

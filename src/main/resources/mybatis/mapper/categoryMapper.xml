@@ -3,6 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.daily.mapper.CategoryMapper">
+
+    <select id="getCategoryListTotal" resultType="long">
+        SELECT COUNT(*)
+        FROM category
+    </select>
+
+    <select id="getCategoryList" parameterType="com.flab.daily.dao.Pagination" resultType="com.flab.daily.dao.CategoryDAO">
+        SELECT *
+        FROM category
+        ORDER BY category_id
+        LIMIT #{size} OFFSET #{startSize}
+    </select>
+
     <select id="isExistCategoryById" parameterType="java.lang.Long" resultType="int">
         select
             exists(

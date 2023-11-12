@@ -1,15 +1,22 @@
 package com.flab.daily.service;
 
 import com.flab.daily.dao.CategoryDAO;
+import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.request.CategoryRequestDTO;
+import com.flab.daily.dto.response.CategoryResponseDTO;
+import com.flab.daily.dto.response.PagingDTO;
 import com.flab.daily.utils.exception.DuplicateCheckException;
 import com.flab.daily.utils.exception.ErrorCode;
 import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MemberMapper;
+import com.flab.daily.utils.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -18,6 +25,29 @@ public class AdminCategoryService {
 
     private final CategoryMapper categoryMapper;
     private final MemberMapper memberMapper;
+
+    public PagingDTO getCategoryList(int size, int page) {
+        // 페이지
+        Pagination pagination = new Pagination(size, page);
+        Long total = categoryMapper.getCategoryListTotal();
+        PagingUtil pagingUtil = new PagingUtil(total, pagination);
+        // 카테고리 목록
+        List<CategoryDAO> categoryDAOList = categoryMapper.getCategoryList(pagination);
+        List<CategoryResponseDTO> categoryResponseDTOList = new ArrayList<>();
+        if (categoryDAOList != null) {
+            for (CategoryDAO categoryDAO : categoryDAOList) {
+                CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.builder()
+                        .categoryId(categoryDAO.getCategoryId())
+                        .categoryName(categoryDAO.getCategoryName())
+                        .build();
+                categoryResponseDTOList.add(categoryResponseDTO);
+            }
+        }
+        return PagingDTO.builder()
+                .dataList(categoryResponseDTOList)
+                .pagingUtil(pagingUtil)
+                .build();
+    }
 
     public void addCategory(CategoryRequestDTO categoryRequestDTO) {
         //카테고리명 중복 확인
