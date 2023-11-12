@@ -1,4 +1,4 @@
-package com.flab.daily.validator;
+package com.flab.daily.utils.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

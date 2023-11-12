@@ -2,7 +2,7 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dao.Pagination;
-import com.flab.daily.exception.IsExistCheckException;
+import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

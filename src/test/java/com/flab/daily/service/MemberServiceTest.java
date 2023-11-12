@@ -3,9 +3,9 @@ package com.flab.daily.service;
 
 import com.flab.daily.dao.MemberDAO;
 import com.flab.daily.dto.request.MemberRequestDTO;
-import com.flab.daily.exception.DuplicateCheckException;
+import com.flab.daily.utils.exception.DuplicateCheckException;
 import com.flab.daily.mapper.MemberMapper;
-import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.type.MemberType;
 import com.flab.daily.utils.SHA256Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

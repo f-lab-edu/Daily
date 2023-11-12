@@ -1,6 +1,6 @@
-package com.flab.daily.validator;
+package com.flab.daily.utils.validator;
 
-import com.flab.daily.type.MemberType;
+import com.flab.daily.utils.type.MemberType;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

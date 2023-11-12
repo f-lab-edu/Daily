@@ -3,12 +3,14 @@ package com.flab.daily.service;
 import com.flab.daily.dao.MeetingDAO;
 import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.dto.response.PagingDTO;
-import com.flab.daily.exception.ErrorCode;
-import com.flab.daily.exception.IsExistCheckException;
+import com.flab.daily.mapper.CategoryMapper;
+import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.IsExistCheckException;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.dao.Pagination;
 import com.flab.daily.utils.PagingUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class MeetingService {
 
     private final MeetingMapper meetingMapper;
+    private final CategoryMapper categoryMapper;
 
     @Transactional(readOnly = true)
     public PagingDTO findMeetingList(int size, int page) {
@@ -56,12 +59,11 @@ public class MeetingService {
         PagingUtil pagingUtil = new PagingUtil(totalMeetingSize, pagination);
 
         /*처리된 페이징 정보와 데이터 정보 저장하여 반환*/
-        PagingDTO paginationInfo = PagingDTO.builder()
+
+        return PagingDTO.builder()
                 .pagingUtil(pagingUtil)
                 .dataList(meetingListInfo)
                 .build();
-
-        return paginationInfo;
     }
 
     @Transactional(readOnly = true)
@@ -70,6 +72,38 @@ public class MeetingService {
         if(meetingDAO == null) {
             throw new IsExistCheckException(ErrorCode.NOT_FOUND_MEETING);
         } else {
+            return MeetingResponseDTO.builder()
+                    .meetingId(meetingDAO.getMeetingId())
+                    .categoryId(meetingDAO.getCategoryId())
+                    .meetingName(meetingDAO.getMeetingName())
+                    .meetingDescription(meetingDAO.getMeetingDescription())
+                    .meetingDate(meetingDAO.getMeetingDate())
+                    .meetingPlace(meetingDAO.getMeetingPlace())
+                    .meetingPeople(meetingDAO.getMeetingPeople())
+                    .currentPeople(meetingDAO.getCurrentPeople())
+                    .meetingImage(meetingDAO.getMeetingImage())
+                    .createdBy(meetingDAO.getCreatedBy())
+                    .createdDate(meetingDAO.getCreatedDate())
+                    .updatedDate(meetingDAO.getUpdatedDate())
+                    .build();
+        }
+    }
+
+    public PagingDTO getMeetingListByCategoryId(int size, int page, Long categoryId) {
+        /*CategoryId 검사*/
+        int categoryCheck = categoryMapper.isExistCategoryById(categoryId);
+        if(categoryCheck == 0) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
+        }
+        /*해당 카테고리에 속한 meeting 전체 수*/
+        Long totalMeetingSize = meetingMapper.countMeetingByCategoryId(categoryId);
+
+        Pagination pagination = new Pagination(size, page);
+
+        List<MeetingDAO> meetingList = meetingMapper.findMeetingListByCategoryId(pagination, categoryId);
+
+        List<MeetingResponseDTO> meetingListInfo = new ArrayList<>();
+        for (MeetingDAO meetingDAO : meetingList) {
             MeetingResponseDTO meetingResponseDTO = MeetingResponseDTO.builder()
                     .meetingId(meetingDAO.getMeetingId())
                     .categoryId(meetingDAO.getCategoryId())
@@ -84,8 +118,13 @@ public class MeetingService {
                     .createdDate(meetingDAO.getCreatedDate())
                     .updatedDate(meetingDAO.getUpdatedDate())
                     .build();
-
-            return meetingResponseDTO;
         }
+
+        PagingUtil pagingUtil = new PagingUtil(totalMeetingSize, pagination);
+
+        return PagingDTO.builder()
+                .dataList(meetingList)
+                .pagingUtil(pagingUtil)
+                .build();
     }
 }
