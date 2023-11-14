@@ -42,6 +42,8 @@ public class WebSecurityConfig {
 
         httpSecurity.authorizeHttpRequests((request) -> request
                         .requestMatchers("/",
+                                "/api-docs", "/api-docs/**",
+                                "/swagger-ui.html", "/swagger-ui/**",
                                 "/members/login", "/members/signup",
                                 "/meeting", "/meeting/category/**", "/meeting/**")
                         .permitAll() /*메인, 소모임, 로그인, 회원가입 페이지 외 제한*/
