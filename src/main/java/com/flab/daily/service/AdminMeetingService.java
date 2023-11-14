@@ -7,7 +7,9 @@ import com.flab.daily.mapper.CategoryMapper;
 import com.flab.daily.mapper.MeetingMapper;
 import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.utils.exception.ErrorCode;
+import com.flab.daily.utils.exception.IndexOutOfException;
 import com.flab.daily.utils.exception.IsExistCheckException;
+import com.flab.daily.utils.exception.JwtCustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,14 +53,46 @@ public class AdminMeetingService {
         }
     }
 
-    public MeetingResponseDTO updateMeetingInfo(Long meetingId, String updatedEmail, MeetingResponseDTO meetingResponseDTO) {
-
+    public MeetingResponseDTO updateMeetingInfo(Long meetingId, String updatedEmail, MeetingRequestDTO meetingRequestDTO) {
         /*1. meetingId 가 유효한 아이디값인지 확인*/
-
+        MeetingDAO meetingDAO = meetingMapper.findMeetingOneById(meetingId);
+        if(meetingDAO == null){
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_MEETING);
+        }
         /*2. 업데이트한 사용자가 생성자가 맞는지 확인*/
-
+        if(!meetingDAO.getCreatedBy().equals(updatedEmail)){
+            throw new JwtCustomException(ErrorCode.INVALID_ACCESS);
+        }
         /*3. 수정된 categoryId가 유효한 아이디값인지 확인*/
+        int checkCategory = categoryMapper.isExistCategoryById(meetingRequestDTO.getCategoryId());
+        if(checkCategory == 0) {
+            throw new IsExistCheckException(ErrorCode.NOT_FOUND_CATEGORY);
+        }
 
-        return null;
+        /*4. 수정된 모집 인원수가 현재 신청자 수보다 많은지 확인*/
+        if(meetingDAO.getCurrentPeople() > meetingRequestDTO.getMeetingPeople()) {
+            throw new IndexOutOfException(ErrorCode.INDEX_OUT_OF_PEOPLE);
+        }
+
+        meetingDAO.setCategoryId(meetingRequestDTO.getCategoryId());
+        meetingDAO.setMeetingName(meetingRequestDTO.getMeetingName());
+        meetingDAO.setMeetingDescription(meetingRequestDTO.getMeetingDescription());
+        meetingDAO.setMeetingDate(meetingRequestDTO.getMeetingDate());
+        meetingDAO.setMeetingPlace(meetingRequestDTO.getMeetingPlace());
+        meetingDAO.setMeetingPeople(meetingRequestDTO.getMeetingPeople());
+        meetingDAO.setMeetingImage(meetingRequestDTO.getMeetingImage());
+
+        meetingMapper.updateMeetingInfo(meetingDAO);
+
+        return MeetingResponseDTO.builder()
+                .meetingId(meetingDAO.getMeetingId())
+                .categoryId(meetingDAO.getCategoryId())
+                .meetingName(meetingDAO.getMeetingName())
+                .meetingDate(meetingDAO.getMeetingDate())
+                .meetingPlace(meetingDAO.getMeetingPlace())
+                .meetingDescription(meetingDAO.getMeetingDescription())
+                .meetingPeople(meetingDAO.getMeetingPeople())
+                .meetingImage(meetingDAO.getMeetingImage())
+                .build();
     }
 }

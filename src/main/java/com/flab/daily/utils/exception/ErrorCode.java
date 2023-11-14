@@ -23,10 +23,13 @@ public enum ErrorCode {
     IS_EXIST_USER_BY_EMAIL(901, "중복된 이메일입니다."),
     DUPLICATED_BY_CATEGORY_NAME(901, "중복된 카테고리 이름입니다."),
 
+    /*데이터가 초과하는 경우*/
+    INDEX_OUT_OF_PEOPLE(902, "모집 인원 수는 신청자 수보다 적을 수 없습니다."),
+
     /*JWT*/
     INVALID_TOKEN(800, "유효하지 않은 토큰입니다."),
-    NOT_EXIST_TOKEN(801, "토큰이 존재하지 않습니다."),
-    INVALID_ACCESS(802, "잘못된 접근입니다.");
+    NOT_EXIST_TOKEN(800, "토큰이 존재하지 않습니다."),
+    INVALID_ACCESS(800, "잘못된 접근입니다.");
 
     private final int code;
     private final String message;
