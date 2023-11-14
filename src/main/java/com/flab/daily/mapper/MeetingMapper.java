@@ -15,4 +15,5 @@ public interface MeetingMapper {
     MeetingDAO findMeetingOneById(Long meetingId);
     Long countMeetingByCategoryId(Long categoryId);
     List<MeetingDAO> findMeetingListByCategoryId(@Param("pagination")Pagination pagination, @Param("categoryId")Long categoryId);
+    int updateMeetingInfo(MeetingDAO meetingDAO);
 }

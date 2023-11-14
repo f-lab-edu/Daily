@@ -3,7 +3,6 @@ package com.flab.daily.controller;
 import com.flab.daily.dto.request.MeetingRequestDTO;
 import com.flab.daily.dto.response.MeetingResponseDTO;
 import com.flab.daily.service.AdminMeetingService;
-import com.flab.daily.utils.dto.ResponseDTO;
 import com.flab.daily.utils.security.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -28,11 +27,9 @@ public class AdminMeetingController {
 
     @PatchMapping("/meetings/{meetingId}")
     public ResponseEntity<MeetingResponseDTO> updateMeetingInfo(@Valid @RequestBody MeetingRequestDTO meetingRequestDTO,
-            , @PathVariable Long meetingId, HttpServletRequest request) {
+            @PathVariable Long meetingId, HttpServletRequest request) {
         String updatedEmail = jwtProvider.getEmailByAccessToken(request);
         MeetingResponseDTO meetingResponseDTO = adminMeetingService.updateMeetingInfo(meetingId, updatedEmail, meetingRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(meetingResponseDTO);
-
     }
-
 }
