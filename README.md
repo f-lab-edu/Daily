@@ -60,7 +60,7 @@
 <br>
 
 ## ▫️ 화면 설계
-➡️ [Daily 델리 화면 구성 카카오 오븐 링크](https://ovenapp.io/view/NvLeehDuP64aiavOuEkcy6nXpoItPzrO/ojYPk)
+➡️ [Daily 델리 화면 구성 카카오 오븐 링크](https://ovenapp.io/view/NvLeehDuP64aiavOuEkcy6nXpoItPzrO/ElvAn)
 
 ![스크린샷 2023-12-28 오전 10 22 46](https://github.com/f-lab-edu/Daily/assets/87467958/8c96c53e-8876-4d67-a1ac-3d08660e3fb2)
 ![스크린샷 2023-12-28 오전 10 22 56](https://github.com/f-lab-edu/Daily/assets/87467958/72cad1fe-e630-4fa2-8172-2ae5cd134a83)
