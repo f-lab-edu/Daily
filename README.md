@@ -60,11 +60,16 @@
 <br>
 
 ## ▫️ 화면 설계
-➡️ [Daily 델리 화면 구성 카카오 오븐 링크](https://ovenapp.io/view/CgBLAqU04G0hykV5P9lgNLVb5RXT5QVu/ElvAn)
+➡️ [Daily 델리 화면 구성 카카오 오븐 링크](https://ovenapp.io/view/NvLeehDuP64aiavOuEkcy6nXpoItPzrO/ojYPk)
 
-![image](https://github.com/f-lab-edu/Daily/assets/87467958/5f7f94fc-638d-45a6-91a8-5e8e2d82c1b1)
-![image](https://github.com/f-lab-edu/Daily/assets/87467958/cdb25cb4-b3de-40f3-b4b8-24eb7282d32a)
-![image](https://github.com/f-lab-edu/Daily/assets/87467958/77c7c609-5486-4819-96c7-22d3ef13fff1)
+![스크린샷 2023-12-28 오전 10 22 46](https://github.com/f-lab-edu/Daily/assets/87467958/8c96c53e-8876-4d67-a1ac-3d08660e3fb2)
+![스크린샷 2023-12-28 오전 10 22 56](https://github.com/f-lab-edu/Daily/assets/87467958/72cad1fe-e630-4fa2-8172-2ae5cd134a83)
+![스크린샷 2023-12-28 오전 10 23 03](https://github.com/f-lab-edu/Daily/assets/87467958/7119f678-51ef-4b7d-a060-5fffa74c61bc)
+![스크린샷 2023-12-28 오전 10 23 11](https://github.com/f-lab-edu/Daily/assets/87467958/88e0a0fa-e4b4-4903-a0b0-883b296178aa)
+![스크린샷 2023-12-28 오전 10 23 18](https://github.com/f-lab-edu/Daily/assets/87467958/b13a3913-9ac6-40f5-99e6-d3eec0bb7d34)
+![스크린샷 2023-12-28 오전 10 23 27](https://github.com/f-lab-edu/Daily/assets/87467958/e43fa116-241e-402d-bab4-dfe157eaa5e3)
+![스크린샷 2023-12-28 오전 10 23 35](https://github.com/f-lab-edu/Daily/assets/87467958/70b0f97a-28b0-4b80-988f-e06efebe05ca)
+
 
 
 
