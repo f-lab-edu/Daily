@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable);
 
         httpSecurity.authorizeHttpRequests((request) -> request
-                        .requestMatchers("/",
+                        .requestMatchers("/", "/ping",
                                 "/members/login", "/members/signup",
                                 "/meeting", "/meeting/category/**", "/meeting/**")
                         .permitAll() /*메인, 소모임, 로그인, 회원가입 페이지 외 제한*/
