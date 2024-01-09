@@ -24,12 +24,12 @@ public class AdminCategoryController {
     @PostMapping(value = "/categories")
     public ResponseEntity<Object> addCategory(@Valid @RequestBody CategoryRequestDTO categoryRequestDTO) {
         adminCategoryService.addCategory(categoryRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
     @PatchMapping(value = "/categories/{categoryId}")
-    public ResponseEntity<Void> changeCategory(@Valid @RequestBody CategoryRequestDTO categoryRequestDTO, @PathVariable Long categoryId) {
+    public ResponseEntity<Object> changeCategory(@Valid @RequestBody CategoryRequestDTO categoryRequestDTO, @PathVariable Long categoryId) {
         adminCategoryService.changeCategory(categoryRequestDTO, categoryId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).body("update success");
     }
 }

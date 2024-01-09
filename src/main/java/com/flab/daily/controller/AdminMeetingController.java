@@ -22,7 +22,7 @@ public class AdminMeetingController {
     @PostMapping("/meetings")
     public ResponseEntity<Object> addMeeting(@Valid @RequestBody MeetingRequestDTO meetingRequestDTO) {
         adminMeetingService.addMeeting(meetingRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
     @PatchMapping("/meetings/{meetingId}")
