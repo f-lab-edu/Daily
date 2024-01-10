@@ -1,10 +1,12 @@
 package com.flab.daily.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flab.daily.mock.WithAuthUser;
 import com.flab.daily.dao.Pagination;
 import com.flab.daily.dto.request.CategoryRequestDTO;
 import com.flab.daily.dto.response.CategoryResponseDTO;
 import com.flab.daily.dto.response.PagingDTO;
+import com.flab.daily.mapper.MemberMapper;
 import com.flab.daily.service.AdminCategoryService;
 import com.flab.daily.utils.PagingUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +47,9 @@ public class AdminCategoryControllerTest {
     @MockBean
     AdminCategoryService adminCategoryService;
 
+    @MockBean
+    MemberMapper memberMapper;
+
     CategoryRequestDTO categoryRequestDTO;
     String code;
     String message;
@@ -57,7 +62,8 @@ public class AdminCategoryControllerTest {
 
     //category 글자수가 초과된 경우
     @Test
-    @DisplayName("Category @Max Character Count Check.")
+    @DisplayName("카테고리 이름이 글자수를 초과한 경우")
+    @WithAuthUser(email="test@naver.com", role="ADMIN")
     public void addCategoryFalseByCharacterCount() throws Exception {
         //given
         categoryRequestDTO = CategoryRequestDTO.builder()
@@ -70,6 +76,7 @@ public class AdminCategoryControllerTest {
 
         //when-then
         mockMvc.perform(post("/admin/categories")
+                        .header("Authorization", "JWT FOR TEST")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(categoryRequestDTO)))
                 .andDo(print())
@@ -108,7 +115,7 @@ public class AdminCategoryControllerTest {
         //given
         categoryRequestDTO = CategoryRequestDTO.builder()
                 .categoryName("미술")
-                .createdBy("testnaver.com")
+                .createdBy("test@naver.com")
                 .updatedBy("test@naver.com")
                 .build();
 

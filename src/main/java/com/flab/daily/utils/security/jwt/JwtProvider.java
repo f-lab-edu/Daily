@@ -82,7 +82,7 @@ public class JwtProvider {
             throw null;
         }*/
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
-        return new UsernamePasswordAuthenticationToken(userDetailsService, "", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     /*토큰 유효성 검증 확인 함수 : 기간, 만료일자*/
