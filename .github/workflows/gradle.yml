@@ -19,7 +19,7 @@ permissions:
 # --------------------------추가
 env:
   PROJECT_NAME: Daily
-  BUCKET_NAME: dailybucket
+  BUCKET_NAME: dailys3bucket
   CODE_DEPLOY_APP_NAME: daily-github-action-deploy
   DEPLOYMENT_GROUP_NAME: daily-github-action-deploy-group
 # --------------------------추가
