@@ -18,7 +18,7 @@ permissions:
 
 # --------------------------추가
 env:
-  BUCKET_NAME: dailys3bucket
+  S3_BUCKET_NAME: dailys3bucket
 # --------------------------추가
 
 jobs:
