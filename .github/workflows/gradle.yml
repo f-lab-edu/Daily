@@ -16,6 +16,14 @@ on:
 permissions:
   contents: read
 
+# --------------------------추가
+env:
+  PROJECT_NAME: Daily
+  BUCKET_NAME: dailybucket
+  CODE_DEPLOY_APP_NAME: daily-github-action-deploy
+  DEPLOYMENT_GROUP_NAME: daily-github-action-deploy-group
+# --------------------------추가
+
 jobs:
   build:
 
@@ -32,3 +40,26 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run : ./gradlew clean build --exclude-task test
+      
+    - name: AWS credential setting
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.DAILY_GITHUB_ACTION_KEYPAIR_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.DAILY_GITHUB_ACTION_KEYPAIR_SECRET_KEY }}
+        
+   # --------------------------추가      
+    - name: Make Zip File
+      run: zip -qq -r ./$GITHUB_SHA.zip .
+      shell: bash
+
+    - name: Upload to S3
+      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+    - name: Code Deploy To EC2 instance
+      run: aws deploy create-deployment 
+              --application-name $CODE_DEPLOY_APP_NAME 
+              --deployment-config-name CodeDeployDefault.AllAtOnce
+              --deployment-group-name $DEPLOYMENT_GROUP_NAME 
+              --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+# --------------------------추가
