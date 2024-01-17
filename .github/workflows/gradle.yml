@@ -39,6 +39,10 @@ jobs:
       run : ./gradlew clean build --exclude-task test
 
     # --------------------------추가
+    - name: Make zip file
+      run: zip -r ./$GITHUB_SHA.zip .
+      shell: bash
+        
     - name: AWS credential setting
       uses: aws-actions/configure-aws-credentials@v1
       with:
