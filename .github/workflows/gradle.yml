@@ -19,6 +19,8 @@ permissions:
 # --------------------------추가
 env:
   S3_BUCKET_NAME: dailys3bucket
+  AWS_CODEDEPLOY_NAME: daily-github-action-deploy
+  AWS_CODEDEPLOY_GROUP: daily-github-action-deploy-group
 # --------------------------추가
 
 jobs:
@@ -38,7 +40,7 @@ jobs:
     - name: Build with Gradle
       run : ./gradlew clean build --exclude-task test
 
-    # --------------------------추가
+  # --------------------------추가
     - name: Make zip file
       run: zip -r ./$GITHUB_SHA.zip .
       shell: bash
@@ -52,4 +54,7 @@ jobs:
 
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+
+    - name: Code Deploy # CodeDeploy에 배포 요청
+      run: aws deploy create-deployment --application-name ${{ secrets.AWS_CODEDEPLOY_NAME }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP }} --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=CI/$GITHUB_SHA.zip
 # --------------------------추가
