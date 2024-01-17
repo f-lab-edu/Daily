@@ -56,5 +56,5 @@ jobs:
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
 
     - name: Code Deploy # CodeDeploy에 배포 요청
-      run: aws deploy create-deployment --application-name ${{ AWS_CODEDEPLOY_NAME }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ AWS_CODEDEPLOY_GROUP }} --s3-location bucket=${{ S3_BUCKET_NAME }},bundleType=zip,key=CI/$GITHUB_SHA.zip
+      run: aws deploy create-deployment --application-name $AWS_CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $AWS_CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=CI/$GITHUB_SHA.zip
 # --------------------------추가
